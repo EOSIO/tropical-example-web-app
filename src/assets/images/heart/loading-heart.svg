@@ -1,0 +1,16 @@
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g id="Tropical-Desktop-App" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+        <g id="Tropical-Property-View" transform="translate(-262.000000, -477.000000)" fill="#E4E8EC">
+            <g id="Property-1" transform="translate(200.000000, 442.000000)">
+                <path fill="url(#loadingHeart)" d="M103.293139,39.2356712 C98.3514905,33.5881096 90.3357263,33.5881096 85.394078,39.2356712 C85.0537596,39.624604 84.7921926,40.0681803 84.4996875,40.486042 C84.2071824,40.0681803 83.9456154,39.624604 83.605297,39.2356712 C78.6636487,33.5881096 70.6478845,33.5881096 65.7062362,39.2356712 C60.7645879,44.8832329 60.7645879,54.0440471 65.7062362,59.6916087 L84.4996875,79.9996875 L103.293139,59.6916087 C108.234787,54.0440471 108.234787,44.8832329 103.293139,39.2356712 Z" id="Path"></path>
+                <defs>
+                    <linearGradient id="loadingHeart">
+                        <stop>
+                            <animate attributeName="stop-color" values="#E4E8EC;#C3CCD5;#97A6B5;#C3CCD5;#E4E8EC" dur="3s" repeatCount="indefinite" />
+                        </stop>
+                    </linearGradient>
+                </defs>
+            </g>
+        </g>
+    </g>
+</svg>

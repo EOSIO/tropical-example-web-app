@@ -1,0 +1,42 @@
+@import "src/assets/styles/constants.scss";
+
+.property-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-column-gap: 1rem;
+  grid-row-gap: 19px;
+  grid-auto-rows: 25px;
+
+  .property-image {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    height: 113px;
+  }
+
+  .property-info {
+    grid-column: 2/3;
+    border-radius: 6px;
+  }
+
+  .property-info-1 {
+    background: $filler-medium;
+    width: 100%;
+  }
+
+  .property-info-2 {
+    background: $filler-light;
+    width: 70%;
+  }
+
+  .property-info-3 {
+    background: $filler-light;
+    width: 85%;
+  }
+}
+
+.results-property:nth-child(even) .property-container {
+  @media screen and (min-width: 1200px) {
+    float: right;
+  }
+}

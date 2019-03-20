@@ -1,0 +1,85 @@
+@import "src/assets/styles/constants.scss";
+
+.search-box-container {
+  display: grid;
+  width: 45%;
+  background: white;
+  border-radius: .25rem;
+  padding: 1.5rem;
+  margin: $content-padding;
+  box-shadow: 1px 2px 1rem #AAA;
+  grid-template-areas:
+    "title title"
+    "name name"
+    "location location"
+    "left right"
+    "button button";
+
+  @media screen and (min-width: $max-content-width) {
+    width: 36%;
+  }
+
+  @media screen and (max-width: $max-tablet-width) {
+    width: 60%;
+  }
+
+  @media screen and (max-width: $max-mobile-width) {
+    width: 100%;
+    margin: 0;
+  }
+
+  .search-field {
+    height: 2rem;
+    border-bottom: 2px solid $filler-light;
+    margin-bottom: 3rem;
+  }
+
+  .search-box-title {
+    grid-area: title;
+    margin: 0 0 2.5rem 0;
+    font-weight: 600;
+  }
+
+  .name {
+    grid-area: name;
+  }
+
+  .location {
+    grid-area: location;
+  }
+
+  .left {
+    grid-area: left;
+    width: 85%;
+  }
+
+  .right {
+    grid-area: right;
+    justify-self: right;
+    width: 85%;
+  }
+
+  .search-button {
+    grid-area: button;
+    height: 3rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    background-color: $button;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+
+    &:focus:not(.focus-visible) {
+      outline: none;
+    }
+  }
+
+  .blurb {
+    width: 50%;
+    height: 50%;
+    border-radius: 5rem;
+    background: $filler-light;
+  }
+}

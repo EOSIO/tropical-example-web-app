@@ -1,0 +1,94 @@
+import React from 'react'
+import { func, shape, instanceOf } from 'prop-types'
+// HOC (Higher Order Component) to pass the UALProvider context to the component
+import { withUAL } from '@blockone/ual-reactjs-renderer'
+import 'App.scss'
+
+import NavigationBar from 'components/navigation/NavigationBar'
+import NotificationBar from 'components/notification/NotificationBar'
+import ResultsPage from 'components/results/ResultsPage'
+import LandingPage from 'components/landing/LandingPage'
+
+class App extends React.Component {
+  static propTypes = {
+    ual: shape({
+      error: instanceOf(Error),
+      logout: func,
+      showModal: func.isRequired,
+      hideModal: func.isRequired,
+    }),
+  }
+
+  static defaultProps = {
+    ual: {
+      error: null,
+      logout: () => {},
+    },
+  }
+
+  state = {
+    showResults: false,
+    showNotificationBar: true,
+    error: null,
+  }
+
+  componentDidUpdate(prevProps) {
+    // Via withUAL() below, access to the error object is now available
+    // This error object will be set in the event of an error during any UAL execution
+    const { ual: { error } } = this.props
+    const { ual: { error: prevError } } = prevProps
+    if (error && (prevError ? error.message !== prevError.message : true)) {
+      // UAL modal will display the error message to the user, so no need to render this error in the app
+      console.error('UAL Error', JSON.parse(JSON.stringify(error)))
+    }
+  }
+
+  displayResults = display => this.setState({ showResults: display })
+
+  displayNotificationBar = display => this.setState({ showNotificationBar: display })
+
+  displayLoginModal = (display) => {
+    // Via withUAL() below, access to the showModal & hideModal functions are now available
+    const { ual: { showModal, hideModal } } = this.props
+    if (display) {
+      showModal()
+    } else {
+      hideModal()
+    }
+  }
+
+  displayError = (error) => {
+    if (error.source) {
+      console.error('UAL Error', JSON.parse(JSON.stringify(error)))
+    }
+    this.setState({ error })
+    this.displayNotificationBar(true)
+  }
+
+  clearError = () => {
+    this.setState({ error: null })
+    this.displayNotificationBar(false)
+  }
+
+  render() {
+    const login = () => this.displayLoginModal(true)
+    const routeToResults = () => this.displayResults(true)
+    const routeToLanding = () => this.displayResults(false)
+    const hideNotificationBar = () => this.clearError()
+    const { showResults, showNotificationBar, error } = this.state
+
+    return (
+      <div className='app-container'>
+        { showNotificationBar && <NotificationBar hideNotificationBar={hideNotificationBar} error={error} /> }
+        <NavigationBar routeToLanding={routeToLanding} login={login} />
+        { showResults
+          ? <ResultsPage routeToLanding={routeToLanding} login={login} displayError={this.displayError} />
+          : <LandingPage routeToResults={routeToResults} />
+        }
+      </div>
+    )
+  }
+}
+
+// Passes down the context via props to the wrapped component
+export default withUAL(App)

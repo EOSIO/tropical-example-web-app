@@ -1,0 +1,14 @@
+@import "src/assets/styles/constants.scss";
+
+.results-header-container {
+  width: 100%;
+  padding-top: 8rem;
+  background: url('../../assets/images/tropical-background.svg');
+  background-size: cover;
+
+  .results-header-content {
+    max-width: $max-content-width;
+    margin: 0 auto;
+    padding: $content-padding;
+  }
+}

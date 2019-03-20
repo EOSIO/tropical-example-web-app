@@ -1,0 +1,23 @@
+@import "src/assets/styles/constants.scss";
+
+.property-image-container {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: $filler-medium;
+
+  &:focus:not(.focus-visible) {
+    outline: none;
+  }
+
+  .heart {
+    display: none;
+  }
+
+  .display {
+    display: block;
+  }
+}

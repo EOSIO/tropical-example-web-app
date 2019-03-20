@@ -1,0 +1,15 @@
+{
+  "name": "Tropical Example",
+  "shortname": "Tropical Example",
+  "scope": "/",
+  "apphome": "/",
+  "icon": "/icon.png#8b7c88882a217876ee4cfd6eaecba21f8083d7f37d757cb7ed3b768ba8590f09",
+  "description": "Simple Example",
+  "chains": [
+    {
+      "chainId": "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f",
+      "chainName": "Local Chain",
+      "icon": "/eosiologo.png#128321d1e1023f41c35b9d168f0af0090ffb4e1a5d84c275feb1aa8c7a2551da"
+    }
+  ]
+}

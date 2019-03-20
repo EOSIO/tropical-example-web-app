@@ -1,0 +1,11 @@
+@import "src/assets/styles/constants.scss";
+
+.results-properties-container {
+  display: grid;
+  grid-gap: 3rem;
+
+  @media screen and (min-width: $max-tablet-width) {
+    grid-column-gap: 6rem;
+    grid-template-columns: 1fr 1fr;
+  }
+}

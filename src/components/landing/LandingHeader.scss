@@ -1,0 +1,17 @@
+@import "src/assets/styles/constants.scss";
+
+.landing-header-container {
+  width: 100%;
+  margin-bottom: 8rem;
+  padding-top: 5rem;
+  background-image: url('../../assets/images/tropical-background.svg');
+  background-size: cover;
+
+  .landing-header-content {
+    position: relative;
+    max-width: $max-content-width;
+    margin: 0 auto;
+    padding: $content-padding;
+    top: 3rem;
+  }
+}

@@ -1,0 +1,51 @@
+@import 'assets/styles/constants.scss';
+
+.notification-bar-container {
+  padding: .5rem 1.5rem;
+
+  &.notification-error {
+    background-color: #F7DDDD;
+    color: #F4452F;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 15;
+  }
+
+  .notification-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .notification-error-text {
+      padding: 0 1rem;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+
+    .notification-bar-title {
+      margin: 0 auto;
+      padding : .75rem;
+      color: $text;
+      text-decoration: none;
+      font-weight: bold;
+      text-align: center;
+
+      &:focus:not(.focus-visible) {
+        outline: none;
+      }
+    }
+
+    .notification-bar-close {
+      opacity: .5;
+      cursor: pointer;
+      font-size: 1.75rem;
+      line-height: 1.5rem;
+
+      &:focus:not(.focus-visible) {
+        outline: none;
+      }
+    }
+  }
+}

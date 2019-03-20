@@ -1,0 +1,17 @@
+@import "src/assets/styles/constants.scss";
+
+.results-page {
+  .results-content {
+    max-width: $max-content-width;
+    margin: 0 auto;
+    padding: $content-padding;
+  }
+
+  .results-intro {
+    background: $filler-dark;
+    height: 2.5rem;
+    margin: 2.25rem 0;
+    width: 44%;
+    border-radius: .5rem;
+  }
+}

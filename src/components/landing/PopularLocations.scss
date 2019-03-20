@@ -1,0 +1,57 @@
+@import "src/assets/styles/constants.scss";
+
+.popular-container {
+  display: grid;
+  align-items: center;
+  grid-template-areas:
+  'title     nav'
+  'locations locations';
+
+  .popular-title-container {
+    grid-area: title;
+
+    .popular-title {
+      margin: 0 0 1.5rem 0;
+      font-weight: 600;
+    }
+
+    .popular-blurb {
+      height: .5rem;
+      width: 40%;
+      margin: .5rem 0;
+      background: $filler-dark;
+      border-radius: 1rem;
+    }
+  }
+
+  .popular-nav-container {
+    grid-area: nav;
+    justify-self: end;
+
+    img {
+      margin-right: 1rem;
+      cursor: pointer;
+      height: 1.8rem;
+    }
+
+    .popular-prev {
+      margin-right: 2rem;
+      cursor: not-allowed;
+    }
+  }
+
+  .popular-locations {
+    display: flex;
+    flex-direction: row;
+    grid-area: locations;
+    height: 13rem;
+
+    .popular-location {
+      width: 31.33%;
+      height: 100%;
+      margin: 1rem 2% 1rem 0;
+      border-radius: .25rem;
+      background: $filler-medium;
+    }
+  }
+}
