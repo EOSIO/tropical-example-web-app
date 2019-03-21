@@ -860,10 +860,10 @@
     object.assign "^4.1.0"
     object.entries "^1.0.4"
 
-"@blockone/ual-eosio-reference-authenticator@^0.0.34":
-  version "0.0.34"
-  resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.34.tgz#222cf3d5a5763a2f14cc47848a88fd18ca296b40"
-  integrity sha512-6AUSuNeJk693LAG+CuBloUGA0J6sv2GEwqoFr32JQn3HgPRcb0y4SvdxO2vZX4nGiSHOD4tycboYjsp5KBcwWA==
+"@blockone/ual-eosio-reference-authenticator@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.35.tgz#f3beedc483cb8bb83bc51b1655a6bdc4871d9e98"
+  integrity sha512-wc2eqHb/6Lze3DsaVkk5BJl/u/tMRKEnWtDOu7u6H7w4wWShYexNV3UEII9srxhzHmuPF9o8MB83HR+/Zs2Kjw==
   dependencies:
     "@blockone/eosjs-ios-browser-signature-provider-interface" "^3.0.1-662e965.0"
     "@blockone/eosjs-react-native-signature-provider-interface" "^4.0.1-61b0cbe.0"
