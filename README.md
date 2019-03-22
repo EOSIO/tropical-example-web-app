@@ -52,17 +52,17 @@ UAL provides users with a common login interface in which they can select the Au
 
 ### Installation
 
-First install your [UAL Renderer](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) of choice. The Tropical Example example uses the [ReactJS UAL Renderer](https://github.com/EOSIO/ual-reactjs-renderer) and the rest of the examples will be demonstrating usage with the React Renderer. Please view the [UAL documentation](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) for links to all available renderers with documentation and examples of their usage.
+First install your [UAL Renderer](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) of choice. The Tropical Example example uses the [UAL Renderer for ReactJS](https://github.com/EOSIO/ual-reactjs-renderer) and the rest of the examples will be demonstrating usage with the React Renderer. Please view the [UAL documentation](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) for links to all available renderers with documentation and examples of their usage.
 
 ```bash
 yarn add @blockone/ual-reactjs-renderer
 ```
 
 Then install the Authenticators you want to allow users to interact with. The Tropical Example example uses the following Authenticators:
-- [EOSIO Reference Authenticator](https://github.com/EOSIO/ual-eosio-reference-authenticator)
-- [Scatter](https://github.com/EOSIO/ual-scatter)
-- [Lynx](https://github.com/EOSIO/ual-lynx)
-- [Token Pocket](https://github.com/EOSIO/ual-token-pocket)
+- [UAL for EOSIO Reference Authenticator](https://github.com/EOSIO/ual-eosio-reference-authenticator)
+- [UAL for Scatter](https://github.com/EOSIO/ual-scatter)
+- [UAL for Lynx](https://github.com/EOSIO/ual-lynx)
+- [UAL for Token Pocket](https://github.com/EOSIO/ual-token-pocket)
 
 ```bash
 yarn add @blockone/ual-eosio-reference-authenticator
@@ -119,7 +119,7 @@ ReactDOM.render(
 
 ### UAL Context
 
-The UAL React renderer uses [Context](https://reactjs.org/docs/context.html) to expose the objects and functions needed to interact with UAL. The context is created by the `UALProvider`. There are two methods to gain access to this context:
+The UAL Renderer for ReactJS uses [Context](https://reactjs.org/docs/context.html) to expose the objects and functions needed to interact with UAL. The context is created by the `UALProvider`. There are two methods to gain access to this context:
 
 1) The `withUAL` [HOC (Higher Order Component)](https://reactjs.org/docs/higher-order-components.html) can be used to pass the `UALProvider` context as props to the wrapped component.
 
@@ -394,7 +394,7 @@ docker-compose exec eosio /bin/bash
 ```
 
 ## Links
-- [UAL](https://github.com/EOSIO/universal-authenticator-library)
+- [Universal Authenticator Library (UAL)](https://github.com/EOSIO/universal-authenticator-library)
 - [Manifest Specification](https://github.com/EOSIO/manifest-spec)
 - [Ricardian Specification](https://github.com/EOSIO/ricardian-spec)
 - [Docker Compose CLI Reference](https://docs.docker.com/compose/reference/)
