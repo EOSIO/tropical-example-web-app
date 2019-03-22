@@ -1,7 +1,7 @@
 # 🌴 Tropical Example <!-- omit in toc -->
 Tropical Example is a mock application for renting properties. It will be referenced throughout this guide as an example for application developers to start building secure applications with a good user experience on the EOSIO blockchain. 
 
-![EOSIO Labs](https://img.shields.io/badge/EOSIO-LABS-blue.svg)
+![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
 
 ## About EOSIO Labs
 
