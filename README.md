@@ -1,5 +1,15 @@
 # 🌴 Tropical Example <!-- omit in toc -->
-Tropical Example is a mock application for renting properties. It will be referenced throughout this guide as an example for application developers to start building secure applications with a good user experience on the EOSIO blockchain. The following open source libraries are utilized in Tropical Example:
+Tropical Example is a mock application for renting properties. It will be referenced throughout this guide as an example for application developers to start building secure applications with a good user experience on the EOSIO blockchain. 
+
+![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
+
+## About EOSIO Labs
+
+EOSIO Labs repositories are experimental.  Developers in the community are encouraged to use EOSIO Labs repositories as the basis for code and concepts to incorporate into their applications. Community members are also welcome to contribute and further develop these repositories. Since these repositories are not supported by Block.one, we may not provide responses to issue reports, pull requests, updates to functionality, or other requests from the community, and we encourage the community to take responsibility for these.
+
+## Overview
+
+The following open source libraries are utilized in Tropical Example:
 
 * Utilizing the [Universal Authenticator Library (UAL)](https://github.com/EOSIO/universal-authenticator-library/) for quick and easy integration with multiple authentication providers (wallets).
 * Increasing the security and transparency of your application by following the [Manifest Specification](https://github.com/EOSIO/manifest-spec).
@@ -42,17 +52,17 @@ UAL provides users with a common login interface in which they can select the Au
 
 ### Installation
 
-First install your [UAL Renderer](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) of choice. The Tropical Example example uses the [ReactJS UAL Renderer](https://github.com/EOSIO/ual-reactjs-renderer) and the rest of the examples will be demonstrating usage with the React Renderer. Please view the [UAL documentation](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) for links to all available renderers with documentation and examples of their usage.
+First install your [UAL Renderer](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) of choice. The Tropical Example example uses the [UAL Renderer for ReactJS](https://github.com/EOSIO/ual-reactjs-renderer) and the rest of the examples will be demonstrating usage with the React Renderer. Please view the [UAL documentation](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) for links to all available renderers with documentation and examples of their usage.
 
 ```bash
 yarn add @blockone/ual-reactjs-renderer
 ```
 
 Then install the Authenticators you want to allow users to interact with. The Tropical Example example uses the following Authenticators:
-- [EOSIO Reference Authenticator](https://github.com/EOSIO/ual-eosio-reference-authenticator)
-- [Scatter](https://github.com/EOSIO/ual-scatter)
-- [Lynx](https://github.com/EOSIO/ual-lynx)
-- [Token Pocket](https://github.com/EOSIO/ual-token-pocket)
+- [UAL for EOSIO Reference Authenticator](https://github.com/EOSIO/ual-eosio-reference-authenticator)
+- [UAL for Scatter](https://github.com/EOSIO/ual-scatter)
+- [UAL for Lynx](https://github.com/EOSIO/ual-lynx)
+- [UAL for Token Pocket](https://github.com/EOSIO/ual-token-pocket)
 
 ```bash
 yarn add @blockone/ual-eosio-reference-authenticator
@@ -109,7 +119,7 @@ ReactDOM.render(
 
 ### UAL Context
 
-The UAL React renderer uses [Context](https://reactjs.org/docs/context.html) to expose the objects and functions needed to interact with UAL. The context is created by the `UALProvider`. There are two methods to gain access to this context:
+The UAL Renderer for ReactJS uses [Context](https://reactjs.org/docs/context.html) to expose the objects and functions needed to interact with UAL. The context is created by the `UALProvider`. There are two methods to gain access to this context:
 
 1) The `withUAL` [HOC (Higher Order Component)](https://reactjs.org/docs/higher-order-components.html) can be used to pass the `UALProvider` context as props to the wrapped component.
 
@@ -384,13 +394,17 @@ docker-compose exec eosio /bin/bash
 ```
 
 ## Links
-- [UAL](https://github.com/EOSIO/universal-authenticator-library)
+- [Universal Authenticator Library (UAL)](https://github.com/EOSIO/universal-authenticator-library)
 - [Manifest Specification](https://github.com/EOSIO/manifest-spec)
 - [Ricardian Specification](https://github.com/EOSIO/ricardian-spec)
 - [Docker Compose CLI Reference](https://docs.docker.com/compose/reference/)
 
 ## Contributing
-Check out the [Contributing](https://github.com/EOSIO/tropical-example-web-app/blob/develop/CONTRIBUTING.md) guide and please adhere to the [Code of Conduct](https://github.com/EOSIO/tropical-example-web-app/blob/develop/CONTRIBUTING.md#conduct)
+Check out the [Contributing](./CONTRIBUTING.md) guide and please adhere to the [Code of Conduct](./CONTRIBUTING.md#conduct)
 
 ## License
-[MIT licensed](https://github.com/EOSIO/tropical-example-web-app/blob/develop/LICENSE)
+[MIT licensed](./LICENSE)
+
+## Important
+
+See LICENSE for copyright and license terms.  Block.one makes its contribution on a voluntary basis as a member of the EOSIO community and is not responsible for ensuring the overall performance of the software or any related applications.  We make no representation, warranty, guarantee or undertaking in respect of the software or any related documentation, whether expressed or implied, including but not limited to the warranties or merchantability, fitness for a particular purpose and noninfringement. In no event shall we be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or documentation or the use or other dealings in the software or documentation.  Any test results or performance figures are indicative and will not reflect performance under all conditions.  Any reference to any third party or third-party product, service or other resource is not an endorsement or recommendation by Block.one.  We are not responsible, and disclaim any and all responsibility and liability, for your use of or reliance on any of these resources. Third-party resources may be updated, changed or terminated at any time, so the information here may be out of date or inaccurate.

@@ -37,7 +37,7 @@ const lynx = new Lynx([chain])
 const tokenPocket = new TokenPocket([chain])
 
 const supportedChains = [chain]
-const supportedAuthenticators = [scatter, lynx, tokenPocket]
+const supportedAuthenticators = [eosioAuth, scatter, lynx, tokenPocket]
 
 ReactDOM.render(
   <UALProvider chains={supportedChains} authenticators={supportedAuthenticators} appName={appName}>
