@@ -1,7 +1,7 @@
 import React from 'react'
 import { func, shape, instanceOf } from 'prop-types'
 // HOC (Higher Order Component) to pass the UALProvider context to the component
-import { withUAL } from '@blockone/ual-reactjs-renderer'
+import { withUAL } from 'ual-reactjs-renderer'
 import 'App.scss'
 
 import NavigationBar from 'components/navigation/NavigationBar'
