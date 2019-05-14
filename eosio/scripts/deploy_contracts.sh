@@ -54,7 +54,7 @@ function deploy_contract {
   # Move into contracts directory
   cd "$CONTRACTS_DIR/$1/"
   (
-    eosio-cpp -abigen "$1.cpp" -o "$1.wasm"
+    eosio-cpp -abigen "$1.cpp" -o "$1.wasm" -I ./
   ) &&
   # Move back into the executable directory
   cd /opt/eosio/bin/
