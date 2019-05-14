@@ -789,36 +789,25 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@blockone/eosjs-ios-browser-signature-provider-interface@^3.0.1-662e965.0":
-  version "3.0.1-662e965.0"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-ios-browser-signature-provider-interface/-/eosjs-ios-browser-signature-provider-interface-3.0.1-662e965.0.tgz#959760d366d845357954362c48cb0a434d4fb16f"
-  integrity sha512-ZwRmFVAbhgHNcxAmjY/+q/UkOLhdFLShEcuMkBiD+/IZ1vExvUsdfkJlPqHMRKedirayDceCxku+mLD50K5KrA==
+"@blockone/eosjs-ios-browser-signature-provider-interface@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@blockone/eosjs-ios-browser-signature-provider-interface/-/eosjs-ios-browser-signature-provider-interface-3.0.2.tgz#c64c4330cdb7c69ee129f931fa1a9065fe302d9c"
+  integrity sha512-s79QysL30O0kWYRdKTJbjTJViTYXQjX735P5+Xlg51Nj0+RB1h5YoS5oRwRiuzJy08g+y52YWfNea4/DXmnkuQ==
   dependencies:
-    "@blockone/eosjs-signature-provider-interface" "^6.0.0"
-    eosjs "^20.0.0-73152ad.0"
+    "@blockone/eosjs-signature-provider-interface" "^6.0.1"
     qs "^6.5.2"
-    typedoc "^0.13.0"
-    typedoc-plugin-markdown "^1.1.19"
     uuid "^3.3.2"
 
-"@blockone/eosjs-react-native-signature-provider-interface@^4.0.1-61b0cbe.0":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-react-native-signature-provider-interface/-/eosjs-react-native-signature-provider-interface-4.0.1.tgz#06d8f56e5afbb185fee6a2fbd2ec0d7413126755"
-  integrity sha512-7fVqmHW77tTdXRcznvQsMjWT6+zqzVvjdffxMnjRltRHZmea1l2js7OE3q9TqtfhiSGTQpGXZOnNfBU9yL9qww==
+"@blockone/eosjs-react-native-signature-provider-interface@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@blockone/eosjs-react-native-signature-provider-interface/-/eosjs-react-native-signature-provider-interface-4.0.2.tgz#d6c6ee94f9fae7f78f53ff4a0ab1b0ac576b2e65"
+  integrity sha512-sT6gyaldOn2YHyNc0plznnQir0hdoeXKyEfoCRBLUG08gZzJt1Xy7O61962P3XGT5fdGF06nRqvuJCoEjjfQeQ==
   dependencies:
-    "@blockone/eosjs-signature-provider-interface" "6.0.0"
+    "@blockone/eosjs-signature-provider-interface" "^6.0.1"
     buffer "^5.2.1"
     whatwg-url "^7.0.0"
 
-"@blockone/eosjs-signature-provider-interface@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-signature-provider-interface/-/eosjs-signature-provider-interface-6.0.0.tgz#f1ad2c91527b794a9fd9e86346def1b4c09d6ff4"
-  integrity sha512-ijHbVSajrim/k2QcUlwlep8BEpr44yqL3H5msvUt/MedvRksdAzuXbmLm0PcgVfWZDfRlubgAtZteHy+5I1FRQ==
-  dependencies:
-    eosjs "20.0.0-8b096ed.0"
-    uuid "^3.3.2"
-
-"@blockone/eosjs-signature-provider-interface@^6.0.0":
+"@blockone/eosjs-signature-provider-interface@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@blockone/eosjs-signature-provider-interface/-/eosjs-signature-provider-interface-6.0.1.tgz#7b02da70fbd859e6c67d59c9fd7bb3fa6529b717"
   integrity sha512-WarK4di9hSgJMVvWSJQu8BM2X1DQpyncfoIvfSGYZsmpItfBd2F1O4+9hNhTY4IXPcnqP8ExbufVFGTLd3OFYg==
@@ -826,12 +815,12 @@
     eosjs "20.0.0-8b096ed.0"
     uuid "^3.3.2"
 
-"@blockone/eosjs-window-message-signature-provider-interface@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-window-message-signature-provider-interface/-/eosjs-window-message-signature-provider-interface-4.0.1.tgz#852abdaf3a1f3dc0d2366e3b211473dd14f59fde"
-  integrity sha512-lqadmSRVfHUttz3jDSRRGmNr3OBSyTbKOAUMB5NvtCcxU8XyiIXkjLL3+vpPfBjsYmb4UQTzV8YgtKhDcIQ2Gg==
+"@blockone/eosjs-window-message-signature-provider-interface@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@blockone/eosjs-window-message-signature-provider-interface/-/eosjs-window-message-signature-provider-interface-4.0.2.tgz#98366f9c57078ebbdf9c97e646e44c4d466a91fe"
+  integrity sha512-Zslomb+ArMNEUSvGff1kP6nB90CqrTPNGmr0QV3bOGXBxK5O31LlIVWPxmyHybl8R94O1MNPim5dK9cWyUs2WQ==
   dependencies:
-    "@blockone/eosjs-signature-provider-interface" "^6.0.0"
+    "@blockone/eosjs-signature-provider-interface" "^6.0.1"
 
 "@blockone/eslint-config-blockone@^1.1.1":
   version "1.1.1"
@@ -860,19 +849,19 @@
     object.assign "^4.1.0"
     object.entries "^1.0.4"
 
-"@blockone/ual-eosio-reference-authenticator@^0.0.35":
-  version "0.0.35"
-  resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.35.tgz#f3beedc483cb8bb83bc51b1655a6bdc4871d9e98"
-  integrity sha512-wc2eqHb/6Lze3DsaVkk5BJl/u/tMRKEnWtDOu7u6H7w4wWShYexNV3UEII9srxhzHmuPF9o8MB83HR+/Zs2Kjw==
+"@blockone/ual-eosio-reference-authenticator@^0.0.36":
+  version "0.0.36"
+  resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.36.tgz#434198f7c8d0795e2469046823d78ea042f39137"
+  integrity sha512-18pYeceeVTpV7eIAVliJnR5rXKUyB78iM5gd9cEWilZu1gl1Vuz9FWgdHt/V5Kkz34st7uTGRFGGIVkImiUzuA==
   dependencies:
-    "@blockone/eosjs-ios-browser-signature-provider-interface" "^3.0.1-662e965.0"
-    "@blockone/eosjs-react-native-signature-provider-interface" "^4.0.1-61b0cbe.0"
-    "@blockone/eosjs-signature-provider-interface" "^6.0.0"
-    "@blockone/eosjs-window-message-signature-provider-interface" "^4.0.1"
-    "@blockone/universal-authenticator-library" "^0.0.33"
+    "@blockone/eosjs-ios-browser-signature-provider-interface" "^3.0.2"
+    "@blockone/eosjs-react-native-signature-provider-interface" "^4.0.2"
+    "@blockone/eosjs-signature-provider-interface" "^6.0.1"
+    "@blockone/eosjs-window-message-signature-provider-interface" "^4.0.2"
     bs58 "^4.0.1"
-    eosjs "^20.0.0-73152ad.0"
+    eosjs "^20.0.0"
     text-encoding "^0.7.0"
+    universal-authenticator-library "^0.1.0"
     uuid "^3.3.2"
 
 "@blockone/ual-lynx@^0.0.25":
@@ -1068,58 +1057,10 @@
     "@svgr/plugin-svgo" "^4.0.3"
     loader-utils "^1.1.0"
 
-"@types/events@*":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
-  integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
-
-"@types/fs-extra@^5.0.3":
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-5.0.5.tgz#080d90a792f3fa2c5559eb44bd8ef840aae9104b"
-  integrity sha512-w7iqhDH9mN8eLClQOYTkhdYUOSpp25eXxfc6VbFOGtzxW34JcvctH2bKjj4jD4++z4R5iO5D+pg48W2e03I65A==
-  dependencies:
-    "@types/node" "*"
-
-"@types/glob@*":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.1.tgz#aa59a1c6e3fbc421e07ccd31a944c30eba521575"
-  integrity sha512-1Bh06cbWJUHMC97acuD6UMG29nMt0Aqz1vF3guLfG+kHHJhy3AyohZFFxYk2f7Q1SQIrNwvncxAE0N/9s70F2w==
-  dependencies:
-    "@types/events" "*"
-    "@types/minimatch" "*"
-    "@types/node" "*"
-
-"@types/handlebars@^4.0.38":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@types/handlebars/-/handlebars-4.1.0.tgz#3fcce9bf88f85fe73dc932240ab3fb682c624850"
-  integrity sha512-gq9YweFKNNB1uFK71eRqsd4niVkXrxHugqWFQkeLRJvGjnxsLr16bYtcsG4tOFwmYi0Bax+wCkbf1reUfdl4kA==
-  dependencies:
-    handlebars "*"
-
-"@types/highlight.js@^9.12.3":
-  version "9.12.3"
-  resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.12.3.tgz#b672cfaac25cbbc634a0fd92c515f66faa18dbca"
-  integrity sha512-pGF/zvYOACZ/gLGWdQH8zSwteQS1epp68yRcVLJMgUck/MjEn/FBYmPub9pXT8C1e4a8YZfHo1CKyV8q1vKUnQ==
-
 "@types/jest@^23.3.1":
   version "23.3.14"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.14.tgz#37daaf78069e7948520474c87b80092ea912520a"
   integrity sha512-Q5hTcfdudEL2yOmluA1zaSyPbzWPmJ3XfSWeP3RyoYvS9hnje1ZyagrZOuQ6+1nQC1Gw+7gap3pLNL3xL6UBug==
-
-"@types/lodash@^4.14.110":
-  version "4.14.123"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.123.tgz#39be5d211478c8dd3bdae98ee75bb7efe4abfe4d"
-  integrity sha512-pQvPkc4Nltyx7G1Ww45OjVqUsJP4UsZm+GWJpigXgkikZqJgRm4c48g027o6tdgubWHwFRF15iFd+Y4Pmqv6+Q==
-
-"@types/marked@^0.4.0":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.4.2.tgz#64a89e53ea37f61cc0f3ee1732c555c2dbf6452f"
-  integrity sha512-cDB930/7MbzaGF6U3IwSQp6XBru8xWajF5PV2YZZeV8DyiliTuld11afVztGI9+yJZ29il5E+NpGA6ooV/Cjkg==
-
-"@types/minimatch@*", "@types/minimatch@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
-  integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*":
   version "11.9.4"
@@ -1130,14 +1071,6 @@
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.1.tgz#48fd98c1561fe718b61733daed46ff115b496e18"
   integrity sha512-eqz8c/0kwNi/OEHQfvIuJVLTst3in0e7uTKeuY+WL/zfKn0xVujOTp42bS/vUUokhK5P2BppLd9JXMOMHcgbjA==
-
-"@types/shelljs@^0.8.0":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.8.3.tgz#f713f312dbae49ab5025290007e71ea32998e9a9"
-  integrity sha512-miY41hqc5SkRlsZDod3heDa4OS9xv8G77EMBQuSpqq86HBn66l7F+f8y9YKm+1PIuwC8QEZVwN8YxOOG7Y67fA==
-  dependencies:
-    "@types/glob" "*"
-    "@types/node" "*"
 
 "@types/tapable@1.0.2":
   version "1.0.2"
@@ -3719,10 +3652,10 @@ eosjs@20.0.0-beta3:
     eosjs-ecc "^4.0.1"
     text-encoding "^0.6.4"
 
-eosjs@^20.0.0-73152ad.0:
-  version "20.0.0-ffffff.0"
-  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-20.0.0-ffffff.0.tgz#7d984a14566c0dcf37510a24f50227e986dc8a77"
-  integrity sha512-j6kV8ZGZ8fE00nGnjvj5NnnWH+7FmeyAVajt6CnX+oshGVULadufipTucap/pUEdI3pme4G/rwCzHBTgJuh4kw==
+eosjs@^20.0.0:
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-20.0.0.tgz#43940abfe15cd191ce4027d60294036e914613e9"
+  integrity sha512-Ak9CPtZgCFayUmq43X3Nsn4v67lkLfSzEdTUfMk1XAWA5s4HRn7lBTeTeDCzJ/rggi+dZ170VeJwc5T3gPk4HQ==
   dependencies:
     babel-runtime "6.26.0"
     eosjs-ecc "4.0.4"
@@ -4886,7 +4819,7 @@ handle-thing@^2.0.0:
   resolved "https://registry.yarnpkg.com/handle-thing/-/handle-thing-2.0.0.tgz#0e039695ff50c93fc288557d696f3c1dc6776754"
   integrity sha512-d4sze1JNC454Wdo2fkuyzCr6aHcbL6PGGuFAz0Li/NcOm1tCHGnWDRmJP85dh9IhQErTc2svWFEX5xHIOo//kQ==
 
-handlebars@*, handlebars@^4.0.3, handlebars@^4.0.6:
+handlebars@^4.0.3:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.0.tgz#0d6a6f34ff1f63cecec8423aa4169827bf787c3a"
   integrity sha512-l2jRuU1NAWK6AW5qqcTATWQJvNPEwkM7NEKSiv/gqOsoSQbVoWyqVEY5GS+XPQ88zLNmqASRpzfdm8d79hJS+w==
@@ -5043,11 +4976,6 @@ hex-color-regex@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/hex-color-regex/-/hex-color-regex-1.1.0.tgz#4c06fccb4602fe2602b3c93df82d7e7dbf1a8a8e"
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
-
-highlight.js@^9.0.0:
-  version "9.15.6"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.15.6.tgz#72d4d8d779ec066af9a17cb14360c3def0aa57c4"
-  integrity sha512-zozTAWM1D6sozHo8kqhfYgsac+B+q0PmsjXeyDrYIHHcBN0zTVT66+s2GW1GZv7DbyaROdLXKdabwS/WqPyIdQ==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -5425,11 +5353,6 @@ internal-ip@^3.0.1:
   dependencies:
     default-gateway "^2.6.0"
     ipaddr.js "^1.5.2"
-
-interpret@^1.0.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
-  integrity sha512-mT34yGKMNceBQUoVn7iCDKDntA7SC6gycMAWzGx1z/CMCTV7b2AAtXlo3nRyHZ1FelRkQbQjprHSYGwzLtkVbw==
 
 invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
@@ -6280,7 +6203,7 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
 
-jsdom@^11.5.1, jsdom@^11.9.0:
+jsdom@^11.5.1:
   version "11.12.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.12.0.tgz#1a80d40ddd378a1de59656e9e6dc5a3ba8657bc8"
   integrity sha512-y8Px43oyiBM13Zc1z780FrfNLJCXTL40EWlty/LXUtcjykRBNgLlCjWXpfSPBl2iv+N7koQN+dvqszHZgT/Fjw==
@@ -6715,11 +6638,6 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.4.0.tgz#9ad2c2a7a1791f10a852e0112f77b571dce10c66"
-  integrity sha512-tMsdNBgOsrUophCAFQl0XPe6Zqk/uy9gnue+jIIKhykO51hxyu6uNx7zBPy0+y/WKYVZZMspV9YeXLNdKk+iYw==
-
 math-random@^1.0.1:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/math-random/-/math-random-1.0.4.tgz#5dd6943c938548267016d4e34f057583080c514c"
@@ -6924,7 +6842,7 @@ minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
   integrity sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo=
 
-minimatch@3.0.4, minimatch@^3.0.0, minimatch@^3.0.3, minimatch@^3.0.4, minimatch@~3.0.2:
+minimatch@3.0.4, minimatch@^3.0.3, minimatch@^3.0.4, minimatch@~3.0.2:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
@@ -8954,13 +8872,6 @@ realpath-native@^1.0.0:
   dependencies:
     util.promisify "^1.0.0"
 
-rechoir@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
-  integrity sha1-hSBLVNuoLVdC4oyWdW70OvUOM4Q=
-  dependencies:
-    resolve "^1.1.6"
-
 recursive-readdir@2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/recursive-readdir/-/recursive-readdir-2.2.2.tgz#9946fb3274e1628de6e36b2f6714953b4845094f"
@@ -9221,7 +9132,7 @@ resolve@1.1.7:
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
   integrity sha1-IDEU2CrSxe2ejgQRs5ModeiJ6Xs=
 
-resolve@1.10.0, resolve@^1.1.6, resolve@^1.10.0, resolve@^1.3.2, resolve@^1.5.0, resolve@^1.6.0, resolve@^1.8.1, resolve@^1.9.0:
+resolve@1.10.0, resolve@^1.10.0, resolve@^1.3.2, resolve@^1.5.0, resolve@^1.6.0, resolve@^1.8.1, resolve@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.10.0.tgz#3bdaaeaf45cc07f375656dfd2e54ed0810b101ba"
   integrity sha512-3sUr9aq5OfSg2S9pNtPA9hL1FVEAjvfOC4leW0SNf/mpnaakz2a9femSd6LqAww2RaFctwyf1lCqnTHuF1rxDg==
@@ -9553,15 +9464,6 @@ shell-quote@1.6.1:
     array-map "~0.0.0"
     array-reduce "~0.0.0"
     jsonify "~0.0.0"
-
-shelljs@^0.8.2:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.8.3.tgz#a7f3319520ebf09ee81275b2368adb286659b097"
-  integrity sha512-fc0BKlAWiLpwZljmOvAOTE/gXawtCoNrP5oaY7KIaQbbyHeQVg01pSEuEGvGh3HEdBU4baCD7wQBwADmM/7f7A==
-  dependencies:
-    glob "^7.0.0"
-    interpret "^1.0.0"
-    rechoir "^0.6.2"
 
 shellwords@^0.1.1:
   version "0.1.1"
@@ -10377,13 +10279,6 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-turndown@^5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/turndown/-/turndown-5.0.3.tgz#a1350b66155d7891f10e451432170b0f7cd7449a"
-  integrity sha512-popfGXEiedpq6F5saRIAThKxq/bbEPVFnsDnUdjaDGIre9f3/OL9Yi/yPbPcZ7RYUDpekghr666bBfZPrwNnhQ==
-  dependencies:
-    jsdom "^11.9.0"
-
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
@@ -10408,46 +10303,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-typedoc-default-themes@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.5.0.tgz#6dc2433e78ed8bea8e887a3acde2f31785bd6227"
-  integrity sha1-bcJDPnjti+qOiHo6zeLzF4W9Yic=
-
-typedoc-plugin-markdown@^1.1.19:
-  version "1.1.27"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-1.1.27.tgz#a74f01d9ec7d625204b6817278bc22b878093b59"
-  integrity sha512-i/ATsUETDxLAN/i4l525tLfEvjBRdPN2UEuZPEZ1CnkLIQFM1xjcIf3dFnAcIvj/qhrhrMQXfgjphqPATfTEtA==
-  dependencies:
-    turndown "^5.0.3"
-
-typedoc@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.13.0.tgz#9efdf352bd54873955cd161bd4b75f24a8c59dde"
-  integrity sha512-jQWtvPcV+0fiLZAXFEe70v5gqjDO6pJYJz4mlTtmGJeW2KRoIU/BEfktma6Uj8Xii7UakuZjbxFewl3UYOkU/w==
-  dependencies:
-    "@types/fs-extra" "^5.0.3"
-    "@types/handlebars" "^4.0.38"
-    "@types/highlight.js" "^9.12.3"
-    "@types/lodash" "^4.14.110"
-    "@types/marked" "^0.4.0"
-    "@types/minimatch" "3.0.3"
-    "@types/shelljs" "^0.8.0"
-    fs-extra "^7.0.0"
-    handlebars "^4.0.6"
-    highlight.js "^9.0.0"
-    lodash "^4.17.10"
-    marked "^0.4.0"
-    minimatch "^3.0.0"
-    progress "^2.0.0"
-    shelljs "^0.8.2"
-    typedoc-default-themes "^0.5.0"
-    typescript "3.1.x"
-
-typescript@3.1.x:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.1.6.tgz#b6543a83cfc8c2befb3f4c8fba6896f5b0c9be68"
-  integrity sha512-tDMYfVtvpb96msS1lDX9MEdHrW4yOuZ4Kdc4Him9oU796XldPYF/t2+uKoX0BBa0hXXwDlqYQbXY5Rzjzc5hBA==
 
 uglify-js@3.4.x, uglify-js@^3.1.4:
   version "3.4.9"
@@ -10532,6 +10387,11 @@ unist-util-stringify-position@^1.0.0, unist-util-stringify-position@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/unist-util-stringify-position/-/unist-util-stringify-position-1.1.2.tgz#3f37fcf351279dcbca7480ab5889bb8a832ee1c6"
   integrity sha512-pNCVrk64LZv1kElr0N1wPiHEUoXNVFERp+mlTg/s9R5Lwg87f9bM/3sQB99w+N9D/qnM9ar3+AKDBwo/gm/iQQ==
+
+universal-authenticator-library@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/universal-authenticator-library/-/universal-authenticator-library-0.1.0.tgz#187e6a85f43e75d4d76b66c228c9e4b59770d4af"
+  integrity sha512-45nl80BWf+9WA8vTMXunMicZmHPm4wWdxNnSlL65cCP4OjA1ra4IuH+T7+Ko3P6IfXSfS9+VNCuXai3fip+taA==
 
 universalify@^0.1.0:
   version "0.1.2"
