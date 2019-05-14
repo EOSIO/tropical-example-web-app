@@ -1,8 +1,8 @@
 #pragma once
 
-#include <eosiolib/crypto.hpp>
-#include <eosiolib/multi_index.hpp>
-#include <eosiolib/singleton.hpp>
+#include <eosio/crypto.hpp>
+#include <eosio/multi_index.hpp>
+#include <eosio/singleton.hpp>
 
 namespace assert_contract {
 

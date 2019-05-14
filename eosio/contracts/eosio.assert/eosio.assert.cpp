@@ -1,8 +1,8 @@
 #include "eosio.assert.hpp"
 
-#include <eosiolib/contract.hpp>
-#include <eosiolib/dispatcher.hpp>
-#include <eosiolib/ignore.hpp>
+#include <eosio/contract.hpp>
+#include <eosio/dispatcher.hpp>
+#include <eosio/ignore.hpp>
 
 namespace assert_contract {
 
@@ -47,14 +47,14 @@ struct[[eosio::contract("eosio.assert")]] asserter : eosio::contract {
 
       require_auth(stored.account);
       auto it = manifest_id_idx.find(stored.id_key());
-      eosio_assert(it == manifest_id_idx.end(), "manifest already present");
+      check(it == manifest_id_idx.end(), "manifest already present");
       manifest_table.emplace(stored.account, [&](auto& x) { x = stored; });
       chain_table.set(chain, _self);
    };
 
    [[eosio::action("del.manifest")]] void del_manifest(checksum256 id) {
       auto it = manifest_id_idx.find(id);
-      eosio_assert(it != manifest_id_idx.end(), "manifest not found");
+      check(it != manifest_id_idx.end(), "manifest not found");
       require_auth(it->account);
       manifest_id_idx.erase(it);
    };
@@ -81,50 +81,36 @@ struct[[eosio::contract("eosio.assert")]] asserter : eosio::contract {
        const checksum256& chain_params_hash, const checksum256& manifest_id, const vector<contract_action>& actions,
        const vector<checksum256>& abi_hashes) {
       if (!(chain_params_hash == chain.hash))
-         eosio_assert(
+         check(
              false,
              ("chain hash is " + hash_to_str(chain.hash) + " but user expected " + hash_to_str(chain_params_hash))
                  .c_str());
       auto it = manifest_id_idx.find(manifest_id);
-      eosio_assert(it != manifest_id_idx.end(), "manifest not found");
+      check(it != manifest_id_idx.end(), "manifest not found");
       std::vector<name> contracts;
       for (auto& action : actions) {
          auto contract_it = std::lower_bound(contracts.begin(), contracts.end(), action.contract);
          if (contract_it == contracts.end() || *contract_it != action.contract)
             contracts.insert(contract_it, action.contract);
          if (!in(action, it->whitelist))
-            eosio_assert(
+            check(
                 false,
                 (action.action.to_string() + "@" + action.contract.to_string() + " is not in whitelist").c_str());
       }
       abi_hash_table table{"eosio"_n, "eosio"_n.value};
-      eosio_assert(abi_hashes.size() == contracts.size(), "incorrect number of abi hashes");
+      check(abi_hashes.size() == contracts.size(), "incorrect number of abi hashes");
       for (size_t i = 0; i < abi_hashes.size(); ++i) {
          auto        it = table.find(contracts[i].value);
          checksum256 hash{};
          if (it != table.end())
             hash = it->hash;
          if (!(abi_hashes[i] == hash))
-            eosio_assert(
+            check(
                 false, (contracts[i].to_string() + " abi hash is " + hash_to_str(hash) + " but user expected " +
                         hash_to_str(abi_hashes[i]))
                            .c_str());
       }
    }
 };
-
-#define CALL(n, m)                                                                                                     \
-   case eosio::name(#n).value: eosio::execute_action(receiver, code, &asserter::m); break;
-
-extern "C" void apply(eosio::name receiver, eosio::name code, eosio::name action) {
-   if (code != receiver)
-      return;
-   switch (action.value) {
-      CALL(setchain, setchain)
-      CALL(add.manifest, add_manifest)
-      CALL(del.manifest, del_manifest)
-      CALL(require, require)
-   }
-}
 
 } // namespace assert_contract
