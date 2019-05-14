@@ -3,11 +3,11 @@ Tropical Example is a mock application for renting properties. It will be refere
 
 ![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
 
-## About EOSIO Labs
+## About EOSIO Labs <!-- omit in toc -->
 
 EOSIO Labs repositories are experimental.  Developers in the community are encouraged to use EOSIO Labs repositories as the basis for code and concepts to incorporate into their applications. Community members are also welcome to contribute and further develop these repositories. Since these repositories are not supported by Block.one, we may not provide responses to issue reports, pull requests, updates to functionality, or other requests from the community, and we encourage the community to take responsibility for these.
 
-## Overview
+## Overview <!-- omit in toc -->
 
 The following open source libraries are utilized in Tropical Example:
 
@@ -16,8 +16,6 @@ The following open source libraries are utilized in Tropical Example:
 * Displaying human readable Ricardian Contracts of your proposed EOSIO actions by following the [Ricardian Specification](https://github.com/EOSIO/ricardian-spec).
   
 ## Table of Contents <!-- omit in toc -->
-- [About EOSIO Labs](#about-eosio-labs)
-- [Overview](#overview)
 - [Universal Authenticator Library (UAL)](#universal-authenticator-library-ual)
   - [Installation](#installation)
   - [Setup](#setup)
