@@ -31,7 +31,7 @@ const chain = {
 }
 
 // Authenticators
-const eosioAuth = new EOSIOAuth([chain], { appName })
+const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' })
 const scatter = new Scatter([chain], { appName })
 const lynx = new Lynx([chain])
 const tokenPocket = new TokenPocket([chain])
