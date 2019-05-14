@@ -16,7 +16,7 @@
   ],
   "private": true,
   "dependencies": {
-    "@blockone/ual-eosio-reference-authenticator": "0.0.36",
+    "@blockone/ual-eosio-reference-authenticator": "^0.0.36",
     "@blockone/ual-lynx": "^0.0.25",
     "@blockone/ual-reactjs-renderer": "^0.0.38",
     "@blockone/ual-scatter": "^0.0.26",

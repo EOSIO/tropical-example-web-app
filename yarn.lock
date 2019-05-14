@@ -849,7 +849,7 @@
     object.assign "^4.1.0"
     object.entries "^1.0.4"
 
-"@blockone/ual-eosio-reference-authenticator@0.0.36":
+"@blockone/ual-eosio-reference-authenticator@^0.0.36":
   version "0.0.36"
   resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.36.tgz#434198f7c8d0795e2469046823d78ea042f39137"
   integrity sha512-18pYeceeVTpV7eIAVliJnR5rXKUyB78iM5gd9cEWilZu1gl1Vuz9FWgdHt/V5Kkz34st7uTGRFGGIVkImiUzuA==
