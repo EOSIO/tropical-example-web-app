@@ -1,15 +1,12 @@
-#include <eosiolib/eosio.hpp>
-#include <eosiolib/print.hpp>
+#include <eosio/eosio.hpp>
 
 using namespace eosio;
 
-class tropical : public contract {
+CONTRACT tropical : public contract {
   public:
       using contract::contract;
 
-      [[eosio::action]]
-      void like( name user ) {
-         print( "You've liked a property on chain! ", name{user});
+      ACTION like( name user ) {
+         print_f("You've liked a property on chain, %!\n", user);
       }
 };
-EOSIO_DISPATCH(tropical, (like))
