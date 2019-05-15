@@ -41,7 +41,7 @@ function deploy_system_contract {
   # Unlock the wallet, ignore error if already unlocked
   cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
 
-	echo "Deploying the $2 contract"
+  echo "Deploying the $2 contract"
 
   # Move into contracts /src directory
   cd "$CONTRACTS_DIR/$1/$2/src"
