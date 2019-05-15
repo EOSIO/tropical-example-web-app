@@ -2,12 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 // UAL Required Imports
-import { UALProvider } from '@blockone/ual-reactjs-renderer'
+import { UALProvider } from 'ual-reactjs-renderer'
 // Authenticator Imports
 import { EOSIOAuth } from '@blockone/ual-eosio-reference-authenticator'
-import { Scatter } from '@blockone/ual-scatter'
-import { Lynx } from '@blockone/ual-lynx'
-import { TokenPocket } from '@blockone/ual-token-pocket'
+import { Scatter } from 'ual-scatter'
+import { Lynx } from 'ual-lynx'
+import { TokenPocket } from 'ual-token-pocket'
 
 import 'focus-visible/dist/focus-visible.min.js'
 import 'index.scss'

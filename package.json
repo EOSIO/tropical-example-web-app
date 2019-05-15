@@ -17,16 +17,16 @@
   "private": true,
   "dependencies": {
     "@blockone/ual-eosio-reference-authenticator": "^0.0.36",
-    "@blockone/ual-lynx": "^0.0.25",
-    "@blockone/ual-reactjs-renderer": "^0.0.38",
-    "@blockone/ual-scatter": "^0.0.26",
-    "@blockone/ual-token-pocket": "^0.0.7",
     "focus-visible": "^4.1.5",
     "node-sass": "^4.10.0",
-    "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-scripts": "^2.1.5"
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.1",
+    "ual-lynx": "^0.1.0",
+    "ual-reactjs-renderer": "^0.1.2",
+    "ual-scatter": "^0.1.1",
+    "ual-token-pocket": "^0.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,5 +1,5 @@
 import React from 'react'
-import { UALContext } from '@blockone/ual-reactjs-renderer'
+import { UALContext } from 'ual-reactjs-renderer'
 import './UserInfo.scss'
 
 import UserDropdown from 'components/navigation/UserDropdown'
