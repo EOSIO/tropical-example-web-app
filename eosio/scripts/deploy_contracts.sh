@@ -34,6 +34,17 @@ function start_wallet {
   cleos wallet import --private-key $SYSTEM_ACCOUNT_PRIVATE_KEY
 }
 
+# $1 smart contract name
+# $2 account name
+function deploy_system_contract {
+	echo "Deploying the system contract"
+  cd "$CONTRACTS_DIR/eosio.contracts/contracts/$1/src"
+  eosio-cpp -abigen "$1.cpp" -o "$1.wasm" -I ../include
+
+  # Set (deploy) the compiled contract to the blockchain
+  cleos set contract $2 "$CONTRACTS_DIR/eosio.contracts/contracts/$1/src" "$1.wasm" "$1.abi" -p eosio@active
+}
+
 # $1 - account name
 # $2 - public key
 # $3 - private key
@@ -61,6 +72,15 @@ function deploy_contract {
 
   # Set (deploy) the compiled contract to the blockchain
   cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
+}
+
+function deploy_assert_contract {
+  cd "$CONTRACTS_DIR/eosio.assert/eosio.assert/src"
+  eosio-cpp -abigen eosio.assert.cpp -o eosio.assert.wasm -I ../include
+  cd /opt/eosio/bin/
+
+  # Set (deploy) the compiled contract to the blockchain
+  cleos set contract eosio.assert "$CONTRACTS_DIR/eosio.assert/eosio.assert/src" eosio.assert.wasm eosio.assert.abi -p eosio.assert
 }
 
 # $1 - chain id
@@ -117,7 +137,10 @@ start_wallet
 # Create accounts and deploy contracts
 # eosio.assert
 create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
-deploy_contract eosio.assert eosio.assert
+deploy_assert_contract eosio.assert eosio.assert
+
+deploy_system_contract eosio.bios eosio
+
 # tropical
 create_account tropical $TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY $TROPICAL_EXAMPLE_ACCOUNT_PRIVATE_KEY
 deploy_contract tropical tropical
