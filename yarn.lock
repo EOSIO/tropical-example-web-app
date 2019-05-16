@@ -1170,15 +1170,6 @@
     qs "^6.5.2"
     uuid "^3.3.2"
 
-"@blockone/eosjs-react-native-signature-provider-interface@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-react-native-signature-provider-interface/-/eosjs-react-native-signature-provider-interface-4.0.2.tgz#d6c6ee94f9fae7f78f53ff4a0ab1b0ac576b2e65"
-  integrity sha512-sT6gyaldOn2YHyNc0plznnQir0hdoeXKyEfoCRBLUG08gZzJt1Xy7O61962P3XGT5fdGF06nRqvuJCoEjjfQeQ==
-  dependencies:
-    "@blockone/eosjs-signature-provider-interface" "^6.0.1"
-    buffer "^5.2.1"
-    whatwg-url "^7.0.0"
-
 "@blockone/eosjs-signature-provider-interface@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@blockone/eosjs-signature-provider-interface/-/eosjs-signature-provider-interface-6.0.1.tgz#7b02da70fbd859e6c67d59c9fd7bb3fa6529b717"
@@ -1221,13 +1212,12 @@
     object.assign "^4.1.0"
     object.entries "^1.0.4"
 
-"@blockone/ual-eosio-reference-authenticator@^0.0.36":
-  version "0.0.36"
-  resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.36.tgz#434198f7c8d0795e2469046823d78ea042f39137"
-  integrity sha512-18pYeceeVTpV7eIAVliJnR5rXKUyB78iM5gd9cEWilZu1gl1Vuz9FWgdHt/V5Kkz34st7uTGRFGGIVkImiUzuA==
+"@blockone/ual-eosio-reference-authenticator@^0.0.37":
+  version "0.0.37"
+  resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.37.tgz#3a5a1908f0ed21d292c53ecf5472a781c9289ddd"
+  integrity sha512-WRCDoJZOMf9wuQGSO5E/X+9uKDRZqwF9zrsKPNqODVypBFVwthxAmeUkTiJaTtXRPq9PU9gmD/DQW31ZjAFBfA==
   dependencies:
     "@blockone/eosjs-ios-browser-signature-provider-interface" "^3.0.2"
-    "@blockone/eosjs-react-native-signature-provider-interface" "^4.0.2"
     "@blockone/eosjs-signature-provider-interface" "^6.0.1"
     "@blockone/eosjs-window-message-signature-provider-interface" "^4.0.2"
     bs58 "^4.0.1"
@@ -2687,14 +2677,6 @@ buffer@^4.3.0:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
     isarray "^1.0.0"
-
-buffer@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.2.1.tgz#dd57fa0f109ac59c602479044dca7b8b3d0b71d6"
-  integrity sha512-c+Ko0loDaFfuPWiL02ls9Xd3GO3cPVmUobQ6t3rXNUk304u6hGq+8N/kFi+QEIKhzK3uwolVhLzszmfLmMLnqg==
-  dependencies:
-    base64-js "^1.0.2"
-    ieee754 "^1.1.4"
 
 builtin-status-codes@^3.0.0:
   version "3.0.0"
