@@ -87,9 +87,9 @@ function deploy_app_contract {
 }
 
 function allocate_sys_tokens {
-	echo "Allocating SYS tokens for staking bandwidth"
-	cleos push action eosio.token create '["eosio", "10000000000.0000 SYS"]' -p eosio.token
-	cleos push action eosio.token issue '["eosio", "5000000000.0000 SYS", "Half of available supply"]' -p eosio
+  echo "Allocating SYS tokens for staking bandwidth"
+  cleos push action eosio.token create '["eosio", "10000000000.0000 SYS"]' -p eosio.token
+  cleos push action eosio.token issue '["eosio", "5000000000.0000 SYS", "Half of available supply"]' -p eosio
 }
 
 # $1 - account name
