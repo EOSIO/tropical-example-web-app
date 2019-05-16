@@ -2,7 +2,7 @@
   "name": "tropical-example-web-app",
   "version": "0.1.0",
   "license": "MIT",
-  "description": "Simple example app demonstrating UAL usage",
+  "description": "Simple example app demonstrating usage of several EOSIO Labs libraries",
   "author": {
     "name": "block.one",
     "url": "https://block.one"
