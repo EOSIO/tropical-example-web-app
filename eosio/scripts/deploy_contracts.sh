@@ -145,6 +145,10 @@ deploy_system_contract eosio.assert eosio.assert eosio.assert
 # eosio.bios
 deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 
+# eosio.token
+create_account eosio.token $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
+deploy_system_contract eosio.contracts/contracts eosio.token eosio.token
+
 # tropical
 create_account tropical $TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY $TROPICAL_EXAMPLE_ACCOUNT_PRIVATE_KEY
 deploy_app_contract tropical tropical
