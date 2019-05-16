@@ -86,6 +86,17 @@ function deploy_app_contract {
   cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
 }
 
+function allocate_sys_tokens {
+  echo "Allocating SYS tokens for staking bandwidth"
+  cleos push action eosio.token create '["eosio", "10000000000.0000 SYS"]' -p eosio.token
+  cleos push action eosio.token issue '["eosio", "5000000000.0000 SYS", "Half of available supply"]' -p eosio
+}
+
+# $1 - account name
+function transfer_sys_tokens {
+  cleos transfer eosio $1 "1000000.0000 SYS"
+}
+
 # $1 - chain id
 # $2 - chain name
 # $3 - icon hash
@@ -145,11 +156,19 @@ deploy_system_contract eosio.assert eosio.assert eosio.assert
 # eosio.bios
 deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 
+# eosio.token
+create_account eosio.token $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
+deploy_system_contract eosio.contracts/contracts eosio.token eosio.token
+allocate_sys_tokens
+
 # tropical
 create_account tropical $TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY $TROPICAL_EXAMPLE_ACCOUNT_PRIVATE_KEY
 deploy_app_contract tropical tropical
+transfer_sys_tokens tropical
+
 # example
 create_account example $EXAMPLE_ACCOUNT_PUBLIC_KEY $EXAMPLE_ACCOUNT_PRIVATE_KEY
+transfer_sys_tokens example
 
 # eosio.assert actions
 # Set chain

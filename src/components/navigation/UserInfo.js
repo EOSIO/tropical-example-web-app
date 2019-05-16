@@ -10,17 +10,26 @@ import { onKeyUpEnter } from 'utils/keyPress'
 class UserInfo extends React.Component {
   static contextType = UALContext
 
+  _isMounted = false
+
   state = {
     showDropdown: false,
     accountName: '',
   }
 
   async componentDidMount() {
+    this._isMounted = true
     const { activeUser } = this.context
     if (activeUser) {
       const accountName = await activeUser.getAccountName()
-      this.setState({ accountName })
+      if (this._isMounted) {
+        this.setState({ accountName })
+      }
     }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   toggleDropdown = () => {
