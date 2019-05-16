@@ -1,7 +1,7 @@
 import React from 'react'
 import { func } from 'prop-types'
 // UAL context object that can be set via the contextType property on a class and can be referenced using this.context
-import { UALContext } from '@blockone/ual-reactjs-renderer'
+import { UALContext } from 'ual-reactjs-renderer'
 import './Property.scss'
 
 import PropertyImage from 'components/results/property/PropertyImage'

@@ -34,6 +34,29 @@ function start_wallet {
   cleos wallet import --private-key $SYSTEM_ACCOUNT_PRIVATE_KEY
 }
 
+# $1 - parent folder where smart contract directory is located
+# $2 - smart contract name
+# $3 - account name
+function deploy_system_contract {
+  # Unlock the wallet, ignore error if already unlocked
+  cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
+
+  echo "Deploying the $2 contract"
+
+  # Move into contracts /src directory
+  cd "$CONTRACTS_DIR/$1/$2/src"
+
+  # Compile the smart contract to wasm and abi files using the EOSIO.CDT (Contract Development Toolkit)
+  # https://github.com/EOSIO/eosio.cdt
+  eosio-cpp -abigen "$2.cpp" -o "$2.wasm" -I ../include
+
+  # Move back into the executable directory
+  cd /opt/eosio/bin/
+
+  # Set (deploy) the compiled contract to the blockchain
+  cleos set contract $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi" -p $3@active
+}
+
 # $1 - account name
 # $2 - public key
 # $3 - private key
@@ -44,7 +67,7 @@ function create_account {
 
 # $1 - smart contract name
 # $2 - account name of the smart contract
-function deploy_contract {
+function deploy_app_contract {
   # Unlock the wallet, ignore error if already unlocked
   cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
 
@@ -54,13 +77,24 @@ function deploy_contract {
   # Move into contracts directory
   cd "$CONTRACTS_DIR/$1/"
   (
-    eosio-cpp -abigen "$1.cpp" -o "$1.wasm"
+    eosio-cpp -abigen "$1.cpp" -o "$1.wasm" -I ./
   ) &&
   # Move back into the executable directory
   cd /opt/eosio/bin/
 
   # Set (deploy) the compiled contract to the blockchain
   cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
+}
+
+function allocate_sys_tokens {
+  echo "Allocating SYS tokens for staking bandwidth"
+  cleos push action eosio.token create '["eosio", "10000000000.0000 SYS"]' -p eosio.token
+  cleos push action eosio.token issue '["eosio", "5000000000.0000 SYS", "Half of available supply"]' -p eosio
+}
+
+# $1 - account name
+function transfer_sys_tokens {
+  cleos transfer eosio $1 "1000000.0000 SYS"
 }
 
 # $1 - chain id
@@ -117,12 +151,24 @@ start_wallet
 # Create accounts and deploy contracts
 # eosio.assert
 create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
-deploy_contract eosio.assert eosio.assert
+deploy_system_contract eosio.assert eosio.assert eosio.assert
+
+# eosio.bios
+deploy_system_contract eosio.contracts/contracts eosio.bios eosio
+
+# eosio.token
+create_account eosio.token $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
+deploy_system_contract eosio.contracts/contracts eosio.token eosio.token
+allocate_sys_tokens
+
 # tropical
 create_account tropical $TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY $TROPICAL_EXAMPLE_ACCOUNT_PRIVATE_KEY
-deploy_contract tropical tropical
+deploy_app_contract tropical tropical
+transfer_sys_tokens tropical
+
 # example
 create_account example $EXAMPLE_ACCOUNT_PUBLIC_KEY $EXAMPLE_ACCOUNT_PRIVATE_KEY
+transfer_sys_tokens example
 
 # eosio.assert actions
 # Set chain

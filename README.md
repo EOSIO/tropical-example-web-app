@@ -3,11 +3,11 @@ Tropical Example is a mock application for renting properties. It will be refere
 
 ![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
 
-## About EOSIO Labs
+## About EOSIO Labs <!-- omit in toc -->
 
 EOSIO Labs repositories are experimental.  Developers in the community are encouraged to use EOSIO Labs repositories as the basis for code and concepts to incorporate into their applications. Community members are also welcome to contribute and further develop these repositories. Since these repositories are not supported by Block.one, we may not provide responses to issue reports, pull requests, updates to functionality, or other requests from the community, and we encourage the community to take responsibility for these.
 
-## Overview
+## Overview <!-- omit in toc -->
 
 The following open source libraries are utilized in Tropical Example:
 
@@ -41,6 +41,7 @@ The following open source libraries are utilized in Tropical Example:
 - [Links](#links)
 - [Contributing](#contributing)
 - [License](#license)
+- [Important](#important)
 
 ## Universal Authenticator Library (UAL)
 
@@ -55,7 +56,7 @@ UAL provides users with a common login interface in which they can select the Au
 First install your [UAL Renderer](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) of choice. The Tropical Example example uses the [UAL Renderer for ReactJS](https://github.com/EOSIO/ual-reactjs-renderer) and the rest of the examples will be demonstrating usage with the React Renderer. Please view the [UAL documentation](https://github.com/EOSIO/universal-authenticator-library#usage-dapp-developer) for links to all available renderers with documentation and examples of their usage.
 
 ```bash
-yarn add @blockone/ual-reactjs-renderer
+yarn add ual-reactjs-renderer
 ```
 
 Then install the Authenticators you want to allow users to interact with. The Tropical Example example uses the following Authenticators:
@@ -65,10 +66,10 @@ Then install the Authenticators you want to allow users to interact with. The Tr
 - [UAL for Token Pocket](https://github.com/EOSIO/ual-token-pocket)
 
 ```bash
-yarn add @blockone/ual-eosio-reference-authenticator
-yarn add @blockone/ual-scatter
-yarn add @blockone/ual-lynx
-yarn add @blockone/ual-token-pocket
+yarn add ual-eosio-reference-authenticator
+yarn add ual-scatter
+yarn add ual-lynx
+yarn add ual-token-pocket
 ```
 
 ### Setup
@@ -79,12 +80,12 @@ The `UALProvider` requires an array of Chains, an array of Authenticators, and a
 
 ```javascript
 // UAL Required Imports
-import { UALProvider } from '@blockone/ual-reactjs-renderer'
+import { UALProvider } from 'ual-reactjs-renderer'
 // Authenticator Imports
-import { EOSIOAuth } from '@blockone/ual-eosio-reference-authenticator'
-import { Scatter } from '@blockone/ual-scatter'
-import { Lynx } from '@blockone/ual-lynx'
-import { TokenPocket } from '@blockone/ual-token-pocket'
+import { EOSIOAuth } from 'ual-eosio-reference-authenticator'
+import { Scatter } from 'ual-scatter'
+import { Lynx } from 'ual-lynx'
+import { TokenPocket } from 'ual-token-pocket'
 ...
 const appName = 'Tropical Example'
 
@@ -126,7 +127,7 @@ The UAL Renderer for ReactJS uses [Context](https://reactjs.org/docs/context.htm
 * **When using the `withUAL` HOC all of the `UALProvider` context will be available under the parent prop `ual`**
 
 ```javascript
-  import { withUAL } from '@blockone/ual-reactjs-renderer'
+  import { withUAL } from 'ual-reactjs-renderer'
   class Example extends React.Component {
     render() {
       const { ual: { logout } } = this.props
@@ -142,7 +143,7 @@ The UAL Renderer for ReactJS uses [Context](https://reactjs.org/docs/context.htm
 * **Using the static `contextType` to access the context is currently only supported by React component classes and not supported by functional components. For functional components, `withUAL` must be used if access to the context is required.**
 
 ```javascript
-  import { UALContext } from '@blockone/ual-reactjs-renderer'
+  import { UALContext } from 'ual-reactjs-renderer'
   class Example extends React.Component {
     static contextType = UALContext
 
@@ -160,7 +161,7 @@ The UAL Renderer for ReactJS uses [Context](https://reactjs.org/docs/context.htm
 By default, the `UALProvider` provides a modal at the root level of your application. This modal will render the login buttons of all the configured Authenticators that can be detected in the user’s environment. The modal is hidden by default, but can be displayed and dismissed by calling the functions `showModal` and `hideModal`, respectively. Both functions are set in the `UALProvider` context.
 
 ```javascript
-import { withUAL } from '@blockone/ual-reactjs-renderer'
+import { withUAL } from 'ual-reactjs-renderer'
 class App extends React.Component {
   ...
   displayLoginModal = (display) => {
@@ -184,7 +185,7 @@ After logging in, an `activeUser` object is returned by the Authenticator and se
 On the `activeUser` object a `getAccountName` method is available. This method returns a promise, which will resolve to a string containing the signed in account name.
 
 ```javascript
-import { UALContext } from '@blockone/ual-reactjs-renderer'
+import { UALContext } from 'ual-reactjs-renderer'
 class UserInfo extends React.Component {
   static contextType = UALContext
   ...
@@ -203,12 +204,12 @@ class UserInfo extends React.Component {
 
 In order to propose transactions, your application needs access to the `activeUser` object returned by the logged in Authenticator.
 
-At the time of signing, call `activeUser.signTransaction` with a valid transaction object and a [configuration object](https://github.com/EOSIO/universal-authenticator-library/blob/develop/packages/universal-authenticator-library/src/interfaces.ts#L40). This will propose the transaction to the logged in Authenticator.
+At the time of signing, call `activeUser.signTransaction` with a valid transaction object and a [configuration object](https://github.com/EOSIO/universal-authenticator-library/blob/master/src/interfaces.ts#L40). This will propose the transaction to the logged in Authenticator.
 
 It is **highly recommended** in the transaction configuration to provide a `expireSeconds` property of a time greater than at least `300` seconds or 5 minutes. This will allow sufficient time for users to review and accept their transactions before expiration.
 
 ```javascript
-import { UALContext } from '@blockone/ual-reactjs-renderer'
+import { UALContext } from 'ual-reactjs-renderer'
 import { generateTransaction } from 'utils/transaction'
 ...
 class Property extends React.Component {
@@ -238,14 +239,14 @@ class Property extends React.Component {
 export default Property
 ```
 
-The method `activeUser.signTransaction` returns a promise, which, if signing is successful, will resolve to the [signed transaction response](https://github.com/EOSIO/universal-authenticator-library/blob/develop/packages/universal-authenticator-library/src/interfaces.ts#L52).
+The method `activeUser.signTransaction` returns a promise, which, if signing is successful, will resolve to the [signed transaction response](https://github.com/EOSIO/universal-authenticator-library/blob/master/src/interfaces.ts#L52).
 
 ### Logout
 
 If you want to logout, you can use the logout function set in the `UALProvider` context.
 
 ```javascript
-import { UALContext } from '@blockone/ual-reactjs-renderer'
+import { UALContext } from 'ual-reactjs-renderer'
 class UserInfo extends React.Component {
   static contextType = UALContext
   ...
@@ -265,7 +266,7 @@ export default UserInfo
 
 ### Errors
 
-Errors thrown by UAL are of type [`UALError`](https://github.com/EOSIO/universal-authenticator-library/blob/develop/packages/universal-authenticator-library/src/UALError.ts), which extends the generic `Error` class, but has extra information that is useful for debugging purposes.
+Errors thrown by UAL are of type [`UALError`](https://github.com/EOSIO/universal-authenticator-library/blob/master/src/UALError.ts), which extends the generic `Error` class, but has extra information that is useful for debugging purposes.
 
 #### Login
 
@@ -301,9 +302,9 @@ _If you need information not covered in this guide, you can reference the full U
 
 Tropical Example follows the Manifest Specification by providing the following:
 
-* A publicly accessible [app-manifest.json](https://github.com/EOSIO/tropical-example-web-app/blob/develop/public/app-metadata.json).
-* A publicly accessible [chain-manifests.json](https://github.com/EOSIO/tropical-example-web-app/blob/develop/public/chain-manifests.json)
-* Registering the app's Manifest on the local chain [via cleos](https://github.com/EOSIO/tropical-example-web-app/blob/develop/eosio/scripts/deploy_contracts.sh#L78)
+* A publicly accessible [app-manifest.json](https://github.com/EOSIO/tropical-example-web-app/blob/master/public/app-metadata.json).
+* A publicly accessible [chain-manifests.json](https://github.com/EOSIO/tropical-example-web-app/blob/master/public/chain-manifests.json)
+* Registering the app's Manifest on the local chain [via cleos](https://github.com/EOSIO/tropical-example-web-app/blob/master/eosio/scripts/deploy_contracts.sh#L103)
 
 _If you need information not covered in this guide, you can reference the Manifest Specification [here](https://github.com/EOSIO/manifest-spec)._
 
@@ -311,8 +312,8 @@ _If you need information not covered in this guide, you can reference the Manife
 
 Tropical Example follows the Ricardian Specification by providing the following:
 
-* A [tropical.contracts.md](https://github.com/EOSIO/tropical-example-web-app/blob/develop/eosio/contracts/tropical/tropical.contracts.md), which defines the Ricardian Contract of the `like` action of the `tropical` contract.
-* Generating the `tropical` abi file with [eosio-cpp](https://github.com/EOSIO/tropical-example-web-app/blob/develop/eosio/scripts/deploy_contracts.sh#L57) passing the `-abigen` flag, which will auto generate an abi including the `tropical.contracts.md` into the `ricardian_contract` field.
+* A [tropical.contracts.md](https://github.com/EOSIO/tropical-example-web-app/blob/master/eosio/contracts/tropical/tropical.contracts.md), which defines the Ricardian Contract of the `like` action of the `tropical` contract.
+* Generating the `tropical` abi file with [eosio-cpp](https://github.com/EOSIO/tropical-example-web-app/blob/master/eosio/scripts/deploy_contracts.sh#L80) passing the `-abigen` flag, which will auto generate an abi including the `tropical.contracts.md` into the `ricardian_contract` field.
 
 _If you need information not covered in this guide, you can reference the Ricardian Specification [here](https://github.com/EOSIO/ricardian-spec)._
 
@@ -358,7 +359,7 @@ Then run the following to start up a local node:
 yarn up
 ```
 
-You can view the contract in the [eosio/contracts directory](https://github.com/EOSIO/tropical-example-web-app/tree/develop/eosio/contracts/tropical).
+You can view the contract in the [eosio/contracts directory](https://github.com/EOSIO/tropical-example-web-app/tree/master/eosio/contracts/tropical).
 
 ### Running Frontend
 
