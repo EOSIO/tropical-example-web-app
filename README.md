@@ -204,7 +204,7 @@ class UserInfo extends React.Component {
 
 In order to propose transactions, your application needs access to the `activeUser` object returned by the logged in Authenticator.
 
-At the time of signing, call `activeUser.signTransaction` with a valid transaction object and a [configuration object](https://github.com/EOSIO/universal-authenticator-library/blob/develop/packages/universal-authenticator-library/src/interfaces.ts#L40). This will propose the transaction to the logged in Authenticator.
+At the time of signing, call `activeUser.signTransaction` with a valid transaction object and a [configuration object](https://github.com/EOSIO/universal-authenticator-library/blob/master/src/interfaces.ts#L40). This will propose the transaction to the logged in Authenticator.
 
 It is **highly recommended** in the transaction configuration to provide a `expireSeconds` property of a time greater than at least `300` seconds or 5 minutes. This will allow sufficient time for users to review and accept their transactions before expiration.
 
@@ -239,7 +239,7 @@ class Property extends React.Component {
 export default Property
 ```
 
-The method `activeUser.signTransaction` returns a promise, which, if signing is successful, will resolve to the [signed transaction response](https://github.com/EOSIO/universal-authenticator-library/blob/develop/packages/universal-authenticator-library/src/interfaces.ts#L52).
+The method `activeUser.signTransaction` returns a promise, which, if signing is successful, will resolve to the [signed transaction response](https://github.com/EOSIO/universal-authenticator-library/blob/master/src/interfaces.ts#L52).
 
 ### Logout
 
@@ -266,7 +266,7 @@ export default UserInfo
 
 ### Errors
 
-Errors thrown by UAL are of type [`UALError`](https://github.com/EOSIO/universal-authenticator-library/blob/develop/packages/universal-authenticator-library/src/UALError.ts), which extends the generic `Error` class, but has extra information that is useful for debugging purposes.
+Errors thrown by UAL are of type [`UALError`](https://github.com/EOSIO/universal-authenticator-library/blob/master/src/UALError.ts), which extends the generic `Error` class, but has extra information that is useful for debugging purposes.
 
 #### Login
 
@@ -302,9 +302,9 @@ _If you need information not covered in this guide, you can reference the full U
 
 Tropical Example follows the Manifest Specification by providing the following:
 
-* A publicly accessible [app-manifest.json](https://github.com/EOSIO/tropical-example-web-app/blob/develop/public/app-metadata.json).
-* A publicly accessible [chain-manifests.json](https://github.com/EOSIO/tropical-example-web-app/blob/develop/public/chain-manifests.json)
-* Registering the app's Manifest on the local chain [via cleos](https://github.com/EOSIO/tropical-example-web-app/blob/develop/eosio/scripts/deploy_contracts.sh#L78)
+* A publicly accessible [app-manifest.json](https://github.com/EOSIO/tropical-example-web-app/blob/master/public/app-metadata.json).
+* A publicly accessible [chain-manifests.json](https://github.com/EOSIO/tropical-example-web-app/blob/master/public/chain-manifests.json)
+* Registering the app's Manifest on the local chain [via cleos](https://github.com/EOSIO/tropical-example-web-app/blob/master/eosio/scripts/deploy_contracts.sh#L103)
 
 _If you need information not covered in this guide, you can reference the Manifest Specification [here](https://github.com/EOSIO/manifest-spec)._
 
@@ -312,8 +312,8 @@ _If you need information not covered in this guide, you can reference the Manife
 
 Tropical Example follows the Ricardian Specification by providing the following:
 
-* A [tropical.contracts.md](https://github.com/EOSIO/tropical-example-web-app/blob/develop/eosio/contracts/tropical/tropical.contracts.md), which defines the Ricardian Contract of the `like` action of the `tropical` contract.
-* Generating the `tropical` abi file with [eosio-cpp](https://github.com/EOSIO/tropical-example-web-app/blob/develop/eosio/scripts/deploy_contracts.sh#L57) passing the `-abigen` flag, which will auto generate an abi including the `tropical.contracts.md` into the `ricardian_contract` field.
+* A [tropical.contracts.md](https://github.com/EOSIO/tropical-example-web-app/blob/master/eosio/contracts/tropical/tropical.contracts.md), which defines the Ricardian Contract of the `like` action of the `tropical` contract.
+* Generating the `tropical` abi file with [eosio-cpp](https://github.com/EOSIO/tropical-example-web-app/blob/master/eosio/scripts/deploy_contracts.sh#L80) passing the `-abigen` flag, which will auto generate an abi including the `tropical.contracts.md` into the `ricardian_contract` field.
 
 _If you need information not covered in this guide, you can reference the Ricardian Specification [here](https://github.com/EOSIO/ricardian-spec)._
 
@@ -359,7 +359,7 @@ Then run the following to start up a local node:
 yarn up
 ```
 
-You can view the contract in the [eosio/contracts directory](https://github.com/EOSIO/tropical-example-web-app/tree/develop/eosio/contracts/tropical).
+You can view the contract in the [eosio/contracts directory](https://github.com/EOSIO/tropical-example-web-app/tree/master/eosio/contracts/tropical).
 
 ### Running Frontend
 
