@@ -66,10 +66,12 @@ function create_account {
 }
 
 # $1 - smart contract name
-# $2 - account name of the smart contract
+# $2 - account name
 function deploy_app_contract {
   # Unlock the wallet, ignore error if already unlocked
   cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
+
+  echo "Deploying the $1 contract"
 
   # Compile the smart contract to wasm and abi files using the EOSIO.CDT (Contract Development Toolkit)
   # https://github.com/EOSIO/eosio.cdt
@@ -86,8 +88,8 @@ function deploy_app_contract {
   cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
 }
 
-function allocate_sys_tokens {
-  echo "Allocating SYS tokens for staking bandwidth"
+function issue_sys_tokens {
+  echo "Issuing SYS tokens"
   cleos push action eosio.token create '["eosio", "10000000000.0000 SYS"]' -p eosio.token
   cleos push action eosio.token issue '["eosio", "5000000000.0000 SYS", "Half of available supply"]' -p eosio
 }
@@ -101,7 +103,7 @@ function transfer_sys_tokens {
 # $2 - chain name
 # $3 - icon hash
 function assert_set_chain {
-  echo "Registering $1 manifest"
+  echo "Setting $2 chain"
   cleos push action eosio.assert setchain "[ "\""$1"\"", "\""$2"\"", "\""$3"\"" ]" -p eosio@active
 }
 
@@ -159,7 +161,7 @@ deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 # eosio.token
 create_account eosio.token $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
 deploy_system_contract eosio.contracts/contracts eosio.token eosio.token
-allocate_sys_tokens
+issue_sys_tokens
 
 # tropical
 create_account tropical $TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY $TROPICAL_EXAMPLE_ACCOUNT_PRIVATE_KEY
