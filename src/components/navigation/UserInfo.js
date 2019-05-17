@@ -29,7 +29,7 @@ class UserInfo extends React.Component {
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this._isMounted = false
   }
 
   toggleDropdown = () => {
