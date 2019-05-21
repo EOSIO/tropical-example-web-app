@@ -1,16 +1,19 @@
-[
-  {
-    "chainId": "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f",
-    "manifest": {
-      "account": "tropical",
-      "domain": "http://localhost:3000",
-      "appmeta": "http://localhost:3000/app-metadata.json#b595f2bfae807e2559c50f48adf8f5afbe4ee0310c95beaab843905e43e2c7cb",
-      "whitelist": [
-        {
-          "contract": "tropical",
-          "action": "like"
-        }
-      ]
+{
+  "spec_version": "0.0.7",
+  "manifests": [
+    {
+      "chainId": "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f",
+      "manifest": {
+        "account": "tropical",
+        "domain": "http://localhost:3000",
+        "appmeta": "http://localhost:3000/app-metadata.json#2181e099fbfb2908a899136367b68d66810175c703ccfeb3c56540ddd96d9f1f",
+        "whitelist": [
+          {
+            "contract": "tropical",
+            "action": "like"
+          }
+        ]
+      }
     }
-  }
-]
+  ]
+}
