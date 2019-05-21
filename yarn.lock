@@ -1161,29 +1161,29 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@blockone/eosjs-ios-browser-signature-provider-interface@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-ios-browser-signature-provider-interface/-/eosjs-ios-browser-signature-provider-interface-3.0.2.tgz#c64c4330cdb7c69ee129f931fa1a9065fe302d9c"
-  integrity sha512-s79QysL30O0kWYRdKTJbjTJViTYXQjX735P5+Xlg51Nj0+RB1h5YoS5oRwRiuzJy08g+y52YWfNea4/DXmnkuQ==
+"@blockone/eosjs-ios-browser-signature-provider-interface@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@blockone/eosjs-ios-browser-signature-provider-interface/-/eosjs-ios-browser-signature-provider-interface-3.0.3.tgz#b96de9833d4fe743d77f2cd5a224506a96e7cb24"
+  integrity sha512-uQxtUOPpVTqOrQkMSxI3kkru1r3hZ8UVbks16HH3jWaxxZyzahN6Vmx4EPA9/ADDQg1P3fd5D6kb7/ESZhD0Aw==
   dependencies:
-    "@blockone/eosjs-signature-provider-interface" "^6.0.1"
+    "@blockone/eosjs-signature-provider-interface" "^7.0.0"
     qs "^6.5.2"
     uuid "^3.3.2"
 
-"@blockone/eosjs-signature-provider-interface@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-signature-provider-interface/-/eosjs-signature-provider-interface-6.0.1.tgz#7b02da70fbd859e6c67d59c9fd7bb3fa6529b717"
-  integrity sha512-WarK4di9hSgJMVvWSJQu8BM2X1DQpyncfoIvfSGYZsmpItfBd2F1O4+9hNhTY4IXPcnqP8ExbufVFGTLd3OFYg==
+"@blockone/eosjs-signature-provider-interface@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@blockone/eosjs-signature-provider-interface/-/eosjs-signature-provider-interface-7.0.0.tgz#d9827bb4caf71e3ab933ea9ffab16ddaa54271c5"
+  integrity sha512-tRlWOwDI268t0OUY9b2k1/QbiQynx5Z2iBuWO82/dxaMYNYHAjVkwCVmLM3p2OOUFctbMVPQOgxVRACAhKKzoQ==
   dependencies:
-    eosjs "20.0.0-8b096ed.0"
+    eosjs "^20.0.0"
     uuid "^3.3.2"
 
-"@blockone/eosjs-window-message-signature-provider-interface@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-window-message-signature-provider-interface/-/eosjs-window-message-signature-provider-interface-4.0.2.tgz#98366f9c57078ebbdf9c97e646e44c4d466a91fe"
-  integrity sha512-Zslomb+ArMNEUSvGff1kP6nB90CqrTPNGmr0QV3bOGXBxK5O31LlIVWPxmyHybl8R94O1MNPim5dK9cWyUs2WQ==
+"@blockone/eosjs-window-message-signature-provider-interface@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@blockone/eosjs-window-message-signature-provider-interface/-/eosjs-window-message-signature-provider-interface-4.0.3.tgz#9f64c9670e3f5f79569e2e5edd7ca7b28ddb8c4a"
+  integrity sha512-xjUlSUSoOM92syKvm7DT1Dob25hss3JvSdlIKWnQiBgbda5wmzNK9K1yb51V6GcZg3htEp5nioejRrEREbVGMg==
   dependencies:
-    "@blockone/eosjs-signature-provider-interface" "^6.0.1"
+    "@blockone/eosjs-signature-provider-interface" "^7.0.0"
 
 "@blockone/eslint-config-blockone@^1.1.1":
   version "1.1.1"
@@ -1212,14 +1212,14 @@
     object.assign "^4.1.0"
     object.entries "^1.0.4"
 
-"@blockone/ual-eosio-reference-authenticator@^0.0.37":
-  version "0.0.37"
-  resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.37.tgz#3a5a1908f0ed21d292c53ecf5472a781c9289ddd"
-  integrity sha512-WRCDoJZOMf9wuQGSO5E/X+9uKDRZqwF9zrsKPNqODVypBFVwthxAmeUkTiJaTtXRPq9PU9gmD/DQW31ZjAFBfA==
+"@blockone/ual-eosio-reference-authenticator@^0.0.38":
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.38.tgz#e3443826d9ca2550af94804f465135a8335277e8"
+  integrity sha512-uY9xCrxPVYr9Wj7NOoxKjYv1N+uBiO9fqg11bqoJU+8Dm72Rn9BGZl2Vv1G7mzzzJzGM7jNWoB79G7oirzU6SQ==
   dependencies:
-    "@blockone/eosjs-ios-browser-signature-provider-interface" "^3.0.2"
-    "@blockone/eosjs-signature-provider-interface" "^6.0.1"
-    "@blockone/eosjs-window-message-signature-provider-interface" "^4.0.2"
+    "@blockone/eosjs-ios-browser-signature-provider-interface" "^3.0.3"
+    "@blockone/eosjs-signature-provider-interface" "^7.0.0"
+    "@blockone/eosjs-window-message-signature-provider-interface" "^4.0.3"
     bs58 "^4.0.1"
     eosjs "^20.0.0"
     text-encoding "^0.7.0"
@@ -1603,11 +1603,6 @@
   dependencies:
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
-
-"@types/jest@^23.3.1":
-  version "23.3.14"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.14.tgz#37daaf78069e7948520474c87b80092ea912520a"
-  integrity sha512-Q5hTcfdudEL2yOmluA1zaSyPbzWPmJ3XfSWeP3RyoYvS9hnje1ZyagrZOuQ6+1nQC1Gw+7gap3pLNL3xL6UBug==
 
 "@types/node@*":
   version "11.9.4"
@@ -4048,7 +4043,7 @@ eos-lynx@1.1.3:
     bluebird "^3.5.2"
     socket.io-client "^2.1.1"
 
-eosjs-ecc@4.0.4, eosjs-ecc@^4.0.1:
+eosjs-ecc@4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/eosjs-ecc/-/eosjs-ecc-4.0.4.tgz#431450f30a6f73088ff5d7ba1ebdfe967a5ca4ab"
   integrity sha512-9wAYefts4TidHOu+eN9nAisZdWpUzlUimZrB63oP7+/s4xRNJEn2Vvep2ICRODpxpidbshM1L7WaSYW9oiV5gA==
@@ -4070,16 +4065,6 @@ eosjs@20.0.0, eosjs@^20.0.0:
     babel-runtime "6.26.0"
     eosjs-ecc "4.0.4"
     text-encoding "0.7.0"
-
-eosjs@20.0.0-8b096ed.0:
-  version "20.0.0-8b096ed.0"
-  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-20.0.0-8b096ed.0.tgz#8c30d5bc14a2a4f12826b200562c676a9439f113"
-  integrity sha512-ehiKHxqAxuSr1Eb+Duu8+ApiYWAM7Rh6/gGb1RHDuM/dgy4YCXTPfRenhNjkEI4u1XTqh1pxdpPrTd+xaHjvHQ==
-  dependencies:
-    "@types/jest" "^23.3.1"
-    babel-runtime "^6.26.0"
-    eosjs-ecc "^4.0.1"
-    text-encoding "^0.6.4"
 
 errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
@@ -10384,11 +10369,6 @@ text-encoding@0.7.0, text-encoding@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.7.0.tgz#f895e836e45990624086601798ea98e8f36ee643"
   integrity sha512-oJQ3f1hrOnbRLOcwKz0Liq2IcrvDeZRHXhd9RgLrsT+DjWY/nty1Hi7v3dtkaEYbPYe0mUoOfzRrMwfXXwgPUA==
-
-text-encoding@^0.6.4:
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.6.4.tgz#e399a982257a276dae428bb92845cb71bdc26d19"
-  integrity sha1-45mpgiV6J22uQou5KEXLcb3CbRk=
 
 text-table@0.2.0, text-table@^0.2.0:
   version "0.2.0"
