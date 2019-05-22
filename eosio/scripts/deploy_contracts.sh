@@ -176,7 +176,7 @@ transfer_sys_tokens example
 # Set chain
 assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f" "Local Chain" "128321d1e1023f41c35b9d168f0af0090ffb4e1a5d84c275feb1aa8c7a2551da"
 # Register tropical manifest
-assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#b595f2bfae807e2559c50f48adf8f5afbe4ee0310c95beaab843905e43e2c7cb" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#2181e099fbfb2908a899136367b68d66810175c703ccfeb3c56540ddd96d9f1f" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
 
 
 echo "All done initializing the blockchain"
