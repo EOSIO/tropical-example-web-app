@@ -1161,30 +1161,6 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@blockone/eosjs-ios-browser-signature-provider-interface@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-ios-browser-signature-provider-interface/-/eosjs-ios-browser-signature-provider-interface-3.0.3.tgz#b96de9833d4fe743d77f2cd5a224506a96e7cb24"
-  integrity sha512-uQxtUOPpVTqOrQkMSxI3kkru1r3hZ8UVbks16HH3jWaxxZyzahN6Vmx4EPA9/ADDQg1P3fd5D6kb7/ESZhD0Aw==
-  dependencies:
-    "@blockone/eosjs-signature-provider-interface" "^7.0.0"
-    qs "^6.5.2"
-    uuid "^3.3.2"
-
-"@blockone/eosjs-signature-provider-interface@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-signature-provider-interface/-/eosjs-signature-provider-interface-7.0.0.tgz#d9827bb4caf71e3ab933ea9ffab16ddaa54271c5"
-  integrity sha512-tRlWOwDI268t0OUY9b2k1/QbiQynx5Z2iBuWO82/dxaMYNYHAjVkwCVmLM3p2OOUFctbMVPQOgxVRACAhKKzoQ==
-  dependencies:
-    eosjs "^20.0.0"
-    uuid "^3.3.2"
-
-"@blockone/eosjs-window-message-signature-provider-interface@^4.0.3":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@blockone/eosjs-window-message-signature-provider-interface/-/eosjs-window-message-signature-provider-interface-4.0.3.tgz#9f64c9670e3f5f79569e2e5edd7ca7b28ddb8c4a"
-  integrity sha512-xjUlSUSoOM92syKvm7DT1Dob25hss3JvSdlIKWnQiBgbda5wmzNK9K1yb51V6GcZg3htEp5nioejRrEREbVGMg==
-  dependencies:
-    "@blockone/eosjs-signature-provider-interface" "^7.0.0"
-
 "@blockone/eslint-config-blockone@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@blockone/eslint-config-blockone/-/eslint-config-blockone-1.1.1.tgz#44f81571c0051bdb356d10fb3676d866ddc18fc9"
@@ -1211,20 +1187,6 @@
     object-keys "^1.0.12"
     object.assign "^4.1.0"
     object.entries "^1.0.4"
-
-"@blockone/ual-eosio-reference-authenticator@^0.0.38":
-  version "0.0.38"
-  resolved "https://registry.yarnpkg.com/@blockone/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.0.38.tgz#e3443826d9ca2550af94804f465135a8335277e8"
-  integrity sha512-uY9xCrxPVYr9Wj7NOoxKjYv1N+uBiO9fqg11bqoJU+8Dm72Rn9BGZl2Vv1G7mzzzJzGM7jNWoB79G7oirzU6SQ==
-  dependencies:
-    "@blockone/eosjs-ios-browser-signature-provider-interface" "^3.0.3"
-    "@blockone/eosjs-signature-provider-interface" "^7.0.0"
-    "@blockone/eosjs-window-message-signature-provider-interface" "^4.0.3"
-    bs58 "^4.0.1"
-    eosjs "^20.0.0"
-    text-encoding "^0.7.0"
-    universal-authenticator-library "^0.1.0"
-    uuid "^3.3.2"
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
@@ -4056,6 +4018,30 @@ eosjs-ecc@4.0.4:
     create-hmac "^1.1.6"
     ecurve "^1.0.5"
     randombytes "^2.0.5"
+
+eosjs-ios-browser-signature-provider-interface@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/eosjs-ios-browser-signature-provider-interface/-/eosjs-ios-browser-signature-provider-interface-0.1.0.tgz#45217a9ae3366c4b2c7b417184c22abbb4e6403b"
+  integrity sha512-LJgnswN/0XgXuhz6ILwYibFE7szVNGPIo3i+zWKPpChvonVycplxgc0Wd+OheoJ5URcJwZ+GXncImCd2SqDOSw==
+  dependencies:
+    eosjs-signature-provider-interface "^0.1.0"
+    qs "^6.5.2"
+    uuid "^3.3.2"
+
+eosjs-signature-provider-interface@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/eosjs-signature-provider-interface/-/eosjs-signature-provider-interface-0.1.0.tgz#7af358acffd6c38d3fe54c5574d399cc81908a0f"
+  integrity sha512-C6B1FYMqxgJFoZmKbyEsrmcBGp6Cip45oNAgJL3bUovV7KbGEzCGbZujzw7iNWnWYA5A7lothMoS6C4akOCMWg==
+  dependencies:
+    eosjs "^20.0.0"
+    uuid "^3.3.2"
+
+eosjs-window-message-signature-provider-interface@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/eosjs-window-message-signature-provider-interface/-/eosjs-window-message-signature-provider-interface-0.1.0.tgz#bfb5f869f30f483c9607881138ed0080ec0d8d54"
+  integrity sha512-OWluBvdbVQ90+sq5uC9FsOLZ5y8AcVfWNc4Xc0eCB1Nkd1TxAq3QOWMollQdb0aTjRIxabPSOYmSEKRtGTApow==
+  dependencies:
+    eosjs-signature-provider-interface "^0.1.0"
 
 eosjs@20.0.0, eosjs@^20.0.0:
   version "20.0.0"
@@ -10577,6 +10563,20 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+ual-eosio-reference-authenticator@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/ual-eosio-reference-authenticator/-/ual-eosio-reference-authenticator-0.1.0.tgz#80c22a703deb86c02b643240a5cadd6918307f3e"
+  integrity sha512-EslPz4yq/lk0i1HV2PJCqx+y9UHSnouB/1F8X3ywPPvpWjTK/B+ztHPmt6ZGJUQ1oGbuaFhwMHWlF4IlRpIDZA==
+  dependencies:
+    bs58 "^4.0.1"
+    eosjs "^20.0.0"
+    eosjs-ios-browser-signature-provider-interface "^0.1.0"
+    eosjs-signature-provider-interface "^0.1.0"
+    eosjs-window-message-signature-provider-interface "^0.1.0"
+    text-encoding "^0.7.0"
+    universal-authenticator-library "^0.1.0"
+    uuid "^3.3.2"
 
 ual-lynx@^0.1.0:
   version "0.1.0"
