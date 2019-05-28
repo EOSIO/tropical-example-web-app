@@ -31,6 +31,7 @@ The following open source repositories are utilized in Tropical Example:
 - [Manifest Specification](#manifest-specification)
 - [Ricardian Specification](#ricardian-specification)
 - [Running Tropical Example](#running-tropical-example)
+  - [Required Tools](#required-tools)
   - [Setup](#setup-1)
     - [.env file defaults](#env-file-defaults)
   - [Installation](#installation-1)
@@ -319,6 +320,15 @@ _If you need information not covered in this guide, you can reference the Ricard
 
 ## Running Tropical Example
 
+### Required Tools
+
+* [Yarn](https://yarnpkg.com/lang/en/) with support at `^1.15.2` (latest stable).
+* [Docker](https://www.docker.com/) with support at Docker Engine `18.09.2` (latest stable).
+* [Docker Compose](https://docs.docker.com/compose/).
+  * Mac and Windows environments - By default the Docker Compose tool is installed with Docker.
+  * Linux - Follow [these instructions to install Docker Compose](https://docs.docker.com/compose/install/).
+* [Node.js](https://nodejs.org/en/) with support at `^10.15.3` LTS. **NOTICE** This project will not build on the current version of Node.js `12.3.1` due to an error in a sub-dependency of `react-scripts`.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### Setup
@@ -350,9 +360,7 @@ Run this first to install all the project's dependencies.
 
 Before the app can be run, the Tropical Example contract must be deployed on the chain configured in the `.env` to the account `tropical`.
 
-This repo provides a `docker-compose.yml` that will setup and deploy the `tropical` contract using the tool, [Docker Compose](https://docs.docker.com/compose/).
-
-Install [Docker](https://www.docker.com/get-started), which will also install the Docker Compose tool on Mac and Windows environments. For Linux systems follow [these instructions to install Docker Compose](https://docs.docker.com/compose/install/).
+This repo provides a `docker-compose.yml` that will setup and deploy the `tropical` contract using Docker Compose.
 
 Then run the following to start up a local node:
 ```bash
