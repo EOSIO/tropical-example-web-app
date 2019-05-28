@@ -1,6 +1,6 @@
 import React from 'react'
 import { func, instanceOf, oneOfType, shape } from 'prop-types'
-import { EOSIOAuthUser } from '@blockone/ual-eosio-reference-authenticator'
+import { EOSIOAuthUser } from 'ual-eosio-reference-authenticator'
 import { ScatterUser } from 'ual-scatter'
 import { LynxUser } from 'ual-lynx'
 import { TokenPocketUser } from 'ual-token-pocket'

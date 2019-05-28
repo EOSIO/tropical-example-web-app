@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 // UAL Required Imports
 import { UALProvider } from 'ual-reactjs-renderer'
 // Authenticator Imports
-import { EOSIOAuth } from '@blockone/ual-eosio-reference-authenticator'
+import { EOSIOAuth } from 'ual-eosio-reference-authenticator'
 import { Scatter } from 'ual-scatter'
 import { Lynx } from 'ual-lynx'
 import { TokenPocket } from 'ual-token-pocket'
