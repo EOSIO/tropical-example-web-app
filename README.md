@@ -327,7 +327,7 @@ _If you need information not covered in this guide, you can reference the Ricard
 * [Docker Compose](https://docs.docker.com/compose/).
   * Mac and Windows environments - By default the Docker Compose tool is installed with Docker.
   * Linux - Follow [these instructions to install Docker Compose](https://docs.docker.com/compose/install/).
-* [Node.JS](https://nodejs.org/en/) with support at `^10.15.3` LTS (latest stable).
+* [Node.js](https://nodejs.org/en/) with support at `^10.15.3` LTS. **NOTICE** This project will not build on the current version of Node.js `12.3.1` due to an error in a sub-dependency of `react-scripts`.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
