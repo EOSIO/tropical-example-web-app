@@ -1,6 +1,7 @@
 import React from 'react'
 import { func, instanceOf, oneOfType, shape } from 'prop-types'
 import { EOSIOAuthUser } from 'ual-eosio-reference-authenticator'
+import { MeetOneUser } from 'ual-meetone'
 import { ScatterUser } from 'ual-scatter'
 import { LynxUser } from 'ual-lynx'
 import { TokenPocketUser } from 'ual-token-pocket'
@@ -39,6 +40,7 @@ NavigationBar.propTypes = {
   ual: shape({
     activeUser: oneOfType([
       instanceOf(EOSIOAuthUser),
+      instanceOf(MeetOneUser),
       instanceOf(ScatterUser),
       instanceOf(LynxUser),
       instanceOf(TokenPocketUser),

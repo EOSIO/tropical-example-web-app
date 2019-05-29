@@ -62,12 +62,14 @@ yarn add ual-reactjs-renderer
 
 Then install the Authenticators you want to allow users to interact with. Tropical Example uses the following Authenticators:
 - [UAL for EOSIO Reference Authenticator](https://github.com/EOSIO/ual-eosio-reference-authenticator)
+- [UAL for MEET.ONE](https://github.com/meet-one/ual-meetone)
 - [UAL for Scatter](https://github.com/EOSIO/ual-scatter)
 - [UAL for Lynx](https://github.com/EOSIO/ual-lynx)
 - [UAL for Token Pocket](https://github.com/EOSIO/ual-token-pocket)
 
 ```bash
 yarn add ual-eosio-reference-authenticator
+yarn add ual-meetone
 yarn add ual-scatter
 yarn add ual-lynx
 yarn add ual-token-pocket
@@ -84,6 +86,7 @@ The `UALProvider` requires an array of Chains you wish your app to transact on, 
 import { UALProvider } from 'ual-reactjs-renderer'
 // Authenticator Imports
 import { EOSIOAuth } from 'ual-eosio-reference-authenticator'
+import { MeetOne } from 'ual-meetone'
 import { Scatter } from 'ual-scatter'
 import { Lynx } from 'ual-lynx'
 import { TokenPocket } from 'ual-token-pocket'
@@ -104,12 +107,13 @@ const chain = {
 
 // Authenticators
 const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' })
+const meetOne = new MeetOne([chain])
 const scatter = new Scatter([chain], { appName })
 const lynx = new Lynx([chain])
 const tokenPocket = new TokenPocket([chain])
 
 const supportedChains = [chain]
-const supportedAuthenticators = [eosioAuth, scatter, lynx, tokenPocket]
+const supportedAuthenticators = [eosioAuth, meetOne, scatter, lynx, tokenPocket]
 
 ReactDOM.render(
   <UALProvider chains={supportedChains} authenticators={supportedAuthenticators} appName={appName}>

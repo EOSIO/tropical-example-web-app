@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom'
 import { UALProvider } from 'ual-reactjs-renderer'
 // Authenticator Imports
 import { EOSIOAuth } from 'ual-eosio-reference-authenticator'
+import { MeetOne } from 'ual-meetone'
 import { Scatter } from 'ual-scatter'
 import { Lynx } from 'ual-lynx'
 import { TokenPocket } from 'ual-token-pocket'
@@ -32,12 +33,13 @@ const chain = {
 
 // Authenticators
 const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' })
+const meetOne = new MeetOne([chain])
 const scatter = new Scatter([chain], { appName })
 const lynx = new Lynx([chain])
 const tokenPocket = new TokenPocket([chain])
 
 const supportedChains = [chain]
-const supportedAuthenticators = [eosioAuth, scatter, lynx, tokenPocket]
+const supportedAuthenticators = [eosioAuth, meetOne, scatter, lynx, tokenPocket]
 
 ReactDOM.render(
   <UALProvider chains={supportedChains} authenticators={supportedAuthenticators} appName={appName}>
