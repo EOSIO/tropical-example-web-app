@@ -2,7 +2,7 @@
    like
 </h1>
 ---
-spec-version: 0.0
+spec_version: 0.2.0
 title: Like a Property
 summary: Like a Tropical Example property
 icon: https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Love_Heart_SVG.svg/265px-Love_Heart_SVG.svg.png#301991F0C25EE8EAA55F4CE940B9E5910560652A8D930C56D65C3C8987FF7DDB

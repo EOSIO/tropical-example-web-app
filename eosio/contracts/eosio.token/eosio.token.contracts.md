@@ -2,7 +2,7 @@
    transfer
 </h1>
 ---
-spec-version: 0.0
+spec_version: 0.2.0
 title: Token Transfer
 summary: Transfer tokens from one account to another.
 icon: https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Attraction_transfer_icon.svg/200px-Attraction_transfer_icon.svg.png#24785AF89B4480048CF951E39D0C3D70EE20C44F66582F0890938378C0025064
