@@ -6,7 +6,7 @@
       "manifest": {
         "account": "tropical",
         "domain": "http://localhost:3000",
-        "appmeta": "http://localhost:3000/app-metadata.json#2181e099fbfb2908a899136367b68d66810175c703ccfeb3c56540ddd96d9f1f",
+        "appmeta": "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa",
         "whitelist": [
           {
             "contract": "tropical",

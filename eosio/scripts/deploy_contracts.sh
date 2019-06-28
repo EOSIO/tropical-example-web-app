@@ -174,9 +174,9 @@ transfer_sys_tokens example
 
 # eosio.assert actions
 # Set chain
-assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f" "Local Chain" "128321d1e1023f41c35b9d168f0af0090ffb4e1a5d84c275feb1aa8c7a2551da"
+assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f" "Local Chain" "8ae3ccb19f3a89a8ea21f6c5e18bd2bc8f00c379411a2d9319985dad2db6243e"
 # Register tropical manifest
-assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#2181e099fbfb2908a899136367b68d66810175c703ccfeb3c56540ddd96d9f1f" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
 
 
 echo "All done initializing the blockchain"
