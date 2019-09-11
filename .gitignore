@@ -69,3 +69,8 @@ jspm_packages/
 
 # Misc
 .env
+
+# Smart Contract Artifacts
+*.wasm
+*.abi
+
