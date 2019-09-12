@@ -9,7 +9,7 @@ CONTRACT tropical : public contract {
    public:
       tropical(name self, name first_receiver, datastream<const char*> ds)
       :contract(self, first_receiver, ds)
-      ,server_key_singleton(get_self(), get_self().value)
+      ,configuration_singleton(get_self(), get_self().value)
       {}
 
       ACTION like( name user ) {
@@ -19,7 +19,13 @@ CONTRACT tropical : public contract {
       /**
        * Global singleton that holds the current "root of trust"
        */
-      eosio::singleton< "srvkey"_n, public_key > server_key_singleton;
+      TABLE config {
+         public_key srvkey;
+
+         EOSLIB_SERIALIZE( config, (srvkey) )
+      };
+
+      eosio::singleton< "config"_n, config > configuration_singleton;
 
       /**
        *
@@ -52,7 +58,7 @@ CONTRACT tropical : public contract {
          // finally validate that the root of trust, the server_key, matches the chain state
          // this was not possible in a context free action
          //
-         auto server_key = server_key_singleton.get();
+         auto server_key = configuration_singleton.get().srvkey;
          check(std::get<2>(second_factor_params) == server_key, "Malfomed 2FA action, wrong root of trust");
 
          print_f("You've rented a % on chain, %!\n", property, user);
@@ -105,6 +111,6 @@ CONTRACT tropical : public contract {
        */
       ACTION setsrvkey(public_key server_key) {
          require_auth(_self);
-         server_key_singleton.set(server_key, _self);
+         configuration_singleton.set({server_key}, _self);
       }
 };

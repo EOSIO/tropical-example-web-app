@@ -94,13 +94,21 @@ function deploy_app_contract {
   # Move into contracts directory
   cd "$CONTRACTS_DIR/$1/"
   (
-    eosio-cpp -abigen "$1.cpp" -o "$1.wasm" -I ./
+    if [ ! -f "$1.wasm" ]; then
+      eosio-cpp -abigen "$1.cpp" -o "$1.wasm" -I ./
+    else
+      echo "Using pre-built contract..."
+    fi
   ) &&
   # Move back into the executable directory
   cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
   cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
+
+  # Set the root of trust for the contract
+  cleos push action $2 setprivkey '["'"$TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY"'"]' -p $2@
+
 }
 
 function issue_sys_tokens {
