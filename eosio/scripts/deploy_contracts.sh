@@ -92,7 +92,7 @@ function deploy_app_contract {
   cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
 
   # Set the root of trust for the contract
-  cleos push action $2 setprivkey '["'"$TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY"'"]' -p $2@
+  cleos push action $2 setsrvkey '["'"$TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY"'"]' -p $2
 
 }
 
