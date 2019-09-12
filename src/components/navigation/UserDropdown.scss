@@ -12,9 +12,16 @@
   z-index: 1;
   cursor: pointer;
 
-  .user-dropdown-item {
-    color: black;
+  li {
+    &.user-dropdown-item {
+      display: inline-block;
+      margin: 0 0 0 0;
+      font-weight: normal;
+      color: black;
+    }
   }
+
+
 
   &:after {
     content: '';
