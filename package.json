@@ -1,6 +1,6 @@
 {
   "name": "tropical-example-web-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "Simple example app demonstrating usage of several EOSIO Labs repositories",
   "author": {
@@ -12,21 +12,21 @@
     "Cody Douglass",
     "Jonathan Pratt",
     "Ben Rush",
-    "Tara Tritt"
+    "Tara Tritt",
+    "Mike Manfredi"
   ],
   "private": true,
   "dependencies": {
-    "focus-visible": "^4.1.5",
-    "node-sass": "^4.10.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "^3.0.1",
-    "ual-eosio-reference-authenticator": "^0.1.2",
-    "ual-lynx": "^0.1.1",
-    "ual-reactjs-renderer": "^0.1.3",
-    "ual-scatter": "^0.1.3",
-    "ual-token-pocket": "^0.1.1"
+    "focus-visible": "4.1.5",
+    "prop-types": "15.7.2",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "ual-eosio-reference-authenticator": "0.1.3",
+    "ual-lynx": "0.2.2",
+    "ual-reactjs-renderer": "0.1.6",
+    "ual-scatter": "0.1.6",
+    "ual-token-pocket": "0.1.2",
+    "react-scripts": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -47,6 +47,7 @@
   ],
   "devDependencies": {
     "@blockone/eslint-config-blockone": "^1.1.1",
-    "eslint-plugin-no-exclusive-tests": "^1.0.0-rc.1"
+    "eslint-plugin-no-exclusive-tests": "^1.0.0-rc.1",
+    "node-sass": "^4.10.0"
   }
 }
