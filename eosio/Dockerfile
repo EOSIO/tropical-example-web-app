@@ -25,7 +25,7 @@ RUN mv /eosio.assert/eosio.assert-0.1.0 /opt/eosio/bin/contracts
 RUN mv /opt/eosio/bin/contracts/eosio.assert-0.1.0 /opt/eosio/bin/contracts/eosio.assert
 
 RUN echo "COPYING APP CONTRACTS"
-COPY ./ /opt/eosio/bin
+COPY ./././././ /opt/eosio/bin
 
 RUN echo "COPYING EOSIO.TOKEN RICARDIAN CONTRACT"
 RUN cp /opt/eosio/bin/contracts/eosio.token/eosio.token.contracts.md /opt/eosio/bin/contracts/eosio.contracts/contracts/eosio.token/src

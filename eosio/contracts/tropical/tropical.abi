@@ -1,0 +1,114 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.1",
+    "types": [],
+    "structs": [
+        {
+            "name": "check2fa",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "property",
+                    "type": "name"
+                },
+                {
+                    "name": "server_key",
+                    "type": "public_key"
+                },
+                {
+                    "name": "user_key",
+                    "type": "public_key"
+                },
+                {
+                    "name": "server_auth",
+                    "type": "signature"
+                },
+                {
+                    "name": "bearer_auth",
+                    "type": "signature"
+                }
+            ]
+        },
+        {
+            "name": "config",
+            "base": "",
+            "fields": [
+                {
+                    "name": "srvkey",
+                    "type": "public_key"
+                }
+            ]
+        },
+        {
+            "name": "like",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "rent",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "property",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "setsrvkey",
+            "base": "",
+            "fields": [
+                {
+                    "name": "server_key",
+                    "type": "public_key"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "check2fa",
+            "type": "check2fa",
+            "ricardian_contract": "---\nspec_version: 0.2.0\ntitle: Validate the 2FA Token\nsummary: Validate a WebAuthn second factor\nicon: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/OOjs_UI_icon_key-ltr.svg/200px-OOjs_UI_icon_key-ltr.svg.png#0A1E2435DCAFDF4B34E60C65C570DCE30FAAC1862D7C5E139D188A6EAAF95014\n---\nAny usage of bots, macros, or any autonomous form of liking a specific person’s property would result in the investigation of like legitimacy for a post."
+        },
+        {
+            "name": "like",
+            "type": "like",
+            "ricardian_contract": "---\nspec_version: 0.2.0\ntitle: Like a Property\nsummary: Like a Tropical Example property\nicon: https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Love_Heart_SVG.svg/265px-Love_Heart_SVG.svg.png#301991F0C25EE8EAA55F4CE940B9E5910560652A8D930C56D65C3C8987FF7DDB\n---\nLiking this property will be visible to anyone who views your profile or searches your name.\nThis like may result in the post owner’s property to be featured on the property owner’s most liked pages.\nAny usage of bots, macros, or any autonomous form of liking a specific person’s property would result in the investigation of like legitimacy for a post."
+        },
+        {
+            "name": "rent",
+            "type": "rent",
+            "ricardian_contract": "---\nspec_version: 0.2.0\ntitle: Rent a Property\nsummary: Rent a Tropical Example property\nicon: https://https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Dollar_sign_in_circle.svg/240px-Dollar_sign_in_circle.svg.png#27F7CC5F628A8FC0B16680C141D58D42A1F49E3E38B1A4F67590C61F5D607CBF\n---\nRenting a property requires 2FA and constitutes a binding agreement to pay the listed rental fee(s).\nAny usage of bots, macros, or any autonomous form of liking a specific person’s property would result in the investigation of like legitimacy for a post."
+        },
+        {
+            "name": "setsrvkey",
+            "type": "setsrvkey",
+            "ricardian_contract": "---\nspec_version: 0.2.0\ntitle: Set the Root-of-trust\nsummary: This is an administrative action that sets the respected \"root of trust\" key that counter signs 2FA\nicon: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/OOjs_UI_icon_key-ltr.svg/200px-OOjs_UI_icon_key-ltr.svg.png#0A1E2435DCAFDF4B34E60C65C570DCE30FAAC1862D7C5E139D188A6EAAF95014\n---\nAny usage of bots, macros, or any autonomous form of liking a specific person’s property would result in the investigation of like legitimacy for a post."
+        }
+    ],
+    "tables": [
+        {
+            "name": "config",
+            "type": "config",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "variants": []
+}
