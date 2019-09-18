@@ -1,16 +1,17 @@
 import { Router, json } from 'express'
 import ecc from 'eosjs-ecc'
-import {SerialBuffer} from 'eosjs'
+import {Serialize, Numeric} from 'eosjs'
 import base64url from 'base64url'
 import cbor from 'cbor'
+import util from 'util';
 
 export default () => {
   const private_key_wif = process.env.API_SERVER_PRIVATE_KEY
   const api = Router()
   console.log(json)
 
-  const decodeResponse = (webauthnResp) => {
-    const attestationBuffer = base64url.toBuffer(webauthnResp.response.attestationObject)
+  const decodeWebauthnPublicKey = (webauthnPublicKey) => {
+    const attestationBuffer = base64url.toBuffer(webauthnPublicKey.attestationObject)
     const attestation  = cbor.decodeAllSync(attestationBuffer)[0]
 
     const flags = attestation.authData.readUInt8(32)
@@ -44,20 +45,29 @@ export default () => {
 
   const users = {}
 
-  api.get( '/generateRentChallenge', json(), (req, resp) => {
+  api.post( '/generateRentChallenge', json(), (req, resp) => {
     const name = req.body.name
     const property_name = req.body.property_name
 
-    const namePairBuffer = new SerialBuffer()
+    console.log(users[name].eosioPubkey.toString('hex'))
+
+    const namePairBuffer = new Serialize.SerialBuffer({textEncoder: new util.TextEncoder(), textDecoder: new util.TextDecoder()})
     namePairBuffer.pushName(name)
     namePairBuffer.pushName(property_name)
-    const sigData = Buffer.concat( namePairBuffer.asUint8Array(), users[name].eosioPubkey )
+    const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
     const sigDigest = ecc.sha256(sigData)
     const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
+    const user_key = Numeric.publicKeyToString({
+      type: Numeric.KeyType.wa,
+      data: users[name].eosioPubkey.slice(1),
+    })
+    const server_key = ecc.privateToPublic(private_key_wif);
 
-    response.json({
+    resp.json({
       'status': 'ok',
-      'challenge': challenge
+      'user_key' : user_key,
+      'server_key' : server_key,
+      'server_auth': challenge
     })
   })
 
@@ -65,9 +75,9 @@ export default () => {
     // Note there is no verfication of this data as it is out of scope for this demo
     //
     const name = req.body.name
-    const webauthnResp = req.body.webauthnResp
+    const webauthnPublicKey = req.body.webauthnPublicKey
 
-    users[name] = decodeResponse(webauthnResp)
+    users[name] = decodeWebauthnPublicKey(webauthnPublicKey)
     resp.json({ 'status': 'ok' })
   })
 
