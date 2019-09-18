@@ -12,7 +12,7 @@ import LoginButton from 'components/navigation/LoginButton'
 import { onKeyUpEnter } from 'utils/keyPress'
 import logo from 'assets/images/logo.svg'
 
-const NavigationBar = ({ ual: { activeUser }, routeToLanding, login }) => (
+const NavigationBar = ({ ual: { activeUser }, routeToLanding, login, enroll }) => (
   <div className='navigation-bar-container'>
     <div className='navigation-bar-content'>
       <div
@@ -27,7 +27,7 @@ const NavigationBar = ({ ual: { activeUser }, routeToLanding, login }) => (
       <ul className='navigation-bar-list'>
         <li className={`post ${!activeUser && 'disabled'}`}>Post a Property</li>
         { activeUser
-          ? <li className='user-info'><UserInfo /></li>
+          ? <li className='user-info'><UserInfo enroll={enroll} /></li>
           : <li className='login'><LoginButton login={login} /></li>
         }
       </ul>
@@ -46,6 +46,7 @@ NavigationBar.propTypes = {
   }),
   routeToLanding: func.isRequired,
   login: func.isRequired,
+  enroll: func.isRequired,
 }
 
 NavigationBar.defaultProps = {
