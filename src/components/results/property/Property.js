@@ -5,7 +5,8 @@ import { UALContext } from 'ual-reactjs-renderer'
 import './Property.scss'
 
 import PropertyImage from 'components/results/property/PropertyImage'
-import { generateTransaction, transactionConfig } from 'utils/transaction'
+import { generateTransaction, generateRentTransaction, transactionConfig } from 'utils/transaction'
+import { generateRentChallenge, signRentChallenge } from 'utils/webauthn'
 import { onKeyUpEnter } from 'utils/keyPress'
 
 class Property extends React.Component {
@@ -19,6 +20,7 @@ class Property extends React.Component {
   state = {
     loading: false,
     liked: false,
+    rented: false,
   }
 
   onLike = async () => {
@@ -33,6 +35,28 @@ class Property extends React.Component {
         // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
         await activeUser.signTransaction(transaction, transactionConfig)
         this.setState({ liked: true })
+      } catch (err) {
+        displayError(err)
+      }
+      this.setState({ loading: false })
+    } else {
+      login()
+    }
+  }
+
+  onRent = async () => {
+    const { login, displayError } = this.props
+    const { activeUser } = this.context
+    if ( activeUser ) {
+      this.setState({ loading: true })
+      try {
+        const accountName = await activeUser.getAccountName()
+        const rentChallenge = await generateRentChallenge(accountName, "aproperty")
+        const userAuth = await signRentChallenge(accountName, "aproperty", rentChallenge)
+        const transaction = generateRentTransaction(accountName, "aproperty", rentChallenge.serverKey, rentChallenge.userKey, rentChallenge.serverAuth, userAuth)
+        // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
+        await activeUser.signTransaction(transaction, transactionConfig)
+        this.setState({rented: true})
       } catch (err) {
         displayError(err)
       }

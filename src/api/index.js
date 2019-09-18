@@ -46,35 +46,37 @@ export default () => {
   const users = {}
 
   api.post( '/generateRentChallenge', json(), (req, resp) => {
-    const name = req.body.name
-    const property_name = req.body.property_name
+    const name = req.body.accountName
+    const propertyName = req.body.propertyName
 
     console.log(users[name].eosioPubkey.toString('hex'))
 
     const namePairBuffer = new Serialize.SerialBuffer({textEncoder: new util.TextEncoder(), textDecoder: new util.TextDecoder()})
     namePairBuffer.pushName(name)
-    namePairBuffer.pushName(property_name)
+    namePairBuffer.pushName(propertyName)
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
     const sigDigest = ecc.sha256(sigData)
     const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
-    const user_key = Numeric.publicKeyToString({
+    const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    const server_key = ecc.privateToPublic(private_key_wif);
+    const serverKey = ecc.privateToPublic(private_key_wif)
+    const credentialIDStr = base64url.encode(users[name].credentialID)
 
     resp.json({
       'status': 'ok',
-      'user_key' : user_key,
-      'server_key' : server_key,
-      'server_auth': challenge
+      'userKey' : userKey,
+      'serverKey' : serverKey,
+      'serverAuth': challenge,
+      'credentialID': credentialIDStr
     })
   })
 
   api.post( '/enroll', json(), (req, resp) => {
     // Note there is no verfication of this data as it is out of scope for this demo
     //
-    const name = req.body.name
+    const name = req.body.accountName
     const webauthnPublicKey = req.body.webauthnPublicKey
 
     users[name] = decodeWebauthnPublicKey(webauthnPublicKey)
