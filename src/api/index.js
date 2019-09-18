@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router, json } from 'express'
 import ecc from 'eosjs-ecc'
 import {SerialBuffer} from 'eosjs'
 import base64url from 'base64url'
@@ -7,9 +7,10 @@ import cbor from 'cbor'
 export default () => {
   const private_key_wif = process.env.API_SERVER_PRIVATE_KEY
   const api = Router()
+  console.log(json)
 
-  const decodeResponse = (clientData, webauthnResp) => {
-    const attestationBuffer = base64url.toBuffer(webAuthnResponse.response.attestationObject)
+  const decodeResponse = (webauthnResp) => {
+    const attestationBuffer = base64url.toBuffer(webauthnResp.response.attestationObject)
     const attestation  = cbor.decodeAllSync(attestationBuffer)[0]
 
     const flags = attestation.authData.readUInt8(32)
@@ -43,9 +44,9 @@ export default () => {
 
   const users = {}
 
-  api.get( '/generateRentChallenge', (req, resp) => {
-    const name = request.body.name
-    const property_name = request.body.property_name
+  api.get( '/generateRentChallenge', json(), (req, resp) => {
+    const name = req.body.name
+    const property_name = req.body.property_name
 
     const namePairBuffer = new SerialBuffer()
     namePairBuffer.pushName(name)
@@ -60,14 +61,14 @@ export default () => {
     })
   })
 
-  api.post( '/enroll', (req, resp) => {
+  api.post( '/enroll', json(), (req, resp) => {
     // Note there is no verfication of this data as it is out of scope for this demo
     //
-    const name = request.body.name
-    const webauthnResp = request.body.webauthnResp
+    const name = req.body.name
+    const webauthnResp = req.body.webauthnResp
 
     users[name] = decodeResponse(webauthnResp)
-    response.json({ 'status': 'ok' })
+    resp.json({ 'status': 'ok' })
   })
 
   return api

@@ -12,35 +12,19 @@ class UserDropdown extends React.Component {
 
   static propTypes = {
     logout: func.isRequired,
-    displayError: func.isRequired
+    enroll: func.isRequired
   }
 
   state = {
     enrolled: false
   }
 
-  onEnroll = async () => {
-    const { displayError } = this.props
-    // Via static contextType = UALContext, access to the activeUser object on this.context is now available
-    const { activeUser } = this.context
-    if (activeUser) {
-      try {
-        //const accountName = await activeUser.getAccountName()
-        //const transaction = generateEnrollTransaction(accountName)
-        // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
-        //await activeUser.signTransaction(transaction, transactionConfig)
-        this.setState({ enrolled: true })
-      } catch (err) {
-        displayError(err)
-      }
-    } else {
-      displayError("Not Logged In!")
-    }
-  }
-
   render() {
-    const { logout, displayError } = this.props;
+    const { logout, enroll } = this.props;
     const { enrolled } = this.state;
+    const doEnroll = () => {
+      enroll(() => this.setState({enrolled: true}))
+    }
     return (
       <div
         className='user-dropdown-container'
@@ -50,8 +34,8 @@ class UserDropdown extends React.Component {
         <ul>
           { !enrolled
             ? <li className='user-dropdown-item'
-                onClick={this.onEnroll}
-                onKeyUp={event => onKeyUpEnter(event, this.onEnroll)}
+                onClick={doEnroll}
+                onKeyUp={event => onKeyUpEnter(event, doEnroll)}
               >
                 Enable WebAuthn 2FA
               </li>
