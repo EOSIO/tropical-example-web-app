@@ -5,7 +5,6 @@ import { UALContext } from 'ual-reactjs-renderer'
 import './UserDropdown.scss'
 
 import { onKeyUpEnter } from 'utils/keyPress'
-import { generateEnrollTransaction, transactionConfig } from 'utils/transaction'
 
 class UserDropdown extends React.Component {
   static contextType = UALContext

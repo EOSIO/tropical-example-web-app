@@ -89,7 +89,6 @@ class App extends React.Component {
     }
   }
 
-
   render() {
     const login = () => this.displayLoginModal(true)
     const routeToResults = () => this.displayResults(true)
