@@ -54,6 +54,7 @@ class Property extends React.Component {
         const rentChallenge = await generateRentChallenge(accountName, "aproperty")
         const userAuth = await signRentChallenge(accountName, "aproperty", rentChallenge)
         const transaction = generateRentTransaction(accountName, "aproperty", rentChallenge.serverKey, rentChallenge.userKey, rentChallenge.serverAuth, userAuth)
+        console.log(JSON.stringify(transaction, null, '  '))
         // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
         await activeUser.signTransaction(transaction, transactionConfig)
         this.setState({rented: true})
@@ -75,8 +76,8 @@ class Property extends React.Component {
           className='property-image'
           tabIndex={0}
           role='button'
-          onClick={this.onLike}
-          onKeyUp={event => onKeyUpEnter(event, this.onLike)}
+          onClick={this.onRent}
+          onKeyUp={event => onKeyUpEnter(event, this.onRent)}
         >
           <PropertyImage loading={loading} liked={liked} />
         </div>

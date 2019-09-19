@@ -8,19 +8,22 @@ import util from 'util';
 export default () => {
   const private_key_wif = process.env.API_SERVER_PRIVATE_KEY
   const api = Router()
-  console.log(json)
 
   const decodeWebauthnPublicKey = (webauthnPublicKey) => {
     const attestationBuffer = base64url.toBuffer(webauthnPublicKey.attestationObject)
-    const attestation  = cbor.decodeAllSync(attestationBuffer)[0]
+    const attestation = cbor.decodeFirstSync(attestationBuffer)
+    const authdata = attestation.authData
+    const flags = authdata.readUInt8(32)
+    const credentialIDLength = authdata.readUInt16BE(53)
+    const credentialID = authdata.slice(55, 55 + credentialIDLength)
+    const COSEPublicKeyBuffer = authdata.slice( 55 + credentialIDLength )
+    const COSEPublicKey = cbor.decodeFirstSync(COSEPublicKeyBuffer)
 
-    const flags = attestation.authData.readUInt8(32)
-    const credentialIDLength = attestation.authData.readUInt16BE(53)
-    const credentialID = attestation.authData.slice(55, credentialIDLength)
-    const COSEPublicKeyBuffer = attestation.authData.slice( 55 + credentialIDLength )
-    const COSEPublicKey = cbor.decodeAllSync(COSEPublicKeyBuffer)[0]
+    console.log(COSEPublicKey);
     const x   = COSEPublicKey.get(-2)
     const y   = COSEPublicKey.get(-3)
+    console.log(Buffer.from(x).toString('hex'))
+    console.log(Buffer.from(y).toString('hex'))
 
     const rpId = 'localhost'
     const presence = ((flags)=>{
@@ -32,14 +35,15 @@ export default () => {
         return 0
     })(flags)
 
-    const eosioPubkey = Buffer.allocUnsafe(45)
-    eosioPubkey.writeInt8(2, 0)                   // WebAuthn pubkey
-    eosioPubkey.writeInt8((y[31] & 1) ? 3 : 2, 1) // solution hint for compact key
-    x.copy(eosioPubkey, 2, 0, 32)                 // ECC x
-    eosioPubkey.writeInt8(presence, 35)           // presence enum
-    eosioPubkey.writeInt8(9, 36)                  // varInt length of rpId
-    eosioPubkey.write(rpId, 37)                   // rpId
+    const ser = new Serialize.SerialBuffer({textEncoder: new util.TextEncoder(), textDecoder: new util.TextDecoder()})
+    ser.push(2)
+    ser.push((y[31] & 1) ? 3 : 2)
+    ser.pushArray(x)
+    ser.push(presence)
+    ser.pushString(rpId)
+    const eosioPubkey = ser.asUint8Array()
 
+    console.log(Buffer.from(eosioPubkey).toString('hex'))
     return {eosioPubkey, credentialID}
   }
 
@@ -48,14 +52,11 @@ export default () => {
   api.post( '/generateRentChallenge', json(), (req, resp) => {
     const name = req.body.accountName
     const propertyName = req.body.propertyName
-
-    console.log(users[name].eosioPubkey.toString('hex'))
-
     const namePairBuffer = new Serialize.SerialBuffer({textEncoder: new util.TextEncoder(), textDecoder: new util.TextDecoder()})
     namePairBuffer.pushName(name)
     namePairBuffer.pushName(propertyName)
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
-    const sigDigest = ecc.sha256(sigData)
+    const sigDigest = Buffer.from(ecc.sha256(sigData), 'hex')
     const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
