@@ -235,16 +235,17 @@ assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc
 
 # Register tropical manifest
 # If running in Gitpod, we need to alter the URLs
+CONTRACT_NAME="tropical"
+MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""rent"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""check2fa"\"" }]"
 if [ -z "$RUNNING_IN_GITPOD" ]; then
-  assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+  APP_DOMAIN="http://localhost:3000"
+  APPMETA="http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
 else
   GP_URL=$(gp url 8000)
-  CONTRACT_NAME="tropical"
   APP_DOMAIN="${GP_URL}"
   APPMETA="${GP_URL}/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
-  MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
-  assert_register_manifest $CONTRACT_NAME $APP_DOMAIN $APPMETA "$MANIFEST"
 fi
+assert_register_manifest $CONTRACT_NAME $APP_DOMAIN $APPMETA "$MANIFEST"
 
 echo "All done initializing the blockchain"
 
