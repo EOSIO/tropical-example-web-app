@@ -49,6 +49,30 @@ function start_wallet {
   cleos wallet import --private-key $SYSTEM_ACCOUNT_PRIVATE_KEY
 }
 
+# $1 account name
+# $2 contract directory
+# $3 wasm file name
+# $4 abi file name
+function setcode {
+  retry_count="4"
+
+  while [ $retry_count -gt 0 ]; do
+    cleos set contract $1 $2 $3 $4 -p $1@active
+    if [ $? -eq 0 ]; then
+      break
+    fi
+
+    echo "setcode failed retrying..."
+    sleep 1s
+    retry_count=$[$retry_count-1]
+  done
+
+  if [ $retry_count -eq 0 ]; then
+    echo "setcode failed too many times, bailing."
+    exit 1
+  fi
+}
+
 # $1 - parent folder where smart contract directory is located
 # $2 - smart contract name
 # $3 - account name
@@ -69,7 +93,7 @@ function deploy_system_contract {
   cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
-  cleos set contract $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi" -p $3@active
+  setcode $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi"
 }
 
 # $1 - account name
@@ -104,7 +128,7 @@ function deploy_app_contract {
   cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
-  cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
+  setcode $2 "$CONTRACTS_DIR/$1/" "$1.wasm" "$1.abi"
 
   # Set the root of trust for the contract
   cleos push action $2 setsrvkey '["'"$TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY"'"]' -p $2
@@ -157,6 +181,7 @@ if [ -z "$NODEOS_RUNNING" ]; then
   --http-server-address=0.0.0.0:8888 \
   --access-control-allow-origin=* \
   --contracts-console \
+  --max-transaction-time=100000 \
   --verbose-http-errors &
 fi
 
