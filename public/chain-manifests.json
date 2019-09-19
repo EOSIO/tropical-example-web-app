@@ -11,6 +11,14 @@
           {
             "contract": "tropical",
             "action": "like"
+          },
+          {
+            "contract": "tropical",
+            "action": "rent"
+          },
+          {
+            "contract": "tropical",
+            "action": "check2fa"
           }
         ]
       }

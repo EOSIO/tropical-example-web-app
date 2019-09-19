@@ -35,14 +35,12 @@ const decodeWebauthnSignature = (assertion, key) => {
       throw new Error('Signature has bad s marker')
   const s = fixup(der.getUint8Array(der.get()))
 
+  const pubkeyData = Numeric.stringToPublicKey(key).data.subarray(0, 33)
   const e = new ec('p256');
-  const pubKey = e.keyFromPublic(Numeric.stringToPublicKey(key).data.subarray(0, 33)).getPublic();
-
-  const whatItReallySigned = new Serialize.SerialBuffer()
-  whatItReallySigned.pushArray(new Uint8Array(assertion.authenticatorData))
-  whatItReallySigned.pushArray(ecc.sha256(assertion.clientDataJSON))
-  const hash = ecc.sha256(whatItReallySigned.asUint8Array().slice())
-  const recid = e.getKeyRecoveryParam(hash, new Uint8Array(assertion.signature), pubKey)
+  const pubKey = e.keyFromPublic(pubkeyData).getPublic();
+  const signedData = Buffer.concat([Buffer.from(assertion.authenticatorData), Buffer.from(ecc.sha256(Buffer.from(assertion.clientDataJSON)), 'hex')])
+  const hash = Buffer.from(ecc.sha256(signedData), 'hex')
+  const recid = e.getKeyRecoveryParam(hash, Buffer.from(assertion.signature), pubKey)
   
   const sigData = new Serialize.SerialBuffer()
   sigData.push(recid + 27 + 4)
@@ -55,6 +53,7 @@ const decodeWebauthnSignature = (assertion, key) => {
       type: Numeric.KeyType.wa,
       data: sigData.asUint8Array().slice(),
   })
+  console.log(sig)
   return sig;
 }
 
@@ -136,9 +135,8 @@ export const signRentChallenge = async(accountName, propertyName, challenge) => 
   challengeBuffer.pushName(accountName)
   challengeBuffer.pushName(propertyName)
   challengeBuffer.pushPublicKey(challenge.userKey)
-  const sigDigest = ecc.sha256(challengeBuffer.asUint8Array())
-
-  console.log(challenge)
+  const sigData = challengeBuffer.asUint8Array()
+  const sigDigest = Buffer.from(ecc.sha256(sigData), 'hex')
   const getCredentialOptions = {
     publicKey: {
       timeout: 60000,
@@ -146,11 +144,9 @@ export const signRentChallenge = async(accountName, propertyName, challenge) => 
         id: base64url.toBuffer(challenge.credentialID),
         type: 'public-key',
       }],
-      challenge: Buffer.from(sigDigest, 'hex'),
+      challenge: sigDigest,
     },
   }
-
-  console.log(getCredentialOptions)
 
   const webauthnResp = await navigator.credentials.get(getCredentialOptions)
   return decodeWebauthnSignature(webauthnResp.response, challenge.userKey)
