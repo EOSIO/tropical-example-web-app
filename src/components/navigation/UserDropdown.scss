@@ -1,5 +1,9 @@
 @import "src/assets/styles/constants.scss";
 
+.user-dropdown-container > ul > li.user-dropdown-item.menu-item-with-icon {
+  margin: 1rem 0 0 0.2rem;
+}
+
 .user-dropdown-container {
   position: relative;
   background-color: white;
@@ -12,16 +16,24 @@
   z-index: 1;
   cursor: pointer;
 
+  ul {
+    padding-inline-start: 0px;
+  }
+
   li {
     &.user-dropdown-item {
-      display: inline-block;
+      display: block;
       margin: 0 0 0 0;
       font-weight: normal;
       color: black;
     }
   }
 
-
+  .menu-item-icon-left {
+    height: 14px;
+    width: 14px;
+    margin: 0px 0.5rem;
+  }
 
   &:after {
     content: '';
