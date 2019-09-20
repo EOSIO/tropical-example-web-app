@@ -11,6 +11,7 @@ import { onKeyUpEnter } from 'utils/keyPress'
 
 import likeSvg from 'assets/images/heart/heart.svg'
 import rentSvg from 'assets/images/money-bag.svg'
+import rentingSvg from 'assets/images/renting.svg'
 
 class Property extends React.Component {
   static contextType = UALContext
@@ -95,7 +96,7 @@ class Property extends React.Component {
             onClick={this.onRent}
             onKeyUp={event => onKeyUpEnter(event, this.onRent)}
           >
-            <img src={rentSvg} alt='rent '/>
+            <img src={rented ? rentingSvg : rentSvg} alt='rent '/>
             {rented && !loading ? 'Renting' : 'Rent'}
           </span>
           <span
