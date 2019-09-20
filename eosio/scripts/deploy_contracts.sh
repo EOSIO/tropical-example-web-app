@@ -49,6 +49,18 @@ function start_wallet {
   cleos wallet import --private-key $SYSTEM_ACCOUNT_PRIVATE_KEY
 }
 
+function post_preactivate {
+  curl -X POST http://127.0.0.1:8888/v1/producer/schedule_protocol_feature_activations -d '{"protocol_features_to_activate": ["0ec7e080177b2c02b278d5088611686b49d739925a92d9bfcacd7fc6b74053bd"]}'
+}
+
+# $1 feature disgest to activate
+function activate_feature {
+  cleos push action eosio activate '["'"$1"'"]' -p eosio
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi
+}
+
 # $1 account name
 # $2 contract directory
 # $3 wasm file name
@@ -175,7 +187,7 @@ if [ -z "$NODEOS_RUNNING" ]; then
   --data-dir $BLOCKCHAIN_DATA_DIR \
   --config-dir $BLOCKCHAIN_CONFIG_DIR \
   --http-validate-host=false \
-  --plugin eosio::producer_plugin \
+  --plugin eosio::producer_api_plugin \
   --plugin eosio::chain_api_plugin \
   --plugin eosio::http_plugin \
   --http-server-address=0.0.0.0:8888 \
@@ -232,6 +244,9 @@ if [ ! -z "$RUNNING_IN_GITPOD" ]; then
   cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/tropical/* $CONTRACTS_DIR/tropical/
 fi
 
+# preactivate concensus upgrades
+post_preactivate
+
 # Create accounts and deploy contracts
 # eosio.assert
 create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
@@ -244,6 +259,9 @@ deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 create_account eosio.token $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
 deploy_system_contract eosio.contracts/contracts eosio.token eosio.token
 issue_sys_tokens
+
+# activate Webauthn support
+activate_feature "4fca8bd82bbd181e714e283f83e1b45d95ca5af40fb89ad3977b653c448f78c2"
 
 # tropical
 create_account tropical $TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY $TROPICAL_EXAMPLE_ACCOUNT_PRIVATE_KEY
