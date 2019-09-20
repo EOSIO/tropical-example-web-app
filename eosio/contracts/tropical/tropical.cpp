@@ -34,18 +34,13 @@ CONTRACT tropical : public contract {
        * @return
        */
       ACTION rent( name user, name property ) {
-         print("processing rent");
          // enforce that the check2fa action is the first CFA
          //
          auto check2fa_action = get_action(0, 0);
 
-         print("got action");
-
          // unpack the first two parameters
          //
          auto second_factor_params = unpack<std::tuple<name, name, public_key>>(check2fa_action.data);
-
-         print("unpacked params");
 
          // validate that the 2FA was properly sent to this contract
          //
@@ -60,7 +55,6 @@ CONTRACT tropical : public contract {
          check(std::get<0>(second_factor_params) == user, "Malformed 2FA action, wrong user");
          check(std::get<1>(second_factor_params) == property, "Malfomed 2FA action, wrong property");
 
-         print("fetching server key");
          // finally validate that the root of trust, the server_key, matches the chain state
          // this was not possible in a context free action
          //
@@ -91,29 +85,23 @@ CONTRACT tropical : public contract {
          // concatenate the serialized user name, property name, and user public key
          // as the "challenge" that the server would have signed
          //
-         print("packing challenge...");
          auto challenge = pack(std::forward_as_tuple(user, property, user_key));
-         print("challenge packed!");
 
          // hash the "challenge" into a signature digest that both the server and the user's WebAuthn authenticator
          // will sign in order to prove to the chain that there was a valid second factor ceremony
          //
          auto signature_digest = sha256(challenge.data(), challenge.size());
-print("digest calculated!");
 
          // verify the provided signature from the server, this is something only an entity in possession of the
          // private `server_key` can have properly generated
          //
          assert_recover_key(signature_digest, server_auth, server_key);
-print("server key validated!");
 
          // verify the provided signature from the bearer, this is something only an entity in possession of the
          // private `user_key` can have properly generated and the `user_key` is attested to by the `server_key`
          // via the challenge digest
          //
          assert_recover_key(signature_digest, bearer_auth, user_key);
-
-         print("challenge validated");
       }
 
       /**
