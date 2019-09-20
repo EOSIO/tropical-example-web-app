@@ -9,6 +9,9 @@ import { generateTransaction, generateRentTransaction, transactionConfig } from 
 import { generateRentChallenge, signRentChallenge } from 'utils/webauthn'
 import { onKeyUpEnter } from 'utils/keyPress'
 
+import likeSvg from 'assets/images/heart/heart.svg'
+import rentSvg from 'assets/images/money-bag.svg'
+
 class Property extends React.Component {
   static contextType = UALContext
 
@@ -27,6 +30,7 @@ class Property extends React.Component {
     const { login, displayError } = this.props
     // Via static contextType = UALContext, access to the activeUser object on this.context is now available
     const { activeUser } = this.context
+    console.info('activeUser:', activeUser)
     if (activeUser) {
       this.setState({ loading: true })
       try {
@@ -68,7 +72,7 @@ class Property extends React.Component {
   }
 
   render() {
-    const { loading, liked } = this.state
+    const { loading, liked, rented } = this.state
 
     return (
       <div className='property-container'>
@@ -83,7 +87,28 @@ class Property extends React.Component {
         </div>
         <div className='property-info property-info-1' />
         <div className='property-info property-info-2' />
-        <div className='property-info property-info-3' />
+        <div className='property-info property-info-3'>
+          <span
+            className={`button rent-button ${rented && !loading ? 'active' : ''}`}
+            tabIndex={0}
+            role='button'
+            onClick={this.onRent}
+            onKeyUp={event => onKeyUpEnter(event, this.onRent)}
+          >
+            <img src={rentSvg} alt='rent '/>
+            {rented && !loading ? 'Renting' : 'Rent'}
+          </span>
+          <span
+            className={`button like-button ${liked && !loading ? 'active' : ''}`}
+            tabIndex={0}
+            role='button'
+            onClick={this.onLike}
+            onKeyUp={event => onKeyUpEnter(event, this.onLike)}
+          >
+            <img src={likeSvg} alt='like'/>
+            {liked && !loading ? 'Liked' : 'Like'}
+          </span>
+        </div>
       </div>
     )
   }
