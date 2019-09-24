@@ -24,7 +24,8 @@ class UserDropdown extends React.Component {
     const { logout, enroll } = this.props;
     const { enrolled } = this.state;
     const doEnroll = () => {
-      enroll(() => this.setState({enrolled: true}))
+      // enroll(() => this.setState({enrolled: true}))
+      this.setState({enrolled: true})
     }
     return (
       <div
@@ -38,10 +39,11 @@ class UserDropdown extends React.Component {
                 onClick={doEnroll}
                 onKeyUp={event => onKeyUpEnter(event, doEnroll)}
               >
-                <img src={privacyIcon} className='menu-item-icon-left' alt='' />
+                <img src={privacyIcon} className='menu-item-icon-left' alt='privacy' />
                 <span>Enable WebAuthn 2FA</span>
               </li>
-            : <li className='user-dropdown-item'>
+            : <li className='user-dropdown-item menu-item-with-icon'>
+                <img src={privacyIcon} className='menu-item-icon-left' alt='privacy' />
                 WebAuthn 2FA Enabled!
               </li>
           }
