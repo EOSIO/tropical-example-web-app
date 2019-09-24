@@ -24,8 +24,7 @@ class UserDropdown extends React.Component {
     const { logout, enroll } = this.props;
     const { enrolled } = this.state;
     const doEnroll = () => {
-      // enroll(() => this.setState({enrolled: true}))
-      this.setState({enrolled: true})
+      enroll(() => this.setState({enrolled: true}))
     }
     return (
       <div
