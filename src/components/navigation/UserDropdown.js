@@ -13,7 +13,7 @@ class UserDropdown extends React.Component {
 
   static propTypes = {
     logout: func.isRequired,
-    enroll: func.isRequired
+    enroll: func.isRequired,
   }
 
   state = {

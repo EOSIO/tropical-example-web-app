@@ -32,6 +32,7 @@ class App extends React.Component {
     showResults: false,
     showNotificationBar: true,
     error: null,
+    enrolled: false,
   }
 
   componentDidUpdate(prevProps) {
@@ -80,6 +81,7 @@ class App extends React.Component {
         const accountName = await activeUser.getAccountName()
         const pubkey = await generateWebauthnPubkey(accountName)
         await enrollWebauthnPubkey(accountName, pubkey)
+        this.setState({enrolled: true})
         onSuccess();
       } catch (err) {
         this.displayError(err)
@@ -101,7 +103,7 @@ class App extends React.Component {
         { showNotificationBar && <NotificationBar hideNotificationBar={hideNotificationBar} error={error} /> }
         <NavigationBar routeToLanding={routeToLanding} login={login} enroll={this.enroll} />
         { showResults
-          ? <ResultsPage routeToLanding={routeToLanding} login={login} displayError={this.displayError} />
+          ? <ResultsPage routeToLanding={routeToLanding} login={login} displayError={this.displayError} enrolled={this.state.enrolled} />
           : <LandingPage routeToResults={routeToResults} />
         }
       </div>
