@@ -10258,10 +10258,10 @@ ual-lynx@0.2.2:
     eosjs "20.0.0"
     universal-authenticator-library "0.1.4"
 
-ual-reactjs-renderer@0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/ual-reactjs-renderer/-/ual-reactjs-renderer-0.1.6.tgz#e5cd19522aeaa890930d4bdcc95ecd66089c1ae7"
-  integrity sha512-CLqkNzOoo3s9bUPJRymxFzUQwoRdo4JbT0H0ctqJPGokZryOQ+RQIW4DKj7rLwVXRPo+2CXS6wEN+CvZH1E0GQ==
+ual-reactjs-renderer@0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/ual-reactjs-renderer/-/ual-reactjs-renderer-0.1.7.tgz#d01d3798482a508a2bbcf44b99a25e63271d773a"
+  integrity sha512-Kjs6G8r0hlo9Uu6IW0I0H4yA0grqxGr1c/wbk85S77eox54itaQOOm3e5iFuPyBYtgNy7rnpI0r5XYQEDexjKQ==
   dependencies:
     i18next "14.0.1"
     i18next-browser-languagedetector "2.2.4"
