@@ -16,6 +16,10 @@ body {
   font-size: 16px;
   border: none;
 
+  *:focus {
+    outline: none;
+  }
+
   @media screen and (min-width: $max-content-width) {
     font-size: 18px;
   }
