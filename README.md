@@ -337,6 +337,16 @@ Tropical Example follows the Ricardian Specification by providing the following:
 
 _If you need information not covered in this guide, you can reference the Ricardian Specification [here](https://github.com/EOSIO/ricardian-spec)._
 
+## WebAuthn
+
+Tropical Example implements WebAuthn as a 2nd factor.
+
+After logging in, under the user menu, you'll find an option to "enroll" a 2FA device. Use this option in conjunction with your device's build-in biometric scanner, secure element, or external hardware key to enroll a key with the Tropical Example.
+
+Then, on the Properties Search Results page, you'll see a 'Rent' button. Where liking something is a relatively low-risk activity, the Rent button represents a real-world use case for commiting yourself to rent that property. In this case where money is on the line, the app will request you sign for the Rent action with the enrolled key.
+
+Read more about this example and technology [here -- REQUIRE LINK to blog or Release Notes of some kind](https://www.google.com)
+
 ## Running Tropical Example
 
 ### Required Tools
@@ -391,10 +401,10 @@ You can view the contract in the [eosio/contracts directory](https://github.com/
 ### Running Frontend
 
 ```bash
-yarn start
+HTTPS=true yarn start
 ```
 This command runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [https://localhost:3000](https://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.
 
