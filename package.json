@@ -29,7 +29,7 @@
     "react-scripts": "^3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node scripts/copyDefaultEnv.js && react-scripts start",
     "build": "react-scripts build",
     "up": "docker-compose up",
     "lint": "eslint \"src/**/*.js{,?}\"",
