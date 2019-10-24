@@ -1,11 +1,16 @@
 image:
   file: .gitpod.dockerfile
 
+github:
+  prebuilds:
+    branches: true
+
 ports:
 - port: 3000
-  onOpen: open-preview
-- port: 8000
   onOpen: ignore
+# We open this port because it's the port that nginx is serving and which is federating the other services (web app and chain in this case)
+- port: 8000
+  onOpen: open-preview
 - port: 8080
   onOpen: ignore
 - port: 8888
@@ -16,7 +21,8 @@ ports:
 tasks:
 - name: WebApp
   init: yarn
-  command: yarn start
+  # We need the $PWD here because this path is not resolved from the current folder but from the path nginx runs from.  $PWD is the workspace path where the copy of the repo files is
+  command: nginx -c $PWD/nginx.conf; yarn start
 - name: Blockchain
   before: cleos wallet unlock --password </password
   command: nodeos --config-dir ~/eosio/chain/config --data-dir ~/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console

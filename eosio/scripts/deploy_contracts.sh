@@ -182,7 +182,7 @@ assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:30
 echo "All done initializing the blockchain"
 
 if [[ -z $NODEOS_RUNNING ]]; then
-  # Shut down Nodeos, sleep for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts
+  echo "Shut down Nodeos, sleeping for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts"
   sleep 2s
   kill %1
   fg %1

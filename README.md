@@ -9,6 +9,12 @@ EOSIO Labs repositories are experimental.  Developers in the community are encou
 
 ## Overview <!-- omit in toc -->
 
+### Try it out in GitPod ###
+
+Gitpod [launches the app](https://gitpod.io/#https://github.com/EOSIO/tropical-example-web-app) for you.  It starts the required blockchain in the background, launches the web server, and opens a preview window.
+NOTE: There are several times during startup it might look like startup hangs, namely... near the end of the docker build, once the IDE comes up, and then once the preview shows.
+Read more about [Gitpod workspaces here](https://gitpod.io)
+
 The following open source repositories are utilized in Tropical Example:
 
 * Using the [Universal Authenticator Library (UAL)](https://github.com/EOSIO/universal-authenticator-library/) for quick and easy integration with multiple authentication providers (wallets).
