@@ -1,0 +1,22 @@
+image:
+  file: .gitpod.dockerfile
+
+ports:
+- port: 3000
+  onOpen: open-preview
+- port: 8000
+  onOpen: ignore
+- port: 8080
+  onOpen: ignore
+- port: 8888
+  onOpen: ignore
+- port: 9876
+  onOpen: ignore
+
+tasks:
+- name: WebApp
+  init: yarn
+  command: yarn start
+- name: Blockchain
+  before: cleos wallet unlock --password </password
+  command: nodeos --config-dir ~/eosio/chain/config --data-dir ~/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console
