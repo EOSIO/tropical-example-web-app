@@ -20,9 +20,16 @@ ports:
 
 tasks:
 - name: WebApp
-  init: yarn
+  init: chmod +x $PWD/eosio/scripts/replaceUrlInAppManifest.sh
+  # init: $PWD/eosio/scripts/replaceUrlInAppManifest.sh
+  # init: yarn
+  # command: alias ls='ls -al --color'
   # We need the $PWD here because this path is not resolved from the current folder but from the path nginx runs from.  $PWD is the workspace path where the copy of the repo files is
-  command: nginx -c $PWD/nginx.conf; yarn start
+  # command: nginx -c $PWD/nginx.conf; yarn start
+  command: ls -al --color $PWD/eosio/scripts
 - name: Blockchain
-  before: cleos wallet unlock --password </password
-  command: nodeos --config-dir ~/eosio/chain/config --data-dir ~/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console
+  init: chmod +x $PWD/eosio/scripts/deploy_contracts.sh
+  # before: cleos wallet unlock --password </password
+  # command: nodeos --config-dir ~/eosio/chain/config --data-dir ~/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console
+- name: Init Blockchain
+  # init: $PWD/eosio/scripts/deploy_contracts.sh

@@ -33,10 +33,13 @@ RUN echo "INSTALLING EOSIO.ASSERT CONTRACT" \
  && rm -rf /eosio.assert \
  && rm ./v0.1.0.tar.gz
 
-RUN echo "COPYING APP CONTRACTS" \
+RUN echo "COPYING APP CONTRACTS AND SCRIPTS" \
 # This must be done here (and not during gitpod because user won't have sufficient privileges then)
  && git clone https://github.com/EOSIO/tropical-example-web-app.git \
  && cp -R ./tropical-example-web-app/eosio/* /opt/eosio/bin/ \
+ && chmod +x /opt/eosio/bin/scripts/deploy_contracts.sh \
+ && cp ./tropical-example-web-app/public/chain-manifests.json /opt/eosio/bin/contracts/tropical/ \
+ && cp ./tropical-example-web-app/public/app-metadata.json /opt/eosio/bin/contracts/tropical/ \
  && rm -rf ./tropical-example-web-app
 
 RUN echo "COPYING EOSIO.TOKEN RICARDIAN CONTRACT" \
@@ -44,4 +47,3 @@ RUN echo "COPYING EOSIO.TOKEN RICARDIAN CONTRACT" \
 
 RUN echo "DEPLOYING CONTRACTS" \
  && mkdir -p "/opt/eosio/bin/config-dir"
-RUN ["/bin/bash", "-c", "/bin/bash /opt/eosio/bin/scripts/deploy_contracts.sh"]
