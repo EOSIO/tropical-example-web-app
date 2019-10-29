@@ -47,3 +47,5 @@ RUN echo "COPYING EOSIO.TOKEN RICARDIAN CONTRACT" \
 
 RUN echo "DEPLOYING CONTRACTS" \
  && mkdir -p "/opt/eosio/bin/config-dir"
+
+RUN ["/bin/bash", "-c", "/bin/bash /opt/eosio/bin/scripts/deploy_contracts.sh"]
