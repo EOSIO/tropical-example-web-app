@@ -26,5 +26,5 @@ tasks:
 - name: Blockchain
   before: cleos wallet unlock --password </password
   command: nodeos --config-dir ~/eosio/chain/config --data-dir ~/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console
-# - name: Init Blockchain
-  # init: gp await-port 8888 && $PWD/eosio/scripts/deploy_contracts.sh
+- name: Init Blockchain
+  init: gp await-port 3000 && $PWD/eosio/scripts/replaceManifestOnChain.sh
