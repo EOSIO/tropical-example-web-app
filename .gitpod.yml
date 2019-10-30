@@ -11,6 +11,8 @@ ports:
 # We open this port because it's the port that nginx is serving and which is federating the other services (web app and chain in this case)
 - port: 8000
   onOpen: open-preview
+- port: 8900
+  onOpen: ignore
 - port: 8080
   onOpen: ignore
 - port: 8888
@@ -20,11 +22,9 @@ ports:
 
 tasks:
 - name: WebApp
-  init: $PWD/eosio/scripts/replaceUrlInAppManifest.sh && yarn
+  init: yarn
   # We need the $PWD here because this path is not resolved from the current folder but from the path nginx runs from.  $PWD is the workspace path where the copy of the repo files is
   command: alias ls='ls -al --color'; nginx -c $PWD/nginx.conf; yarn start
 - name: Blockchain
-  before: cleos wallet unlock --password </password
-  command: nodeos --config-dir ~/eosio/chain/config --data-dir ~/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console
-- name: Init Blockchain
-  init: gp await-port 3000 && $PWD/eosio/scripts/replaceManifestOnChain.sh
+  before: alias ls='ls -al --color' && $PWD/eosio/scripts/replaceUrlInAppManifest.sh && $PWD/eosio/scripts/deploy_contracts.sh && cleos wallet unlock --password </password
+  command: nodeos --config-dir $PWD/eosio/chain/config --data-dir $PWD/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console

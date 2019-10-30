@@ -14,13 +14,14 @@ EXAMPLE_ACCOUNT_PUBLIC_KEY="EOS6TWM95TUqpgcjYnvXSK5kBsi6LryWRxmcBaULVTvf5zxkaMYW
 
 NODEOS_RUNNING=$1
 
-# Set PATH
-PATH="$PATH:/opt/eosio/bin:/opt/eosio/bin/scripts"
+ROOT_DIR="/home/gitpod"
 
-ROOT_DIR="/opt/eosio"
+# Set PATH
+PATH="$PATH:$ROOT_DIR/bin:$ROOT_DIR/bin/scripts"
+
 WALLET_DIR="$ROOT_DIR/wallet/"
 CONFIG_DIR="$ROOT_DIR/bin/config-dir"
-CONTRACTS_DIR="$ROOT_DIR/bin/contracts"
+CONTRACTS_DIR="$ROOT_DIR/contracts"
 
 function start_wallet {
   echo "Starting the wallet"
@@ -51,7 +52,7 @@ function deploy_system_contract {
   eosio-cpp -abigen "$2.cpp" -o "$2.wasm" -I ../include
 
   # Move back into the executable directory
-  cd /opt/eosio/bin/
+  cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
   cleos set contract $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi" -p $3@active
@@ -82,7 +83,7 @@ function deploy_app_contract {
     eosio-cpp -abigen "$1.cpp" -o "$1.wasm" -I ./
   ) &&
   # Move back into the executable directory
-  cd /opt/eosio/bin/
+  cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
   cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
@@ -117,12 +118,16 @@ function assert_register_manifest {
 }
 
 # Move into the executable directory
-cd /opt/eosio/bin/
+cd $ROOT_DIR/bin/
+mkdir -p $CONFIG_DIR
+mkdir -p $ROOT_DIR/eosio/chain/data
+mkdir -p $ROOT_DIR/eosio/chain/config
 
 if [[ -z $NODEOS_RUNNING ]]; then
   echo "Starting the chain for setup"
   nodeos -e -p eosio \
-  --data-dir /root/.local/share \
+  --data-dir $ROOT_DIR/eosio/chain/data \
+  --config-dir $ROOT_DIR/eosio/chain/config \
   --http-validate-host=false \
   --plugin eosio::producer_plugin \
   --plugin eosio::chain_api_plugin \
@@ -150,6 +155,37 @@ echo "Creating accounts and deploying contracts"
 
 start_wallet
 
+
+
+echo "INSTALLING CONTRACTS"
+mkdir -p $CONTRACTS_DIR
+mkdir -p $ROOT_DIR/downloads
+
+echo "INSTALLING EOSIO.CONTRACTS"
+wget https://github.com/EOSIO/eosio.contracts/archive/v1.6.0.tar.gz
+mkdir -p $ROOT_DIR/downloads/eosio.contracts
+mkdir -p $CONTRACTS_DIR/eosio.contracts
+tar xvzf ./v1.6.0.tar.gz -C $ROOT_DIR/downloads/eosio.contracts
+mv $ROOT_DIR/downloads/eosio.contracts/eosio.contracts-1.6.0/* $CONTRACTS_DIR/eosio.contracts
+rm -rf $ROOT_DIR/downloads/eosio.contracts
+rm ./v1.6.0.tar.gz
+
+echo "INSTALLING EOSIO.ASSERT CONTRACT"
+wget https://github.com/EOSIO/eosio.assert/archive/v0.1.0.tar.gz
+mkdir -p $ROOT_DIR/downloads/eosio.assert
+mkdir -p $CONTRACTS_DIR/eosio.assert
+tar xvzf ./v0.1.0.tar.gz -C $ROOT_DIR/downloads/eosio.assert
+mv $ROOT_DIR/downloads/eosio.assert/eosio.assert-0.1.0/* $CONTRACTS_DIR/eosio.assert
+rm -rf $ROOT_DIR/downloads/eosio.assert
+rm ./v0.1.0.tar.gz
+
+echo "COPYING CONTRACTS FROM REPO"
+cp $PWD/eosio/contracts/eosio.token/eosio.token.contracts.md $CONTRACTS_DIR/eosio.contracts/contracts/eosio.token/src
+mkdir -p $CONTRACTS_DIR/tropical
+cp $PWD/eosio/contracts/tropical/* $CONTRACTS_DIR/tropical/
+
+
+
 # Create accounts and deploy contracts
 # eosio.assert
 create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
@@ -176,14 +212,29 @@ transfer_sys_tokens example
 # Set chain
 assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f" "Local Chain" "8ae3ccb19f3a89a8ea21f6c5e18bd2bc8f00c379411a2d9319985dad2db6243e"
 # Register tropical manifest
-assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+# assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+
+
+
+GP_URL=$(gp url)
+CONTRACT_NAME="tropical"
+APP_DOMAIN="${GP_URL}"
+APPMETA="${GP_URL}/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
+MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+assert_register_manifest $CONTRACT_NAME $APP_DOMAIN $APPMETA "$MANIFEST"
+
+# Delete the manifest the default/localhost manifest the scipts put on the change
+# and replace with a manifest with the proper URL for GitPod
+# cleos push action eosio.assert del.manifest "[ "bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" ]" -p $CONTRACT_NAME@active
+# cleos push action eosio.assert add.manifest "[ "\""$CONTRACT_NAME"\"", "\""$APP_DOMAIN"\"", "\""$APPMETA"\"", $MANIFEST ]" -p $CONTRACT_NAME@activ
+
 
 
 echo "All done initializing the blockchain"
 
-if [[ -z $NODEOS_RUNNING ]]; then
-  echo "Shut down Nodeos, sleeping for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts"
-  sleep 2s
-  kill %1
-  fg %1
-fi
+# if [[ -z $NODEOS_RUNNING ]]; then
+#   echo "Shut down Nodeos, sleeping for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts"
+#   sleep 2s
+#   kill %1
+#   fg %1
+# fi
