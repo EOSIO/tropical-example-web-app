@@ -18,13 +18,14 @@ import * as serviceWorker from './serviceWorker'
 
 const appName = 'Tropical Example'
 
-const isGitPod = process.env.IS_GITPOD === 'true'
+console.info('index.js process.env:', process.env)
+const isGitpod = process.env.REACT_APP_IS_GITPOD === 'true'
 
 // Chains
 const chain = {
   chainId: process.env.REACT_APP_CHAIN_ID,
   rpcEndpoints: [
-    isGitPod ? {
+    isGitpod ? {
       protocol: window.location.protocol.replace(/:$/, ''),
       host: window.location.host,
       port: '',

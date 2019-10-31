@@ -9,13 +9,14 @@ EOSIO Labs repositories are experimental. Developers in the community are encour
 
 ## Overview <!-- omit in toc -->
 
-### Try it out in GitPod ###
+### Try it out in Gitpod ###
 
 Gitpod [launches the app](https://gitpod.io/#https://github.com/EOSIO/tropical-example-web-app) for you. It starts the required blockchain in the background, launches the web server, and opens a preview window.
 NOTES: 
  1) There are several times during startup it might look like startup hangs, namely... near the end of the docker build, once the IDE comes up, and then once the preview shows.
- 2) Gitpod generates a dynamic URL for the browser to access the app from. This URL is needed in numerous parts of the app, so note that there is code in this repo specifically meant for Gitpod compatibility. A comment has been added in those locations to point it out.
- 2) To use Scatter in Gitpod, launch the demo in Gitpod, then go into Scatter's Networks section and add a custom network with the following settings as well as adding the account name
+ 2) Sometimes when Gitpod launches the webapp preview, it does so prematurely.  Just click the small refresh circular arrow icon in the top left of the preview window.
+ 3) Gitpod generates a dynamic URL for the browser to access the app from. This URL is needed in numerous parts of the app, so note that there is code in this repo specifically meant for Gitpod compatibility. A comment has been added in those locations to point it out.
+ 4) To use Scatter in Gitpod, launch the demo in Gitpod, then go into Scatter's Networks section and add a custom network with the following settings as well as adding the account name. Note that these settings will need to be updated each time you launch the demo in Gitpod (because the URL will be different each time).
  -Network Settings
   - Host: <the URL Gitpod generated to view the web page; it's what's in the address bar of the browser it opened for you>
   - Protocol: https
