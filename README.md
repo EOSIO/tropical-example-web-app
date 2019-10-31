@@ -5,14 +5,24 @@ Tropical Example is a mock application for renting properties. It will be refere
 
 ## About EOSIO Labs <!-- omit in toc -->
 
-EOSIO Labs repositories are experimental.  Developers in the community are encouraged to use EOSIO Labs repositories as the basis for code and concepts to incorporate into their applications. Community members are also welcome to contribute and further develop these repositories. Since these repositories are not supported by Block.one, we may not provide responses to issue reports, pull requests, updates to functionality, or other requests from the community, and we encourage the community to take responsibility for these.
+EOSIO Labs repositories are experimental. Developers in the community are encouraged to use EOSIO Labs repositories as the basis for code and concepts to incorporate into their applications. Community members are also welcome to contribute and further develop these repositories. Since these repositories are not supported by Block.one, we may not provide responses to issue reports, pull requests, updates to functionality, or other requests from the community, and we encourage the community to take responsibility for these.
 
 ## Overview <!-- omit in toc -->
 
 ### Try it out in GitPod ###
 
-Gitpod [launches the app](https://gitpod.io/#https://github.com/EOSIO/tropical-example-web-app) for you.  It starts the required blockchain in the background, launches the web server, and opens a preview window.
-NOTE: There are several times during startup it might look like startup hangs, namely... near the end of the docker build, once the IDE comes up, and then once the preview shows.
+Gitpod [launches the app](https://gitpod.io/#https://github.com/EOSIO/tropical-example-web-app) for you. It starts the required blockchain in the background, launches the web server, and opens a preview window.
+NOTES: 
+ 1) There are several times during startup it might look like startup hangs, namely... near the end of the docker build, once the IDE comes up, and then once the preview shows.
+ 2) Gitpod generates a dynamic URL for the browser to access the app from. This URL is needed in numerous parts of the app, so note that there is code in this repo specifically meant for Gitpod compatibility. A comment has been added in those locations to point it out.
+ 2) To use Scatter in Gitpod, launch the demo in Gitpod, then go into Scatter's Networks section and add a custom network with the following settings as well as adding the account name
+ -Network Settings
+  - Host: <the URL Gitpod generated to view the web page; it's what's in the address bar of the browser it opened for you>
+  - Protocol: https
+  - Post: 443
+  - Chain ID: cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f (This is the test chainId used in the example)
+ -Adding account name
+  - After you've imported the private key from this example (see other parts of the README for those instructions), Scatter might not pull the "example" account from the network. If that's the case, in the Wallet section, if "example" doesn't show up under your imported key with a balance to the right, on a Mac, you'll hold Ctrl when you click the three horizontal dot button to the right of your imported key. Ctrl will enable a normally-hidden item called "Link Account". Click that and in the first box, type "example" and in the drop-down, select the custom network you created above.
 Read more about [Gitpod workspaces here](https://gitpod.io)
 
 The following open source repositories are utilized in Tropical Example:
@@ -54,9 +64,9 @@ The following open source repositories are utilized in Tropical Example:
 
 An Authenticator provides the ability to communicate with an authentication provider. Authentication providers generally allow users to add, modify, and delete private / public key pairs and use these key pairs to sign proposed transactions.
 
-UAL allows developers to support multiple Authenticators with only a few lines of code.  This significantly reduces the start up time of creating applications by removing the need to detect and create an interface for interacting with the Authenticators.
+UAL allows developers to support multiple Authenticators with only a few lines of code. This significantly reduces the start up time of creating applications by removing the need to detect and create an interface for interacting with the Authenticators.
 
-UAL provides users with a common login interface in which they can select the Authenticator of their choice to interact with the EOSIO protocol.  Once a user selects the Authenticator of their choice and logs in, the application developer will have access to an `activeUser` object which contains all necessary fields and functions to sign transactions and customize their user experience.
+UAL provides users with a common login interface in which they can select the Authenticator of their choice to interact with the EOSIO protocol. Once a user selects the Authenticator of their choice and logs in, the application developer will have access to an `activeUser` object which contains all necessary fields and functions to sign transactions and customize their user experience.
 
 ### Installation
 
@@ -422,6 +432,6 @@ Check out the [Contributing](./CONTRIBUTING.md) guide and please adhere to the [
 
 ## Important
 
-See LICENSE for copyright and license terms.  Block.one makes its contribution on a voluntary basis as a member of the EOSIO community and is not responsible for ensuring the overall performance of the software or any related applications.  We make no representation, warranty, guarantee or undertaking in respect of the software or any related documentation, whether expressed or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall we be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or documentation or the use or other dealings in the software or documentation. Any test results or performance figures are indicative and will not reflect performance under all conditions.  Any reference to any third party or third-party product, service or other resource is not an endorsement or recommendation by Block.one.  We are not responsible, and disclaim any and all responsibility and liability, for your use of or reliance on any of these resources. Third-party resources may be updated, changed or terminated at any time, so the information here may be out of date or inaccurate.  Any person using or offering this software in connection with providing software, goods or services to third parties shall advise such third parties of these license terms, disclaimers and exclusions of liability.  Block.one, EOSIO, EOSIO Labs, EOS, the heptahedron and associated logos are trademarks of Block.one.
+See LICENSE for copyright and license terms. Block.one makes its contribution on a voluntary basis as a member of the EOSIO community and is not responsible for ensuring the overall performance of the software or any related applications. We make no representation, warranty, guarantee or undertaking in respect of the software or any related documentation, whether expressed or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall we be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or documentation or the use or other dealings in the software or documentation. Any test results or performance figures are indicative and will not reflect performance under all conditions. Any reference to any third party or third-party product, service or other resource is not an endorsement or recommendation by Block.one. We are not responsible, and disclaim any and all responsibility and liability, for your use of or reliance on any of these resources. Third-party resources may be updated, changed or terminated at any time, so the information here may be out of date or inaccurate. Any person using or offering this software in connection with providing software, goods or services to third parties shall advise such third parties of these license terms, disclaimers and exclusions of liability. Block.one, EOSIO, EOSIO Labs, EOS, the heptahedron and associated logos are trademarks of Block.one.
 
-Wallets and related components are complex software that require the highest levels of security.  If incorrectly built or used, they may compromise users’ private keys and digital assets. Wallet applications and related components should undergo thorough security evaluations before being used.  Only experienced developers should work with this software.
+Wallets and related components are complex software that require the highest levels of security. If incorrectly built or used, they may compromise users’ private keys and digital assets. Wallet applications and related components should undergo thorough security evaluations before being used. Only experienced developers should work with this software.

@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+RUNNING_IN_GITPOD=$1
+
 set -m
 
 # CAUTION: Never use these development keys for a production account!
@@ -211,30 +213,28 @@ transfer_sys_tokens example
 # eosio.assert actions
 # Set chain
 assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f" "Local Chain" "8ae3ccb19f3a89a8ea21f6c5e18bd2bc8f00c379411a2d9319985dad2db6243e"
+
 # Register tropical manifest
-# assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
-
-
-
-GP_URL=$(gp url 8000)
-CONTRACT_NAME="tropical"
-APP_DOMAIN="${GP_URL}"
-APPMETA="${GP_URL}/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
-MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
-assert_register_manifest $CONTRACT_NAME $APP_DOMAIN $APPMETA "$MANIFEST"
-
-# Delete the manifest the default/localhost manifest the scipts put on the change
-# and replace with a manifest with the proper URL for GitPod
-# cleos push action eosio.assert del.manifest "[ "bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" ]" -p $CONTRACT_NAME@active
-# cleos push action eosio.assert add.manifest "[ "\""$CONTRACT_NAME"\"", "\""$APP_DOMAIN"\"", "\""$APPMETA"\"", $MANIFEST ]" -p $CONTRACT_NAME@activ
-
-
+# If running in GitPos, we need to alter the URLs
+if [-z "$RUNNING_IN_GITPOD"]; then
+  assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+else
+  GP_URL=$(gp url 8000)
+  CONTRACT_NAME="tropical"
+  APP_DOMAIN="${GP_URL}"
+  APPMETA="${GP_URL}/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
+  MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+  assert_register_manifest $CONTRACT_NAME $APP_DOMAIN $APPMETA "$MANIFEST"
+fi
 
 echo "All done initializing the blockchain"
 
-# if [[ -z $NODEOS_RUNNING ]]; then
-#   echo "Shut down Nodeos, sleeping for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts"
-#   sleep 2s
-#   kill %1
-#   fg %1
-# fi
+# If running in GitPos, we *don't* want to shutdown the blockchain; we'll leave it running in the terminal window.
+if [-z "$RUNNING_IN_GITPOD"]; then
+  if [[ -z $NODEOS_RUNNING ]]; then
+    echo "Shut down Nodeos, sleeping for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts"
+    sleep 2s
+    kill %1
+    fg %1
+  fi
+fi

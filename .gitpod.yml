@@ -24,7 +24,7 @@ tasks:
 - name: WebApp
   init: yarn
   # We need the $PWD here because this path is not resolved from the current folder but from the path nginx runs from.  $PWD is the workspace path where the copy of the repo files is
-  command: alias ls='ls -al --color'; nginx -c $PWD/nginx.conf; yarn start
+  command: alias ls='ls -al --color'; nginx -c $PWD/.gitpod.nginx.conf; IS_GITPOD=true; yarn start
 - name: Blockchain
   before: alias ls='ls -al --color' && $PWD/eosio/scripts/replaceUrlInAppManifest.sh && $PWD/eosio/scripts/deploy_contracts.sh && cleos wallet unlock --password </password
   command: nodeos --config-dir $PWD/eosio/chain/config --data-dir $PWD/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console
