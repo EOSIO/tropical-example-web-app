@@ -26,7 +26,7 @@ tasks:
   # We need the $PWD here because this path is not resolved from the current folder but from the path nginx runs from.  $PWD is the workspace path where the copy of the repo files is
   command: alias ls='ls -al --color'; nginx -c $PWD/.gitpod.nginx.conf; yarn startInGitpod
 - name: Blockchain
-  before: alias ls='ls -al --color' && $PWD/eosio/scripts/replaceUrlInAppManifest.sh && $PWD/eosio/scripts/deploy_contracts.sh && cleos wallet unlock --password </password
+  before: alias ls='ls -al --color' && $PWD/eosio/scripts/replaceUrlInAppManifest.sh && $PWD/eosio/scripts/deploy_contracts.sh IS_GITPOD && cleos wallet unlock --password </password
   command: nodeos --config-dir $PWD/eosio/chain/config --data-dir $PWD/eosio/chain/data -e -p eosio --plugin eosio::chain_api_plugin --contracts-console
 - name: README
   command: echo -e "\n\n\n\n\n\nPlease wait a moment while the blockchain and web app initialize.\n\n----------------------------------\n\n\n  ==>> PLEASE minimally read the section of the README (above) related to Gitpod for important instructions.\n\n\n-----------------------------\n\n\n\n\n\n"

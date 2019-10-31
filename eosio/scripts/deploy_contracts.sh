@@ -16,7 +16,13 @@ EXAMPLE_ACCOUNT_PUBLIC_KEY="EOS6TWM95TUqpgcjYnvXSK5kBsi6LryWRxmcBaULVTvf5zxkaMYW
 
 NODEOS_RUNNING=$1
 
-ROOT_DIR="/home/gitpod"
+if [ -z "$RUNNING_IN_GITPOD" ]; then
+  echo "Running locally..."
+  ROOT_DIR="/opt"
+else
+  echo "Running in Gitpod..."
+  ROOT_DIR="/home/gitpod"
+fi
 
 # Set PATH
 PATH="$PATH:$ROOT_DIR/bin:$ROOT_DIR/bin/scripts"
@@ -216,7 +222,7 @@ assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc
 
 # Register tropical manifest
 # If running in GitPos, we need to alter the URLs
-if [-z "$RUNNING_IN_GITPOD"]; then
+if [ -z "$RUNNING_IN_GITPOD" ]; then
   assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
 else
   GP_URL=$(gp url 8000)
@@ -230,7 +236,7 @@ fi
 echo "All done initializing the blockchain"
 
 # If running in GitPos, we *don't* want to shutdown the blockchain; we'll leave it running in the terminal window.
-if [-z "$RUNNING_IN_GITPOD"]; then
+if [ -z "$RUNNING_IN_GITPOD" ]; then
   if [[ -z $NODEOS_RUNNING ]]; then
     echo "Shut down Nodeos, sleeping for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts"
     sleep 2s
