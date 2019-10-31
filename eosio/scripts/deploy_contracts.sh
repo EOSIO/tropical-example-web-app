@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-RUNNING_IN_GITPOD=$1
+NODEOS_RUNNING=$1
+RUNNING_IN_GITPOD=$2
 
 set -m
 
@@ -14,22 +15,27 @@ TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY="EOS6bRs6knaaHyvpVXd5EgAPoxrZkkeDv89M1jidHCt
 EXAMPLE_ACCOUNT_PRIVATE_KEY="5KkXYBUb7oXrq9cvEYT3HXsoHvaC2957VKVftVRuCy7Z7LyUcQB"
 EXAMPLE_ACCOUNT_PUBLIC_KEY="EOS6TWM95TUqpgcjYnvXSK5kBsi6LryWRxmcBaULVTvf5zxkaMYWf"
 
-NODEOS_RUNNING=$1
-
 if [ -z "$RUNNING_IN_GITPOD" ]; then
   echo "Running locally..."
   ROOT_DIR="/opt"
+  CONTRACTS_DIR="$ROOT_DIR/eosio/bin/contracts"
+  BLOCKCHAIN_DATA_DIR=/root/.local/share
+  BLOCKCHAIN_CONFIG_DIR=/opt/eosio/bin/config-dir
 else
   echo "Running in Gitpod..."
   ROOT_DIR="/home/gitpod"
+  CONTRACTS_DIR="$ROOT_DIR/contracts"
+  BLOCKCHAIN_DATA_DIR=$ROOT_DIR/eosio/chain/data
+  BLOCKCHAIN_CONFIG_DIR=$ROOT_DIR/eosio/chain/config
 fi
+
+mkdir -p $ROOT_DIR/bin
 
 # Set PATH
 PATH="$PATH:$ROOT_DIR/bin:$ROOT_DIR/bin/scripts"
-
+GITPOD_WORKSPACE_ROOT="/workspace/tropical-example-web-app"
 WALLET_DIR="$ROOT_DIR/wallet/"
 CONFIG_DIR="$ROOT_DIR/bin/config-dir"
-CONTRACTS_DIR="$ROOT_DIR/contracts"
 
 function start_wallet {
   echo "Starting the wallet"
@@ -50,7 +56,7 @@ function deploy_system_contract {
   # Unlock the wallet, ignore error if already unlocked
   cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
 
-  echo "Deploying the $2 contract"
+  echo "Deploying the $2 contract in path: $CONTRACTS_DIR/$1/$2/src"
 
   # Move into contracts /src directory
   cd "$CONTRACTS_DIR/$1/$2/src"
@@ -128,14 +134,14 @@ function assert_register_manifest {
 # Move into the executable directory
 cd $ROOT_DIR/bin/
 mkdir -p $CONFIG_DIR
-mkdir -p $ROOT_DIR/eosio/chain/data
-mkdir -p $ROOT_DIR/eosio/chain/config
+mkdir -p $BLOCKCHAIN_DATA_DIR
+mkdir -p $BLOCKCHAIN_CONFIG_DIR
 
-if [[ -z $NODEOS_RUNNING ]]; then
+if [ -z "$NODEOS_RUNNING" ]; then
   echo "Starting the chain for setup"
   nodeos -e -p eosio \
-  --data-dir $ROOT_DIR/eosio/chain/data \
-  --config-dir $ROOT_DIR/eosio/chain/config \
+  --data-dir $BLOCKCHAIN_DATA_DIR \
+  --config-dir $BLOCKCHAIN_CONFIG_DIR \
   --http-validate-host=false \
   --plugin eosio::producer_plugin \
   --plugin eosio::chain_api_plugin \
@@ -163,36 +169,35 @@ echo "Creating accounts and deploying contracts"
 
 start_wallet
 
+if [ ! -z "$RUNNING_IN_GITPOD" ]; then
+  echo "INSTALLING CONTRACTS"
+  mkdir -p $CONTRACTS_DIR
+  mkdir -p $ROOT_DIR/downloads
 
+  echo "INSTALLING EOSIO.CONTRACTS"
+  wget https://github.com/EOSIO/eosio.contracts/archive/v1.6.0.tar.gz
+  mkdir -p $ROOT_DIR/downloads/eosio.contracts
+  mkdir -p $CONTRACTS_DIR/eosio.contracts
+  tar xvzf ./v1.6.0.tar.gz -C $ROOT_DIR/downloads/eosio.contracts
+  mv $ROOT_DIR/downloads/eosio.contracts/eosio.contracts-1.6.0/* $CONTRACTS_DIR/eosio.contracts
+  rm -rf $ROOT_DIR/downloads/eosio.contracts
+  rm ./v1.6.0.tar.gz
 
-echo "INSTALLING CONTRACTS"
-mkdir -p $CONTRACTS_DIR
-mkdir -p $ROOT_DIR/downloads
+  echo "INSTALLING EOSIO.ASSERT CONTRACT"
+  wget https://github.com/EOSIO/eosio.assert/archive/v0.1.0.tar.gz
+  mkdir -p $ROOT_DIR/downloads/eosio.assert
+  mkdir -p $CONTRACTS_DIR/eosio.assert
+  tar xvzf ./v0.1.0.tar.gz -C $ROOT_DIR/downloads/eosio.assert
+  mv $ROOT_DIR/downloads/eosio.assert/eosio.assert-0.1.0/* $CONTRACTS_DIR/eosio.assert
+  rm -rf $ROOT_DIR/downloads/eosio.assert
+  rm ./v0.1.0.tar.gz
 
-echo "INSTALLING EOSIO.CONTRACTS"
-wget https://github.com/EOSIO/eosio.contracts/archive/v1.6.0.tar.gz
-mkdir -p $ROOT_DIR/downloads/eosio.contracts
-mkdir -p $CONTRACTS_DIR/eosio.contracts
-tar xvzf ./v1.6.0.tar.gz -C $ROOT_DIR/downloads/eosio.contracts
-mv $ROOT_DIR/downloads/eosio.contracts/eosio.contracts-1.6.0/* $CONTRACTS_DIR/eosio.contracts
-rm -rf $ROOT_DIR/downloads/eosio.contracts
-rm ./v1.6.0.tar.gz
-
-echo "INSTALLING EOSIO.ASSERT CONTRACT"
-wget https://github.com/EOSIO/eosio.assert/archive/v0.1.0.tar.gz
-mkdir -p $ROOT_DIR/downloads/eosio.assert
-mkdir -p $CONTRACTS_DIR/eosio.assert
-tar xvzf ./v0.1.0.tar.gz -C $ROOT_DIR/downloads/eosio.assert
-mv $ROOT_DIR/downloads/eosio.assert/eosio.assert-0.1.0/* $CONTRACTS_DIR/eosio.assert
-rm -rf $ROOT_DIR/downloads/eosio.assert
-rm ./v0.1.0.tar.gz
-
-echo "COPYING CONTRACTS FROM REPO"
-cp $PWD/eosio/contracts/eosio.token/eosio.token.contracts.md $CONTRACTS_DIR/eosio.contracts/contracts/eosio.token/src
-mkdir -p $CONTRACTS_DIR/tropical
-cp $PWD/eosio/contracts/tropical/* $CONTRACTS_DIR/tropical/
-
-
+  echo "COPYING APP CONTRACT"
+  echo "GITPOD_WORKSPACE_ROOT: $GITPOD_WORKSPACE_ROOT"
+  cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/eosio.token/eosio.token.contracts.md $CONTRACTS_DIR/eosio.contracts/contracts/eosio.token/src
+  mkdir -p $CONTRACTS_DIR/tropical
+  cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/tropical/* $CONTRACTS_DIR/tropical/
+fi
 
 # Create accounts and deploy contracts
 # eosio.assert

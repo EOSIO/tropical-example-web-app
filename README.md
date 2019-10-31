@@ -18,9 +18,9 @@ NOTES:
  3) Gitpod generates a dynamic URL for the browser to access the app from. This URL is needed in numerous parts of the app, so note that there is code in this repo specifically meant for Gitpod compatibility. A comment has been added in those locations to point it out.
  4) To use Scatter in Gitpod, launch the demo in Gitpod, then go into Scatter's Networks section and add a custom network with the following settings as well as adding the account name. Note that these settings will need to be updated each time you launch the demo in Gitpod (because the URL will be different each time).
  -Network Settings
-  - Host: <the URL Gitpod generated to view the web page; it's what's in the address bar of the browser it opened for you>
+  - Host: <the hostname (URL *without* the "https://" or a final "/") Gitpod generated to view the web page; it's what's in the address bar of the browser it opened for you>
   - Protocol: https
-  - Post: 443
+  - Port: 443
   - Chain ID: cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f (This is the test chainId used in the example)
  -Adding account name
   - After you've imported the private key from this example (see other parts of the README for those instructions), Scatter might not pull the "example" account from the network. If that's the case, in the Wallet section, if "example" doesn't show up under your imported key with a balance to the right, on a Mac, you'll hold Ctrl when you click the three horizontal dot button to the right of your imported key. Ctrl will enable a normally-hidden item called "Link Account". Click that and in the first box, type "example" and in the drop-down, select the custom network you created above.
