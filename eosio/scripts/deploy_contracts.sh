@@ -216,7 +216,7 @@ assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc
 
 
 
-GP_URL=$(gp url)
+GP_URL=$(gp url 8000)
 CONTRACT_NAME="tropical"
 APP_DOMAIN="${GP_URL}"
 APPMETA="${GP_URL}/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"

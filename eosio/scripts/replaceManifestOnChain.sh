@@ -1,6 +1,6 @@
 # Delete the manifest the default/localhost manifest the scipts put on the change
 # and replace with a manifest with the proper URL for GitPod
-GP_URL=$(gp url)
+GP_URL=$(gp url 8000)
 CONTRACT_NAME="tropical"
 APP_DOMAIN="${GP_URL}"
 APPMETA="${GP_URL}/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"

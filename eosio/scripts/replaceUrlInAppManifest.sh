@@ -1,5 +1,5 @@
 # Gitpod creates a dynamic URL for browsers.  We need to update the tropical app manifest to reflect this dynamic URL as the host of the app
-GP_URL=$(gp url)
+GP_URL=$(gp url 8000)
 echo "Replacing URLs with: ${GP_URL}"
 
 # Pull in the manifest the chain serves and update the URLs
