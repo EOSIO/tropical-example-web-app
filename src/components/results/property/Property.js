@@ -32,7 +32,6 @@ class Property extends React.Component {
     const { login, displayError } = this.props
     // Via static contextType = UALContext, access to the activeUser object on this.context is now available
     const { activeUser } = this.context
-    console.info('activeUser:', activeUser)
     if (activeUser) {
       this.setState({ loading: true })
       try {
@@ -64,7 +63,6 @@ class Property extends React.Component {
         const rentChallenge = await generateRentChallenge(accountName, "aproperty")
         const userAuth = await signRentChallenge(accountName, "aproperty", rentChallenge)
         const transaction = generateRentTransaction(accountName, "aproperty", rentChallenge.serverKey, rentChallenge.userKey, rentChallenge.serverAuth, userAuth)
-        console.log(JSON.stringify(transaction, null, '  '))
         // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
         await activeUser.signTransaction(transaction, transactionConfig)
         this.setState({rented: true})
