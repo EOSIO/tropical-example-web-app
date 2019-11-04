@@ -226,7 +226,7 @@ transfer_sys_tokens example
 assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f" "Local Chain" "8ae3ccb19f3a89a8ea21f6c5e18bd2bc8f00c379411a2d9319985dad2db6243e"
 
 # Register tropical manifest
-# If running in GitPos, we need to alter the URLs
+# If running in Gitpod, we need to alter the URLs
 if [ -z "$RUNNING_IN_GITPOD" ]; then
   assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
 else
