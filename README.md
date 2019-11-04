@@ -22,10 +22,10 @@ NOTES:
       * **Protocol**: https
       * **Port**: 443
       * **Chain ID**: cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f (This is the test chainId used in the example)
-      ![Customer Network Configuation](https://github.com/EOSIO/devdocs/blob/master/images/tropical-stay/scatter-custom-network-config.png)
+      ![Customer Network Configuation](docs/images/tropical-stay/scatter-custom-network-config.png)
     * Adding account name
       * After you've imported the private key from this example (see other parts of the README for those instructions), Scatter might not pull the "example" account from the network. If that's the case, in the Wallet section, if "example" doesn't show up under your imported key with a balance to the right, on a Mac, you'll hold Ctrl when you click the three horizontal dot button to the right of your imported key. Ctrl will enable a normally-hidden item called "Link Account". Click that and in the first box, type "example" and in the drop-down, select the custom network you created above.  See screenshot below for what this looks like.
-      ![Link Account](https://github.com/EOSIO/devdocs/blob/master/images/tropical-stay/scatter-link-account.png)
+      ![Link Account](docs/images/tropical-stay/scatter-link-account.png)
 Read more about [Gitpod workspaces here](https://gitpod.io)
 
 The following open source repositories are utilized in Tropical Example:
