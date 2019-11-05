@@ -240,7 +240,7 @@ fi
 
 echo "All done initializing the blockchain"
 
-# If running in GitPos, we *don't* want to shutdown the blockchain; we'll leave it running in the terminal window.
+# If running in Gitpod, we *don't* want to shutdown the blockchain; we'll leave it running in the terminal window.
 if [ -z "$RUNNING_IN_GITPOD" ]; then
   if [[ -z $NODEOS_RUNNING ]]; then
     echo "Shut down Nodeos, sleeping for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts"
