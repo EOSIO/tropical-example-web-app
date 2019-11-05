@@ -2,8 +2,6 @@ import base64url from 'base64url'
 import {Serialize, Numeric} from 'eosjs'
 import { ec } from 'elliptic'
 
-const e = new ec('p256');
-
 // taken from the
 const formatWebauthnPubkey = (pubkey) => {
   const clientDataStr = String.fromCharCode.apply(null, new Uint8Array(pubkey.clientDataJSON))
@@ -15,6 +13,7 @@ const formatWebauthnPubkey = (pubkey) => {
 
 const decodeWebauthnSignature = (assertion, key) => {
   console.info('decodeWebauthnSignature().top')
+  const e = new ec('p256');
   const fixup = (x) => {
     const a = Array.from(x)
     while (a.length < 32)
@@ -137,6 +136,7 @@ export const generateRentChallenge = async(accountName, propertyName) => {
 
 export const signRentChallenge = async(accountName, propertyName, challenge) => {
   console.info('signRentChallenge().top')
+  const e = new ec('p256');
   const challengeBuffer = new Serialize.SerialBuffer()
   challengeBuffer.pushName(accountName)
   challengeBuffer.pushName(propertyName)
