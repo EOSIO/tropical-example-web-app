@@ -62,7 +62,9 @@ export default () => {
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
+    console.info('private_key_wif:', private_key_wif)
     const serverKey = ecc.privateToPublic(private_key_wif)
+    console.info('serverKey:', serverKey)
     const credentialIDStr = base64url.encode(users[name].credentialID)
 
     resp.json({
