@@ -58,14 +58,17 @@ export default () => {
     namePairBuffer.pushName(propertyName)
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
     const sigDigest = Buffer.from(defaultEc.hash().update(sigData), 'hex')
-    const challenge = defaultEc.signHash(sigDigest, private_key_wif).toString()
+    const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
+
+    console.info('private_key_wif:', private_key_wif)
     // const serverKey = defaultEc.privateToPublic(private_key_wif)
     const priv = PrivateKey.fromString(private_key_wif).toElliptic(defaultEc);
     const serverKey = PublicKey.fromElliptic(priv, KeyType.k1).toString();
+    console.info('serverKey:', serverKey)
 
     const credentialIDStr = base64url.encode(users[name].credentialID)
 
