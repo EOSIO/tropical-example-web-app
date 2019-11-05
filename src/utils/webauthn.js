@@ -135,16 +135,13 @@ export const generateRentChallenge = async(accountName, propertyName) => {
 }
 
 export const signRentChallenge = async(accountName, propertyName, challenge) => {
-  console.info('signRentChallenge().top')
   const e = new ec('p256');
   const challengeBuffer = new Serialize.SerialBuffer()
   challengeBuffer.pushName(accountName)
   challengeBuffer.pushName(propertyName)
   challengeBuffer.pushPublicKey(challenge.userKey)
   const sigData = challengeBuffer.asUint8Array()
-  // const sigDigest = Buffer.from(ecc.sha256(sigData), 'hex')
   const sigDigest = Buffer.from(e.hash().update(sigData).digest(), 'hex')
-  console.info('sigDigest:', sigDigest)
   const getCredentialOptions = {
     publicKey: {
       timeout: 60000,
