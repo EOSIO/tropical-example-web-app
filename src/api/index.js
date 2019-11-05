@@ -1,5 +1,5 @@
 import { Router, json } from 'express'
-import ecc from 'eosjs-ecc'
+import { ec } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
 import base64url from 'base64url'
 import cbor from 'cbor'
@@ -50,19 +50,23 @@ export default () => {
   const users = {}
 
   api.post( '/generateRentChallenge', json(), (req, resp) => {
+    const defaultEc = new ec('secp256k1')
     const name = req.body.accountName
     const propertyName = req.body.propertyName
     const namePairBuffer = new Serialize.SerialBuffer({textEncoder: new util.TextEncoder(), textDecoder: new util.TextDecoder()})
     namePairBuffer.pushName(name)
     namePairBuffer.pushName(propertyName)
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
-    const sigDigest = Buffer.from(ecc.sha256(sigData), 'hex')
-    const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
+    const sigDigest = Buffer.from(defaultEc.hash().update(sigData), 'hex')
+    const challenge = defaultEc.signHash(sigDigest, private_key_wif).toString()
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    const serverKey = ecc.privateToPublic(private_key_wif)
+    // const serverKey = defaultEc.privateToPublic(private_key_wif)
+    const priv = PrivateKey.fromString(private_key_wif).toElliptic(defaultEc);
+    const serverKey = PublicKey.fromElliptic(priv, KeyType.k1).toString();
+
     const credentialIDStr = base64url.encode(users[name].credentialID)
 
     resp.json({
