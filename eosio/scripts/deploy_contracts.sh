@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+NODEOS_RUNNING=$1
+RUNNING_IN_GITPOD=$2
+
 set -m
 
 # CAUTION: Never use these development keys for a production account!
@@ -12,15 +15,27 @@ TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY="EOS6bRs6knaaHyvpVXd5EgAPoxrZkkeDv89M1jidHCt
 EXAMPLE_ACCOUNT_PRIVATE_KEY="5KkXYBUb7oXrq9cvEYT3HXsoHvaC2957VKVftVRuCy7Z7LyUcQB"
 EXAMPLE_ACCOUNT_PUBLIC_KEY="EOS6TWM95TUqpgcjYnvXSK5kBsi6LryWRxmcBaULVTvf5zxkaMYWf"
 
-NODEOS_RUNNING=$1
+if [ -z "$RUNNING_IN_GITPOD" ]; then
+  echo "Running locally..."
+  ROOT_DIR="/opt"
+  CONTRACTS_DIR="$ROOT_DIR/eosio/bin/contracts"
+  BLOCKCHAIN_DATA_DIR=/root/.local/share
+  BLOCKCHAIN_CONFIG_DIR=/opt/eosio/bin/config-dir
+else
+  echo "Running in Gitpod..."
+  ROOT_DIR="/home/gitpod"
+  CONTRACTS_DIR="$ROOT_DIR/contracts"
+  BLOCKCHAIN_DATA_DIR=$ROOT_DIR/eosio/chain/data
+  BLOCKCHAIN_CONFIG_DIR=$ROOT_DIR/eosio/chain/config
+fi
+
+mkdir -p $ROOT_DIR/bin
 
 # Set PATH
-PATH="$PATH:/opt/eosio/bin:/opt/eosio/bin/scripts"
-
-ROOT_DIR="/opt/eosio"
+PATH="$PATH:$ROOT_DIR/bin:$ROOT_DIR/bin/scripts"
+GITPOD_WORKSPACE_ROOT="/workspace/tropical-example-web-app"
 WALLET_DIR="$ROOT_DIR/wallet/"
 CONFIG_DIR="$ROOT_DIR/bin/config-dir"
-CONTRACTS_DIR="$ROOT_DIR/bin/contracts"
 
 function start_wallet {
   echo "Starting the wallet"
@@ -41,7 +56,7 @@ function deploy_system_contract {
   # Unlock the wallet, ignore error if already unlocked
   cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
 
-  echo "Deploying the $2 contract"
+  echo "Deploying the $2 contract in path: $CONTRACTS_DIR/$1/$2/src"
 
   # Move into contracts /src directory
   cd "$CONTRACTS_DIR/$1/$2/src"
@@ -51,7 +66,7 @@ function deploy_system_contract {
   eosio-cpp -abigen "$2.cpp" -o "$2.wasm" -I ../include
 
   # Move back into the executable directory
-  cd /opt/eosio/bin/
+  cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
   cleos set contract $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi" -p $3@active
@@ -82,7 +97,7 @@ function deploy_app_contract {
     eosio-cpp -abigen "$1.cpp" -o "$1.wasm" -I ./
   ) &&
   # Move back into the executable directory
-  cd /opt/eosio/bin/
+  cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
   cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
@@ -117,12 +132,16 @@ function assert_register_manifest {
 }
 
 # Move into the executable directory
-cd /opt/eosio/bin/
+cd $ROOT_DIR/bin/
+mkdir -p $CONFIG_DIR
+mkdir -p $BLOCKCHAIN_DATA_DIR
+mkdir -p $BLOCKCHAIN_CONFIG_DIR
 
-if [[ -z $NODEOS_RUNNING ]]; then
+if [ -z "$NODEOS_RUNNING" ]; then
   echo "Starting the chain for setup"
   nodeos -e -p eosio \
-  --data-dir /root/.local/share \
+  --data-dir $BLOCKCHAIN_DATA_DIR \
+  --config-dir $BLOCKCHAIN_CONFIG_DIR \
   --http-validate-host=false \
   --plugin eosio::producer_plugin \
   --plugin eosio::chain_api_plugin \
@@ -150,6 +169,36 @@ echo "Creating accounts and deploying contracts"
 
 start_wallet
 
+if [ ! -z "$RUNNING_IN_GITPOD" ]; then
+  echo "INSTALLING CONTRACTS"
+  mkdir -p $CONTRACTS_DIR
+  mkdir -p $ROOT_DIR/downloads
+
+  echo "INSTALLING EOSIO.CONTRACTS"
+  wget https://github.com/EOSIO/eosio.contracts/archive/v1.6.0.tar.gz
+  mkdir -p $ROOT_DIR/downloads/eosio.contracts
+  mkdir -p $CONTRACTS_DIR/eosio.contracts
+  tar xvzf ./v1.6.0.tar.gz -C $ROOT_DIR/downloads/eosio.contracts
+  mv $ROOT_DIR/downloads/eosio.contracts/eosio.contracts-1.6.0/* $CONTRACTS_DIR/eosio.contracts
+  rm -rf $ROOT_DIR/downloads/eosio.contracts
+  rm ./v1.6.0.tar.gz
+
+  echo "INSTALLING EOSIO.ASSERT CONTRACT"
+  wget https://github.com/EOSIO/eosio.assert/archive/v0.1.0.tar.gz
+  mkdir -p $ROOT_DIR/downloads/eosio.assert
+  mkdir -p $CONTRACTS_DIR/eosio.assert
+  tar xvzf ./v0.1.0.tar.gz -C $ROOT_DIR/downloads/eosio.assert
+  mv $ROOT_DIR/downloads/eosio.assert/eosio.assert-0.1.0/* $CONTRACTS_DIR/eosio.assert
+  rm -rf $ROOT_DIR/downloads/eosio.assert
+  rm ./v0.1.0.tar.gz
+
+  echo "COPYING APP CONTRACT"
+  echo "GITPOD_WORKSPACE_ROOT: $GITPOD_WORKSPACE_ROOT"
+  cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/eosio.token/eosio.token.contracts.md $CONTRACTS_DIR/eosio.contracts/contracts/eosio.token/src
+  mkdir -p $CONTRACTS_DIR/tropical
+  cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/tropical/* $CONTRACTS_DIR/tropical/
+fi
+
 # Create accounts and deploy contracts
 # eosio.assert
 create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
@@ -175,15 +224,28 @@ transfer_sys_tokens example
 # eosio.assert actions
 # Set chain
 assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f" "Local Chain" "8ae3ccb19f3a89a8ea21f6c5e18bd2bc8f00c379411a2d9319985dad2db6243e"
-# Register tropical manifest
-assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
 
+# Register tropical manifest
+# If running in Gitpod, we need to alter the URLs
+if [ -z "$RUNNING_IN_GITPOD" ]; then
+  assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+else
+  GP_URL=$(gp url 8000)
+  CONTRACT_NAME="tropical"
+  APP_DOMAIN="${GP_URL}"
+  APPMETA="${GP_URL}/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
+  MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+  assert_register_manifest $CONTRACT_NAME $APP_DOMAIN $APPMETA "$MANIFEST"
+fi
 
 echo "All done initializing the blockchain"
 
-if [[ -z $NODEOS_RUNNING ]]; then
-  # Shut down Nodeos, sleep for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts
-  sleep 2s
-  kill %1
-  fg %1
+# If running in Gitpod, we *don't* want to shutdown the blockchain; we'll leave it running in the terminal window.
+if [ -z "$RUNNING_IN_GITPOD" ]; then
+  if [[ -z $NODEOS_RUNNING ]]; then
+    echo "Shut down Nodeos, sleeping for 2 seconds to allow time for at least 4 blocks to be created after deploying contracts"
+    sleep 2s
+    kill %1
+    fg %1
+  fi
 fi

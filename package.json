@@ -30,6 +30,7 @@
   },
   "scripts": {
     "start": "node scripts/copyDefaultEnv.js && react-scripts start",
+    "startInGitpod": "node scripts/copyDefaultEnv.js && REACT_APP_IS_GITPOD=true react-scripts start",
     "build": "react-scripts build",
     "up": "docker-compose up",
     "lint": "eslint \"src/**/*.js{,?}\"",
