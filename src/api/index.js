@@ -1,4 +1,5 @@
 import { Router, json } from 'express'
+import { JsSignatureProvider, Signature } from 'eosjs/dist/eosjs-jssig'
 import { ec } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
 import base64url from 'base64url'
@@ -10,6 +11,7 @@ export default () => {
   const api = Router()
 
   const decodeWebauthnPublicKey = (webauthnPublicKey) => {
+    console.info('decodeWebauthnPublicKey().top')
     const attestationBuffer = base64url.toBuffer(webauthnPublicKey.attestationObject)
     const attestation = cbor.decodeFirstSync(attestationBuffer)
     const authdata = attestation.authData
@@ -57,8 +59,10 @@ export default () => {
     namePairBuffer.pushName(name)
     namePairBuffer.pushName(propertyName)
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
-    const sigDigest = Buffer.from(defaultEc.hash().update(sigData), 'hex')
-    const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
+    const sigDigest = Buffer.from(defaultEc.hash().update(sigData).digest(), 'hex')
+    // const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
+    const challenge = Signature.fromElliptic(defaultEc.sign(sigDigest, private_key_wif)).toString()
+    console.info('challenge:', challenge)
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
@@ -66,18 +70,22 @@ export default () => {
 
     console.info('private_key_wif:', private_key_wif)
     // const serverKey = defaultEc.privateToPublic(private_key_wif)
-    const priv = PrivateKey.fromString(private_key_wif).toElliptic(defaultEc);
-    const serverKey = PublicKey.fromElliptic(priv, KeyType.k1).toString();
-    console.info('serverKey:', serverKey)
+    // const priv = PrivateKey.fromString(private_key_wif).toElliptic(defaultEc);
+    // const serverKey = PublicKey.fromElliptic(priv, KeyType.k1).toString();
+    const sigProv = new JsSignatureProvider([private_key_wif])
+    sigProv.getAvailableKeys().then((publicKeys) => {
+      const serverKey = publicKeys[0]
+      console.info('serverKey:', serverKey)
 
-    const credentialIDStr = base64url.encode(users[name].credentialID)
+      const credentialIDStr = base64url.encode(users[name].credentialID)
 
-    resp.json({
-      'status': 'ok',
-      'userKey' : userKey,
-      'serverKey' : serverKey,
-      'serverAuth': challenge,
-      'credentialID': credentialIDStr
+      resp.json({
+        'status': 'ok',
+        'userKey' : userKey,
+        'serverKey' : serverKey,
+        'serverAuth': challenge,
+        'credentialID': credentialIDStr
+      })
     })
   })
 
