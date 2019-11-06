@@ -13,6 +13,8 @@ const formatWebauthnPubkey = (pubkey) => {
 
 const decodeWebauthnSignature = (assertion, key) => {
   console.info('decodeWebauthnSignature().top')
+  // assertion.authenticatorData = new Buffer('73,150,13,229,136,14,140,104,116,52,23,15,100,118,96,91,143,228,174,185,162,134,50,199,153,92,243,186,131,29,151,99,5,93,194,42,226'.split(','))
+  key = 'PUB_WA_8wvokCijMQgkimW8JvycbBo4v417qGGbmh8S1osf1ALAtjKjSRzk1fhLXt6rTknUS'
   const e = new ec('p256');
   const fixup = (x) => {
     const a = Array.from(x)
@@ -23,8 +25,9 @@ const decodeWebauthnSignature = (assertion, key) => {
         throw new Error('Signature has an r or s that is too big')
     return new Uint8Array(a)
   }
+  const signature = new Buffer('48,70,2,33,0,251,94,254,179,237,150,30,162,187,132,174,47,106,199,162,171,252,198,176,124,56,244,40,172,78,237,50,154,122,75,56,26,2,33,0,210,96,206,111,40,122,15,104,168,0,46,69,171,9,61,61,63,193,200,130,69,238,202,103,69,141,29,33,0,176,151,208'.split(','))
   
-  const der = new Serialize.SerialBuffer({ array: new Uint8Array(assertion.signature) })
+  const der = new Serialize.SerialBuffer({ array: new Uint8Array(signature) })
   if (der.get() !== 0x30)
       throw new Error('Signature missing DER prefix')
   if (der.get() !== der.array.length - 2)
@@ -39,25 +42,30 @@ const decodeWebauthnSignature = (assertion, key) => {
   const pubkeyData = Numeric.stringToPublicKey(key).data.subarray(0, 33)
   const pubKey = e.keyFromPublic(pubkeyData).getPublic();
   // const signedData = Buffer.concat([Buffer.from(assertion.authenticatorData), Buffer.from(ecc.sha256(Buffer.from(assertion.clientDataJSON)), 'hex')])
-  const signedData = Buffer.concat([Buffer.from(assertion.authenticatorData), Buffer.from(e.hash().update(Buffer.from(assertion.clientDataJSON)).digest(), 'hex')])
-  console.info('signedData:', signedData)
+  // const signedData = Buffer.concat([Buffer.from(assertion.authenticatorData), Buffer.from(e.hash().update(Buffer.from(assertion.clientDataJSON)).digest(), 'hex')])
+  const authenticatorData = new Buffer('73,150,13,229,136,14,140,104,116,52,23,15,100,118,96,91,143,228,174,185,162,134,50,199,153,92,243,186,131,29,151,99,5,93,194,42,226'.split(','))
+  // const userHandle = new Buffer('0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0'.split(','))
+  const clientDataJSON = new Buffer('123,34,99,104,97,108,108,101,110,103,101,34,58,34,110,52,76,72,90,83,122,119,115,49,110,66,48,98,120,102,53,118,75,84,119,121,114,115,50,84,107,105,105,114,71,120,105,95,106,52,89,119,71,45,76,68,85,34,44,34,111,114,105,103,105,110,34,58,34,104,116,116,112,115,58,47,47,108,111,99,97,108,104,111,115,116,58,51,48,48,48,34,44,34,116,121,112,101,34,58,34,119,101,98,97,117,116,104,110,46,103,101,116,34,125'.split(','))
+  const signedData = Buffer.concat([Buffer.from(authenticatorData), Buffer.from(e.hash().update(Buffer.from(clientDataJSON)).digest(), 'hex')])
+  console.info('signedData:', signedData.join(','))
   // const hash = Buffer.from(ecc.sha256(signedData), 'hex')
   const hash = Buffer.from(e.hash().update(signedData).digest(), 'hex')
-  console.info('hash:', hash)
-  const recid = e.getKeyRecoveryParam(hash, Buffer.from(assertion.signature), pubKey)
+  console.info('hash:', hash.join(', '))
+  const recid = e.getKeyRecoveryParam(hash, Buffer.from(signature), pubKey)
+  console.info('recid:', recid)
   
   const sigData = new Serialize.SerialBuffer()
   sigData.push(recid + 27 + 4)
   sigData.pushArray(r)
   sigData.pushArray(s)
-  sigData.pushBytes(new Uint8Array(assertion.authenticatorData))
-  sigData.pushBytes(new Uint8Array(assertion.clientDataJSON))
+  sigData.pushBytes(new Uint8Array(authenticatorData))
+  sigData.pushBytes(new Uint8Array(clientDataJSON))
   
   const sig = Numeric.signatureToString({
       type: Numeric.KeyType.wa,
       data: sigData.asUint8Array().slice(),
   })
-  console.log(sig)
+  console.log('sig:', sig)
   return sig;
 }
 

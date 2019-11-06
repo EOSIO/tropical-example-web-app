@@ -65,10 +65,13 @@ class Property extends React.Component {
         console.info('rentChallenge:', rentChallenge)
         const userAuth = await signRentChallenge(accountName, "aproperty", rentChallenge)
         console.info('userAuth:', userAuth)
+        console.info('generating transaction')
         const transaction = generateRentTransaction(accountName, "aproperty", rentChallenge.serverKey, rentChallenge.userKey, rentChallenge.serverAuth, userAuth)
         console.info('transaction:', transaction)
         // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
+        console.info('signing transaction...')
         await activeUser.signTransaction(transaction, transactionConfig)
+        console.info('back from signing')
         this.setState({rented: true})
       } catch (err) {
         displayError(err)
