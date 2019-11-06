@@ -80,9 +80,11 @@ class App extends React.Component {
     if (activeUser) {
       try {
         const accountName = await activeUser.getAccountName()
-        const pubkey = await generateWebauthnPubkey(accountName)
+        let pubkey = await generateWebauthnPubkey(accountName)
+        console.info('pubkey actual:', pubkey)
         console.info('accountName:', accountName)
-        console.info('pubkey:', pubkey)
+        pubkey.attestationObject = 'o2NmbXRmcGFja2VkZ2F0dFN0bXSjY2FsZyZjc2lnWEYwRAIgBv7IKYEGiX2BgoyaX375fAJF4HCVwyX2Imnukua8zFkCIH-V5KDVIhEqYdveBHimTg3XaRPdv6W5qcWdbwHb0Bn-Y3g1Y4FZAsAwggK8MIIBpKADAgECAgQDrfASMA0GCSqGSIb3DQEBCwUAMC4xLDAqBgNVBAMTI1l1YmljbyBVMkYgUm9vdCBDQSBTZXJpYWwgNDU3MjAwNjMxMCAXDTE0MDgwMTAwMDAwMFoYDzIwNTAwOTA0MDAwMDAwWjBtMQswCQYDVQQGEwJTRTESMBAGA1UECgwJWXViaWNvIEFCMSIwIAYDVQQLDBlBdXRoZW50aWNhdG9yIEF0dGVzdGF0aW9uMSYwJAYDVQQDDB1ZdWJpY28gVTJGIEVFIFNlcmlhbCA2MTczMDgzNDBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABBmeh5wWLbfcOe5KQqBGFqWzCf7KCS92vglI-W1ulcrkzGXNVKBZz73HybMbKx1sGER5wsBh9BiqlUtZaiwc-hejbDBqMCIGCSsGAQQBgsQKAgQVMS4zLjYuMS40LjEuNDE0ODIuMS43MBMGCysGAQQBguUcAgEBBAQDAgQwMCEGCysGAQQBguUcAQEEBBIEEPormdyeOUJXj5JKMNI8QRgwDAYDVR0TAQH_BAIwADANBgkqhkiG9w0BAQsFAAOCAQEAKOuzZ_7R2PDiievKn_bYB1fGDprlfLFyjJscOMq7vYTZI32oMawhlJ8PLfwMMWv9sXWzbmOiK7tYDq3KUoDQeYQOWh4lcmJaO_uHYDPb-yKpack4uJzhcTWUAKElLZcCqRKT1UUZ6WDdIs6KJ-sF6355t1DAAv7ZAWtxHsmtdFAb2RTLvo7ZVxKBt09E6wd85h7LBquFqXJVJn7o45gr9D8Msho4LSNeueTObbKYxAVCUEAjKyth4QzXDGIVvAO36UBxtw4S0cR_lmVaLvmdTOVafxtLH_kU7hNtnmEgRxSIZGmIgEQxFmU4ibhkhtnJyf-8k4VFNWmzRXRLjKC0N2hhdXRoRGF0YVjESZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NBAAAAh_ormdyeOUJXj5JKMNI8QRgAQMazWvuMvKEb8xOQD3-qtlYe-fi4Sp1k5cjJEqWscQ1FooyAAiBARVgV1heJP8d0YT4gOcIrumSagQPC4-tDX2ulAQIDJiABIVgg1NyYypASlGIz2rbF5H8EcVdbOtuQLV0gbqFsWV-VCWgiWCA4EuD-eahdVMbEQBWzLdBFVK7eaRxzFGf8I3-HMC1KPg'
+        console.info('pubkey simulated:', pubkey)
         await enrollWebauthnPubkey(accountName, pubkey)
         this.setState({enrolled: true})
         onSuccess();
