@@ -74,12 +74,15 @@ class App extends React.Component {
   }
 
   enroll = async ( onSuccess ) => {
+    console.info('enroll().top')
     // Via static contextType = UALContext, access to the activeUser object on this.context is now available
     const { ual: { activeUser } } = this.props
     if (activeUser) {
       try {
         const accountName = await activeUser.getAccountName()
         const pubkey = await generateWebauthnPubkey(accountName)
+        console.info('accountName:', accountName)
+        console.info('pubkey:', pubkey)
         await enrollWebauthnPubkey(accountName, pubkey)
         this.setState({enrolled: true})
         onSuccess();
