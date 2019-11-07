@@ -57,9 +57,15 @@ export default () => {
     const namePairBuffer = new Serialize.SerialBuffer({textEncoder: new util.TextEncoder(), textDecoder: new util.TextDecoder()})
     namePairBuffer.pushName(name)
     namePairBuffer.pushName(propertyName)
-    const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
+    console.info('////////////-----------')
+    console.info('eosioPubkey:', users[name].eosioPubkey)
+    const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )a
+    console.info('sigData:', sigData)
     const sigDigest = Buffer.from(ecc.sha256(sigData), 'hex')
+    console.info('sigDigest:', sigDigest)
     const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
+    console.info('challenge:', challenge)
+    console.info('\\\\\\\\\\\\-----------')
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
