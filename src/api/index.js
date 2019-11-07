@@ -50,6 +50,8 @@ export default () => {
   const users = {}
 
   api.post( '/generateRentChallenge', json(), (req, resp) => {
+    console.info('generateRentChallenge().top')
+    console.info('req:', req.body)
     const name = req.body.accountName
     const propertyName = req.body.propertyName
     const namePairBuffer = new Serialize.SerialBuffer({textEncoder: new util.TextEncoder(), textDecoder: new util.TextDecoder()})
@@ -62,11 +64,16 @@ export default () => {
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    console.info('private_key_wif:', private_key_wif)
     const serverKey = ecc.privateToPublic(private_key_wif)
-    console.info('serverKey:', serverKey)
     const credentialIDStr = base64url.encode(users[name].credentialID)
 
+    console.info('result:', {
+      'status': 'ok',
+      'userKey' : userKey,
+      'serverKey' : serverKey,
+      'serverAuth': challenge,
+      'credentialID': credentialIDStr
+    })
     resp.json({
       'status': 'ok',
       'userKey' : userKey,
@@ -80,9 +87,12 @@ export default () => {
     // Note there is no verfication of this data as it is out of scope for this demo
     //
     const name = req.body.accountName
+    console.info('name:', name)
     const webauthnPublicKey = req.body.webauthnPublicKey
+    console.info('webauthnPublicKey:', webauthnPublicKey)
 
     users[name] = decodeWebauthnPublicKey(webauthnPublicKey)
+    console.info('publicKey:', users[name].eosioPubkey.join(','))
     resp.json({ 'status': 'ok' })
   })
 
