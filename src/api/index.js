@@ -58,8 +58,8 @@ export default () => {
     namePairBuffer.pushName(name)
     namePairBuffer.pushName(propertyName)
     console.info('////////////-----------')
-    console.info('eosioPubkey:', users[name].eosioPubkey)
-    const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )a
+    console.info('eosioPubkey:', users[name].eosioPubkey.join(','))
+    const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
     console.info('sigData:', sigData)
     const sigDigest = Buffer.from(ecc.sha256(sigData), 'hex')
     console.info('sigDigest:', sigDigest)
@@ -90,6 +90,7 @@ export default () => {
   })
 
   api.post( '/enroll', json(), (req, resp) => {
+    console.info('enroll().top')
     // Note there is no verfication of this data as it is out of scope for this demo
     //
     const name = req.body.accountName
