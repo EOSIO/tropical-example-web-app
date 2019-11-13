@@ -63,7 +63,6 @@ export default () => {
     console.info('////////////-----------')
     console.info('eosioPubkey:', users[name].eosioPubkey.join(','))
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
-    const sigDigestOrig = Buffer.from(ecc.sha256(sigData), 'hex')
     const sigDigest = Buffer.from(ec.hash().update(sigData).digest())
     const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
     console.info('challenge:', challenge)

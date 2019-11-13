@@ -1,6 +1,5 @@
 import base64url from 'base64url'
 import {Serialize, Numeric} from 'eosjs'
-import ecc from 'eosjs-ecc'
 import { ec } from 'elliptic'
 
 // taken from the
@@ -13,6 +12,7 @@ const formatWebauthnPubkey = (pubkey) => {
 }
 
 const decodeWebauthnSignature = (assertion, key) => {
+  const e = new ec('p256');
   const fixup = (x) => {
     const a = Array.from(x)
     while (a.length < 32)
@@ -36,10 +36,9 @@ const decodeWebauthnSignature = (assertion, key) => {
   const s = fixup(der.getUint8Array(der.get()))
 
   const pubkeyData = Numeric.stringToPublicKey(key).data.subarray(0, 33)
-  const e = new ec('p256');
   const pubKey = e.keyFromPublic(pubkeyData).getPublic();
-  const signedData = Buffer.concat([Buffer.from(assertion.authenticatorData), Buffer.from(ecc.sha256(Buffer.from(assertion.clientDataJSON)), 'hex')])
-  const hash = Buffer.from(ecc.sha256(signedData), 'hex')
+  const signedData = Buffer.concat([Buffer.from(assertion.authenticatorData), Buffer.from(e.hash().update(Buffer.from(assertion.clientDataJSON)).digest())])
+  const hash = Buffer.from(e.hash().update(signedData).digest())
   const recid = e.getKeyRecoveryParam(hash, Buffer.from(assertion.signature), pubKey)
   
   const sigData = new Serialize.SerialBuffer()
@@ -131,12 +130,14 @@ export const generateRentChallenge = async(accountName, propertyName) => {
 }
 
 export const signRentChallenge = async(accountName, propertyName, challenge) => {
+  const e = new ec('p256');
   const challengeBuffer = new Serialize.SerialBuffer()
   challengeBuffer.pushName(accountName)
   challengeBuffer.pushName(propertyName)
   challengeBuffer.pushPublicKey(challenge.userKey)
   const sigData = challengeBuffer.asUint8Array()
-  const sigDigest = Buffer.from(ecc.sha256(sigData), 'hex')
+  // const sigDigest = Buffer.from(ecc.sha256(sigData), 'hex')
+  const sigDigest = Buffer.from(e.hash().update(sigData).digest())
   const getCredentialOptions = {
     publicKey: {
       timeout: 60000,
