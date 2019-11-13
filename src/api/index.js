@@ -1,5 +1,5 @@
 import { Router, json } from 'express'
-import ecc from 'eosjs-ecc'
+import { eccSignHash } from './eosjsEccReplacement'
 import { ec as EC } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
 import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig'
@@ -64,7 +64,7 @@ export default () => {
     console.info('eosioPubkey:', users[name].eosioPubkey.join(','))
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
     const sigDigest = Buffer.from(ec.hash().update(sigData).digest())
-    const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
+    const challenge = eccSignHash(sigDigest, private_key_wif).toString()
     console.info('challenge:', challenge)
     console.info('\\\\\\\\\\\\-----------')
     const userKey = Numeric.publicKeyToString({
