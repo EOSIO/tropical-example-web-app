@@ -3673,7 +3673,7 @@ electron-to-chromium@^1.3.247, electron-to-chromium@^1.3.284:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.292.tgz#7812fc5138619342f1dd5823df6e9cbb7d2820e9"
   integrity sha512-hqkem5ANpt6mxVXmhAmlbdG8iicuyM/jEYgmP1tiHPeOLyZoTyGUzrDmJS/xyrrZy9frkW1uQcubicu7f6DS5g==
 
-elliptic@^6.0.0:
+elliptic@^6.0.0, elliptic@^6.5.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.1.tgz#c380f5f909bf1b9b4428d028cd18d3b0efd6b52b"
   integrity sha512-xvJINNLbTeWQjrl6X+7eQCrIy/YPv5XCpKW6kB5mKvtnGILoLDcySuwomfdzt0BMdLNVnuRNTuzKNHj0bva1Cg==
@@ -3774,10 +3774,10 @@ eosjs@20.0.0, eosjs@^20.0.2-a53eecb.0:
     eosjs-ecc "4.0.4"
     text-encoding "0.7.0"
 
-eosjs@20.0.2-a53eecb.0:
-  version "20.0.2-a53eecb.0"
-  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-20.0.2-a53eecb.0.tgz#1a131bd8fb7c98a2dee178885dc47c9899f7e4a3"
-  integrity sha512-VGirrkYKy3LrBMkMH+C5ncnj0ZZ/9QaL+5RhWFtxBsOsgH+IiGwFtweBGOo0aSXlOJNJ9Mt+kR01tYhm3QkTDQ==
+eosjs@20.0.3-cd2fb09.0:
+  version "20.0.3-cd2fb09.0"
+  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-20.0.3-cd2fb09.0.tgz#d6281fe6cd849ed4531e3029a2f55fc7a907817d"
+  integrity sha512-FuMr/4THF3nIXXOBf5EniGCipQta7amdXv4efpGTXJZRR6vJ3QJAXu8kaSy1mmyKbUAPo56rudrjggTNY35OJQ==
   dependencies:
     babel-runtime "6.26.0"
     text-encoding "0.7.0"

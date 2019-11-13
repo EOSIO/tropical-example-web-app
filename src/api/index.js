@@ -1,11 +1,14 @@
 import { Router, json } from 'express'
 import ecc from 'eosjs-ecc'
+import { ec as EC } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
+import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig'
 import base64url from 'base64url'
 import cbor from 'cbor'
 import util from 'util';
 
 export default () => {
+  const ec = new EC('secp256k1')
   const private_key_wif = process.env.API_SERVER_PRIVATE_KEY
   const api = Router()
 
@@ -70,22 +73,25 @@ export default () => {
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    const serverKey = ecc.privateToPublic(private_key_wif)
-    const credentialIDStr = base64url.encode(users[name].credentialID)
+    const sigProvider = new JsSignatureProvider([private_key_wif])
+    const serverKey = sigProvider.getAvailableKeys().then((pubKeys) => {
+      const serverKey = pubKeys[0]
+      const credentialIDStr = base64url.encode(users[name].credentialID)
 
-    console.info('result:', {
-      'status': 'ok',
-      'userKey' : userKey,
-      'serverKey' : serverKey,
-      'serverAuth': challenge,
-      'credentialID': credentialIDStr
-    })
-    resp.json({
-      'status': 'ok',
-      'userKey' : userKey,
-      'serverKey' : serverKey,
-      'serverAuth': challenge,
-      'credentialID': credentialIDStr
+      console.info('result:', {
+        'status': 'ok',
+        'userKey' : userKey,
+        'serverKey' : serverKey,
+        'serverAuth': challenge,
+        'credentialID': credentialIDStr
+      })
+      resp.json({
+        'status': 'ok',
+        'userKey' : userKey,
+        'serverKey' : serverKey,
+        'serverAuth': challenge,
+        'credentialID': credentialIDStr
+      })
     })
   })
 
