@@ -101,10 +101,10 @@ Signature.signHash = function(dataSha256, privateKey, encoding = 'hex') {
       if (lenR === 32 && lenS === 32) {
         i = ecdsa.calcPubKeyRecoveryParam(curve, e, ecsignature, privateKey.toPublic().Q);
         console.info('ecsignature:', ecsignature)
-        console.info('ellipticSig.constructor:', EllipticSignature.fromBuffer(ecsignature.toDER()))
-        const iAlt = ec.getKeyRecoveryParam(dataSha256, Buffer.from(ecsignature.toDER()), publicKey)
-        console.info('i, iAlt:')
-        console.info(i, iAlt)
+        // console.info('ellipticSig.constructor:', EllipticSignature.fromBuffer(ecsignature.toDER()))
+        // const iAlt = ec.getKeyRecoveryParam(dataSha256, Buffer.from(ecsignature.toDER()), publicKey)
+        // console.info('i, iAlt:')
+        // console.info(i, iAlt)
         i += 4;  // compressed
         i += 27; // compact  //  24 or 27 :( forcing odd-y 2nd key candidate)
         break;
