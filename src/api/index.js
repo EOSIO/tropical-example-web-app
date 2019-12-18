@@ -2,13 +2,14 @@ import { Router, json } from 'express'
 import { eccSignHash } from './eosjsEccReplacement'
 import { ec as EC } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
-import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig'
+import {JsSignatureProvider, PrivateKey, Signature} from 'eosjs/dist/eosjs-jssig'
+import { KeyType } from "eosjs/dist/eosjs-numeric";
 import base64url from 'base64url'
 import cbor from 'cbor'
 import util from 'util';
 
 export default () => {
-  const ec = new EC('secp256k1')
+  const ec = new EC('p256')
   const private_key_wif = process.env.API_SERVER_PRIVATE_KEY
   const api = Router()
 
@@ -61,17 +62,19 @@ export default () => {
     namePairBuffer.pushName(name)
     namePairBuffer.pushName(propertyName)
     console.info('////////////-----------')
-    console.info('eosioPubkey:', users[name].eosioPubkey.join(','))
+    //console.info('eosioPubkey:', users[name].eosioPubkey.join(','))
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
     const sigDigest = Buffer.from(ec.hash().update(sigData).digest())
-    const challenge = eccSignHash(sigDigest, private_key_wif).toString()
+    //const challenge = eccSignHash(sigDigest, private_key_wif).toString()
+    const eosioChallenge = ec.sign(sigDigest, PrivateKey.fromString(private_key_wif).toElliptic(ec))
+    const challenge = Signature.fromElliptic(eosioChallenge, KeyType.r1).toString()
     console.info('challenge:', challenge)
     console.info('\\\\\\\\\\\\-----------')
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    const sigProvider = new JsSignatureProvider([private_key_wif])
+    const sigProvider = new JsSignatureProvider([private_key_wif], KeyType.r1, ec)
     const serverKey = sigProvider.getAvailableKeys().then((pubKeys) => {
       const serverKey = pubKeys[0]
       const credentialIDStr = base64url.encode(users[name].credentialID)

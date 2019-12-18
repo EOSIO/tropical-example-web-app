@@ -3784,10 +3784,10 @@ eosjs@20.0.0, eosjs@^20.0.2-a53eecb.0:
     eosjs-ecc "4.0.4"
     text-encoding "0.7.0"
 
-eosjs@20.0.3-cd2fb09.0:
-  version "20.0.3-cd2fb09.0"
-  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-20.0.3-cd2fb09.0.tgz#d6281fe6cd849ed4531e3029a2f55fc7a907817d"
-  integrity sha512-FuMr/4THF3nIXXOBf5EniGCipQta7amdXv4efpGTXJZRR6vJ3QJAXu8kaSy1mmyKbUAPo56rudrjggTNY35OJQ==
+eosjs@^20.0.4-e2c667e.0:
+  version "20.0.4-e2c667e.0"
+  resolved "https://registry.yarnpkg.com/eosjs/-/eosjs-20.0.4-e2c667e.0.tgz#8815a8d2ae476aac4dc3502d976c0b20cb931c3a"
+  integrity sha512-pL2fudVFvYv24VIX7QIWjFKFcXV+xzKrzmyyCr5UFpaDwKdxhg/Q/jtq6BSDraEapyctNnVS1sl6XLBTXr85KQ==
   dependencies:
     babel-runtime "6.26.0"
     text-encoding "0.7.0"
