@@ -3,7 +3,7 @@ import { eccSignHash } from './eosjsEccReplacement'
 import { ec as EC } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
 import {JsSignatureProvider, PrivateKey, PublicKey, Signature} from 'eosjs/dist/eosjs-jssig'
-import { KeyType } from "eosjs/dist/eosjs-numeric";
+import { KeyType } from "eosjs/dist/eosjs-numeric"
 import base64url from 'base64url'
 import cbor from 'cbor'
 import util from 'util';
@@ -75,40 +75,37 @@ export default () => {
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    const sigProvider = new JsSignatureProvider([private_key_wif], KeyType.r1, ec)
-    const serverKey = sigProvider.getAvailableKeys().then((pubKeys) => {
-      const serverKey = pubKeys[0]
-      const credentialIDStr = base64url.encode(users[name].credentialID)
+    const serverKey = PublicKey.fromElliptic(kPrivElliptic, KeyType.r1).toString()
+    const credentialIDStr = base64url.encode(users[name].credentialID)
 
-      // TEST
-      console.log('/////////////------- TEST')
-      const ellipticSignature = Signature.fromString(signature).toElliptic(KeyType.r1);
-      const ellipticHashedStringAsBuffer = Buffer.from(ec.hash().update(sigData).digest())
-      const ellipticRecoveredPublicKey =
-        ec.recoverPubKey(
-          ellipticHashedStringAsBuffer,
-          ellipticSignature,
-          ellipticSignature.recoveryParam);
-      const ellipticPublicKey = ec.keyFromPublic(ellipticRecoveredPublicKey);
-      const publicKeyStr = PublicKey.fromElliptic(ellipticPublicKey, KeyType.r1).toString();
-      console.log('From Signature Public Key Matches?', publicKeyStr === serverKey);
-      console.log('\\\\\\\\-----------')
-      // End of Test
+    // TEST
+    console.log('/////////////------- TEST')
+    const ellipticSign = Signature.fromString(signature).toElliptic(KeyType.r1)
+    const ellipticHashedStringAsBuffer = Buffer.from(ec.hash().update(sigData).digest())
+    const ellipticRecoveredPublicKey =
+      ec.recoverPubKey(
+        ellipticHashedStringAsBuffer,
+        ellipticSign,
+        ellipticSign.recoveryParam)
+    const ellipticPublicKey = ec.keyFromPublic(ellipticRecoveredPublicKey)
+    const publicKeyStr = PublicKey.fromElliptic(ellipticPublicKey, KeyType.r1).toString()
+    console.log('From Signature Public Key Matches?', publicKeyStr === serverKey)
+    console.log('\\\\\\\\-----------')
+    // End of Test
 
-      console.info('result:', {
-        'status': 'ok',
-        'userKey' : userKey,
-        'serverKey' : serverKey,
-        'serverAuth': signature,
-        'credentialID': credentialIDStr
-      })
-      resp.json({
-        'status': 'ok',
-        'userKey' : userKey,
-        'serverKey' : serverKey,
-        'serverAuth': signature,
-        'credentialID': credentialIDStr
-      })
+    console.info('result:', {
+      'status': 'ok',
+      'userKey' : userKey,
+      'serverKey' : serverKey,
+      'serverAuth': signature,
+      'credentialID': credentialIDStr
+    })
+    resp.json({
+      'status': 'ok',
+      'userKey' : userKey,
+      'serverKey' : serverKey,
+      'serverAuth': signature,
+      'credentialID': credentialIDStr
     })
   })
 
