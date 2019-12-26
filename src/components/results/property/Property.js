@@ -6,7 +6,7 @@ import './Property.scss'
 
 import PropertyImage from 'components/results/property/PropertyImage'
 import { generateTransaction, generateRentTransaction, transactionConfig } from 'utils/transaction'
-import { generateRentChallenge, signRentChallenge } from 'utils/webauthn'
+import { generateRentChallenge, signRentChallenge, canUseWebAuthN } from 'utils/webauthn'
 import { onKeyUpEnter } from 'utils/keyPress'
 
 import likeSvg from 'assets/images/heart/heart.svg'
@@ -26,6 +26,7 @@ class Property extends React.Component {
     loading: false,
     liked: false,
     rented: false,
+    canRent: canUseWebAuthN()
   }
 
   onLike = async () => {
@@ -53,7 +54,10 @@ class Property extends React.Component {
     const { login, displayError } = this.props
     const { activeUser } = this.context
     if ( activeUser ) {
-      if (!this.props.enrolled) {
+      if (!this.state.canRent) {
+        displayError(new Error('You need to use HTTPS in order to rent.'))
+        return;
+      } else if (!this.props.enrolled) {
         displayError(new Error('No 2FA enrolled 2FA: Please enroll in 2FA (under Login/Profile menu at the top right) to Rent.'))
         return;
       }
@@ -98,6 +102,7 @@ class Property extends React.Component {
             role='button'
             onClick={this.onRent}
             onKeyUp={event => onKeyUpEnter(event, this.onRent)}
+            disabled={!this.state.canRent}
           >
             <img src={rented ? rentingSvg : rentSvg} alt='rent '/>
             {rented && !loading ? 'Renting' : 'Rent'}

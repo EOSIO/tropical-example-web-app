@@ -52,7 +52,7 @@ const decodeWebauthnSignature = (assertion, key) => {
       type: Numeric.KeyType.wa,
       data: sigData.asUint8Array().slice(),
   })
-  
+
   return sig;
 }
 
@@ -151,4 +151,8 @@ export const signRentChallenge = async(accountName, propertyName, challenge) => 
 
   const webauthnResp = await navigator.credentials.get(getCredentialOptions)
   return decodeWebauthnSignature(webauthnResp.response, challenge.userKey)
+}
+
+export const canUseWebAuthN = () => {
+  return window.location.protocol.replace(/:$/, '') === 'https'
 }
