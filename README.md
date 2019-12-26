@@ -1,5 +1,5 @@
 # 🌴 Tropical Example <!-- omit in toc -->
-Tropical Example is a mock application for renting properties. It will be referenced throughout this guide as an example for application developers to start building secure applications with a good user experience on the EOSIO blockchain. 
+Tropical Example is a mock application for renting properties. It will be referenced throughout this guide as an example for application developers to start building secure applications with a good user experience on the EOSIO blockchain.
 
 ![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
 
@@ -12,7 +12,7 @@ EOSIO Labs repositories are experimental. Developers in the community are encour
 ### Try it out in Gitpod ###
 
 Gitpod [launches the app](https://gitpod.io/#https://github.com/EOSIO/tropical-example-web-app) for you. It starts the required blockchain in the background, launches the web server, and opens a preview window.
-NOTES: 
+NOTES:
  1) There are several times during startup it might look like startup hangs, namely... near the end of the docker build, once the IDE comes up, and then once the preview shows.
  2) Sometimes when Gitpod launches the webapp preview, it does so prematurely.  Just click the small refresh circular arrow icon in the top left of the preview window.
  3) Gitpod generates a dynamic URL for the browser to access the app from. This URL is needed in numerous parts of the app, so note that there is code in this repo specifically meant for Gitpod compatibility. A comment has been added in those locations to point it out.
@@ -33,7 +33,7 @@ The following open source repositories are utilized in Tropical Example:
 * Using the [Universal Authenticator Library (UAL)](https://github.com/EOSIO/universal-authenticator-library/) for quick and easy integration with multiple authentication providers (wallets).
 * Increasing the security and transparency of your application by following the [Manifest Specification](https://github.com/EOSIO/manifest-spec).
 * Displaying human readable Ricardian Contracts of your proposed EOSIO actions by following the [Ricardian Specification](https://github.com/EOSIO/ricardian-spec).
-  
+
 ## Table of Contents <!-- omit in toc -->
 - [Universal Authenticator Library (UAL)](#universal-authenticator-library-ual)
   - [Installation](#installation)
@@ -430,6 +430,11 @@ docker-compose down eosio
 # Open a bash terminal into the docker container
 docker-compose exec eosio /bin/bash
 ```
+
+# Add other info somewhere in here
+## How to use WebAuthn
+### Need for SSL ++
+### Need for enabling chrome://flags/#allow-insecure-localhost
 
 ## Links
 - [Universal Authenticator Library (UAL)](https://github.com/EOSIO/universal-authenticator-library)
