@@ -1,8 +1,7 @@
 import { Router, json } from 'express'
-import { eccSignHash } from './eosjsEccReplacement'
 import { ec as EC } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
-import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig'
+import { JsSignatureProvider, PrivateKey, PublicKey, Signature } from 'eosjs/dist/eosjs-jssig'
 import base64url from 'base64url'
 import cbor from 'cbor'
 import util from 'util';
@@ -61,35 +60,35 @@ export default () => {
     namePairBuffer.pushName(name)
     namePairBuffer.pushName(propertyName)
     console.info('////////////-----------')
-    console.info('eosioPubkey:', users[name].eosioPubkey.join(','))
+    //console.info('eosioPubkey:', users[name].eosioPubkey.join(','))
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
     const sigDigest = Buffer.from(ec.hash().update(sigData).digest())
-    const challenge = eccSignHash(sigDigest, private_key_wif).toString()
-    console.info('challenge:', challenge)
+
+    const kPrivElliptic = PrivateKey.fromString(private_key_wif).toElliptic(ec)
+    const ellipticSignature = kPrivElliptic.sign(sigDigest)
+    const signature = Signature.fromElliptic(ellipticSignature).toString()
+    console.info('signature:', signature)
     console.info('\\\\\\\\\\\\-----------')
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    const sigProvider = new JsSignatureProvider([private_key_wif])
-    const serverKey = sigProvider.getAvailableKeys().then((pubKeys) => {
-      const serverKey = pubKeys[0]
-      const credentialIDStr = base64url.encode(users[name].credentialID)
+    const serverKey = PublicKey.fromElliptic(kPrivElliptic).toString()
+    const credentialIDStr = base64url.encode(users[name].credentialID)
 
-      console.info('result:', {
-        'status': 'ok',
-        'userKey' : userKey,
-        'serverKey' : serverKey,
-        'serverAuth': challenge,
-        'credentialID': credentialIDStr
-      })
-      resp.json({
-        'status': 'ok',
-        'userKey' : userKey,
-        'serverKey' : serverKey,
-        'serverAuth': challenge,
-        'credentialID': credentialIDStr
-      })
+    console.info('result:', {
+      'status': 'ok',
+      'userKey' : userKey,
+      'serverKey' : serverKey,
+      'serverAuth': signature,
+      'credentialID': credentialIDStr
+    })
+    resp.json({
+      'status': 'ok',
+      'userKey' : userKey,
+      'serverKey' : serverKey,
+      'serverAuth': signature,
+      'credentialID': credentialIDStr
     })
   })
 
