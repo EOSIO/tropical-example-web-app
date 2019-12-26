@@ -1,11 +1,13 @@
 import { Router, json } from 'express'
-import ecc from 'eosjs-ecc'
+import { ec as EC } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
+import { JsSignatureProvider, PrivateKey, PublicKey, Signature } from 'eosjs/dist/eosjs-jssig'
 import base64url from 'base64url'
 import cbor from 'cbor'
 import util from 'util';
 
 export default () => {
+  const ec = new EC('secp256k1')
   const private_key_wif = process.env.API_SERVER_PRIVATE_KEY
   const api = Router()
 
@@ -50,37 +52,57 @@ export default () => {
   const users = {}
 
   api.post( '/generateRentChallenge', json(), (req, resp) => {
+    console.info('generateRentChallenge().top')
+    console.info('req:', req.body)
     const name = req.body.accountName
     const propertyName = req.body.propertyName
     const namePairBuffer = new Serialize.SerialBuffer({textEncoder: new util.TextEncoder(), textDecoder: new util.TextDecoder()})
     namePairBuffer.pushName(name)
     namePairBuffer.pushName(propertyName)
+    console.info('////////////-----------')
+    //console.info('eosioPubkey:', users[name].eosioPubkey.join(','))
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
-    const sigDigest = Buffer.from(ecc.sha256(sigData), 'hex')
-    const challenge = ecc.signHash(sigDigest, private_key_wif).toString()
+    const sigDigest = Buffer.from(ec.hash().update(sigData).digest())
+
+    const kPrivElliptic = PrivateKey.fromString(private_key_wif).toElliptic(ec)
+    const ellipticSignature = kPrivElliptic.sign(sigDigest)
+    const signature = Signature.fromElliptic(ellipticSignature).toString()
+    console.info('signature:', signature)
+    console.info('\\\\\\\\\\\\-----------')
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    const serverKey = ecc.privateToPublic(private_key_wif)
+    const serverKey = PublicKey.fromElliptic(kPrivElliptic).toString()
     const credentialIDStr = base64url.encode(users[name].credentialID)
 
+    console.info('result:', {
+      'status': 'ok',
+      'userKey' : userKey,
+      'serverKey' : serverKey,
+      'serverAuth': signature,
+      'credentialID': credentialIDStr
+    })
     resp.json({
       'status': 'ok',
       'userKey' : userKey,
       'serverKey' : serverKey,
-      'serverAuth': challenge,
+      'serverAuth': signature,
       'credentialID': credentialIDStr
     })
   })
 
   api.post( '/enroll', json(), (req, resp) => {
+    console.info('enroll().top')
     // Note there is no verfication of this data as it is out of scope for this demo
     //
     const name = req.body.accountName
+    console.info('name:', name)
     const webauthnPublicKey = req.body.webauthnPublicKey
+    console.info('webauthnPublicKey:', webauthnPublicKey)
 
     users[name] = decodeWebauthnPublicKey(webauthnPublicKey)
+    console.info('publicKey:', users[name].eosioPubkey.join(','))
     resp.json({ 'status': 'ok' })
   })
 
