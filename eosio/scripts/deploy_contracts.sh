@@ -220,13 +220,13 @@ if [ ! -z "$RUNNING_IN_GITPOD" ]; then
   mkdir -p $ROOT_DIR/downloads
 
   echo "INSTALLING EOSIO.CONTRACTS"
-  wget https://github.com/EOSIO/eosio.contracts/archive/v1.6.0.tar.gz
+  wget https://github.com/EOSIO/eosio.contracts/archive/v1.7.0.tar.gz
   mkdir -p $ROOT_DIR/downloads/eosio.contracts
   mkdir -p $CONTRACTS_DIR/eosio.contracts
-  tar xvzf ./v1.6.0.tar.gz -C $ROOT_DIR/downloads/eosio.contracts
-  mv $ROOT_DIR/downloads/eosio.contracts/eosio.contracts-1.6.0/* $CONTRACTS_DIR/eosio.contracts
+  tar xvzf ./v1.7.0.tar.gz -C $ROOT_DIR/downloads/eosio.contracts
+  mv $ROOT_DIR/downloads/eosio.contracts/eosio.contracts-1.7.0/* $CONTRACTS_DIR/eosio.contracts
   rm -rf $ROOT_DIR/downloads/eosio.contracts
-  rm ./v1.6.0.tar.gz
+  rm ./v1.7.0.tar.gz
 
   echo "INSTALLING EOSIO.ASSERT CONTRACT"
   wget https://github.com/EOSIO/eosio.assert/archive/v0.1.0.tar.gz
