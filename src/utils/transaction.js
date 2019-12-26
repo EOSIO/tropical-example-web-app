@@ -33,8 +33,7 @@ export const generateRentTransaction = (accountName, propertyName, serverKey, us
       authorization: [{
         actor: accountName,
         permission: 'active'
-      }
-      ],
+      }],
       data: {
         user: accountName,
         property: propertyName,
