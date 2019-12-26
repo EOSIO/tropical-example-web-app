@@ -114,7 +114,7 @@ const chain = {
   chainId: process.env.REACT_APP_CHAIN_ID,
   rpcEndpoints: [
     {
-      protocol: window.location.protocol.replace(/:$/, ''),
+      protocol: process.env.REACT_APP_RPC_PROTOCOL,
       host: process.env.REACT_APP_RPC_HOST,
       port: process.env.REACT_APP_RPC_PORT,
     },
@@ -373,6 +373,7 @@ Tropical Example uses an environment configuration for the Chain and RPC endpoin
 
 ```
 REACT_APP_CHAIN_ID=cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f
+REACT_APP_RPC_PROTOCOL=http
 REACT_APP_RPC_HOST=localhost
 REACT_APP_RPC_PORT=8888
 ```

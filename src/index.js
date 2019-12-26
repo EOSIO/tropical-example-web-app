@@ -29,7 +29,7 @@ const chain = {
       host: window.location.host,
       port: '',
     } : {
-      protocol: window.location.protocol.replace(/:$/, ''),
+      protocol: process.env.REACT_APP_RPC_PROTOCOL,
       host: process.env.REACT_APP_RPC_HOST,
       port: process.env.REACT_APP_RPC_PORT,
     },
