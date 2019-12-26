@@ -37,8 +37,6 @@ GITPOD_WORKSPACE_ROOT="/workspace/tropical-example-web-app"
 WALLET_DIR="$ROOT_DIR/wallet/"
 CONFIG_DIR="$ROOT_DIR/bin/config-dir"
 
-echo "{\"includes\": [],\"appenders\": [{\"name\": \"consoleout\",\"type\": \"console\",\"args\": {\"stream\": \"std_out\",\"level_colors\": [{\"level\": \"debug\",\"color\": \"green\"},{\"level\": \"warn\",\"color\": \"brown\"},{\"level\": \"error\",\"color\": \"red\"}]},\"enabled\": true}],\"loggers\": [{\"name\": \"default\",\"level\": \"debug\",\"enabled\": true,\"additivity\": false,\"appenders\": [\"consoleout\"]}]}" > /opt/eosio/bin/config-dir/logging.json
-
 function start_wallet {
   echo "Starting the wallet"
   rm -rf $WALLET_DIR
@@ -188,7 +186,6 @@ if [ -z "$NODEOS_RUNNING" ]; then
   nodeos -e -p eosio \
   --data-dir $BLOCKCHAIN_DATA_DIR \
   --config-dir $BLOCKCHAIN_CONFIG_DIR \
-  --logconf $BLOCKCHAIN_CONFIG_DIR/logging.json \
   --http-validate-host=false \
   --plugin eosio::producer_api_plugin \
   --plugin eosio::chain_api_plugin \
@@ -256,13 +253,6 @@ create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_K
 deploy_system_contract eosio.assert eosio.assert eosio.assert
 
 # eosio.bios
-deploy_system_contract eosio.contracts-1.8.3/contracts eosio.bios eosio
-
-activate_feature "299dcb6af692324b899b39f16d5a530a33062804e41f09dc97e9f156b4476707"
-
-wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0-rc1/eosio.cdt_1.7.0-rc1-ubuntu-18.04_amd64.deb
-apt-get update && sudo apt install -y ./eosio.cdt_1.7.0-rc1-ubuntu-18.04_amd64.deb
-
 deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 
 # eosio.token

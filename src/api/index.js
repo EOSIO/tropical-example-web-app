@@ -57,7 +57,7 @@ export default () => {
     const sigData = Buffer.concat( [ namePairBuffer.asUint8Array(), users[name].eosioPubkey ] )
     const sigDigest = Buffer.from(ec.hash().update(sigData).digest())
 
-    const kPrivElliptic = PrivateKey.fromString(private_key_wif).toElliptic(ec);
+    const kPrivElliptic = PrivateKey.fromString(private_key_wif).toElliptic(ec)
     const ellipticSignature = kPrivElliptic.sign(sigDigest)
     const signature = Signature.fromElliptic(ellipticSignature).toString()
 
