@@ -55,7 +55,7 @@ class Property extends React.Component {
     const { activeUser } = this.context
     if ( activeUser ) {
       if (!this.state.canRent) {
-        displayError(new Error('You need to use HTTPS in order to rent.'))
+        displayError(new Error('HTTPS is required to use 2FA.'))
         return;
       } else if (!this.props.enrolled) {
         displayError(new Error('No 2FA enrolled 2FA: Please enroll in 2FA (under Login/Profile menu at the top right) to Rent.'))
