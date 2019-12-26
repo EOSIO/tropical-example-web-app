@@ -1,9 +1,7 @@
 import { Router, json } from 'express'
-import { eccSignHash } from './eosjsEccReplacement'
 import { ec as EC } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
-import {JsSignatureProvider, PrivateKey, PublicKey, Signature} from 'eosjs/dist/eosjs-jssig'
-import { KeyType } from "eosjs/dist/eosjs-numeric"
+import { JsSignatureProvider, PrivateKey, PublicKey, Signature } from 'eosjs/dist/eosjs-jssig'
 import base64url from 'base64url'
 import cbor from 'cbor'
 import util from 'util';
@@ -68,30 +66,15 @@ export default () => {
 
     const kPrivElliptic = PrivateKey.fromString(private_key_wif).toElliptic(ec)
     const ellipticSignature = kPrivElliptic.sign(sigDigest)
-    const signature = Signature.fromElliptic(ellipticSignature, KeyType.r1).toString()
+    const signature = Signature.fromElliptic(ellipticSignature).toString()
     console.info('signature:', signature)
     console.info('\\\\\\\\\\\\-----------')
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    const serverKey = PublicKey.fromElliptic(kPrivElliptic, KeyType.r1).toString()
+    const serverKey = PublicKey.fromElliptic(kPrivElliptic).toString()
     const credentialIDStr = base64url.encode(users[name].credentialID)
-
-    // TEST
-    console.log('/////////////------- TEST')
-    const ellipticSign = Signature.fromString(signature).toElliptic(KeyType.r1)
-    const ellipticHashedStringAsBuffer = Buffer.from(ec.hash().update(sigData).digest())
-    const ellipticRecoveredPublicKey =
-      ec.recoverPubKey(
-        ellipticHashedStringAsBuffer,
-        ellipticSign,
-        ellipticSign.recoveryParam)
-    const ellipticPublicKey = ec.keyFromPublic(ellipticRecoveredPublicKey)
-    const publicKeyStr = PublicKey.fromElliptic(ellipticPublicKey, KeyType.r1).toString()
-    console.log('From Signature Public Key Matches?', publicKeyStr === serverKey)
-    console.log('\\\\\\\\-----------')
-    // End of Test
 
     console.info('result:', {
       'status': 'ok',
