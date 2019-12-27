@@ -49,6 +49,7 @@ The following open source repositories are utilized in Tropical Example:
     - [Transactions Errors](#transactions-errors)
 - [Manifest Specification](#manifest-specification)
 - [Ricardian Specification](#ricardian-specification)
+- [WebAuthn](#web-authn)
 - [Running Tropical Example](#running-tropical-example)
   - [Required Tools](#required-tools)
   - [Setup](#setup-1)
@@ -57,6 +58,8 @@ The following open source repositories are utilized in Tropical Example:
   - [Running Nodeos](#running-nodeos)
   - [Running Frontend](#running-frontend)
   - [Login](#login-1)
+  - [Using WebAuthn](#using-web-authn)
+    - [Other Available Actions](#other-available-actions)
   - [Docker Compose Command Reference](#docker-compose-command-reference)
 - [Links](#links)
 - [Contributing](#contributing)
@@ -419,7 +422,7 @@ EOS6TWM95TUqpgcjYnvXSK5kBsi6LryWRxmcBaULVTvf5zxkaMYWf
 5KkXYBUb7oXrq9cvEYT3HXsoHvaC2957VKVftVRuCy7Z7LyUcQB
 ```
 
-### WebAuthn
+### Using WebAuthn
 
 After setting up the application and logging in, you can enable WebAuthn if you want to be able to `rent` a property.
 ![Enabling WebAuthn](docs/images/enable-webauthn.png)
