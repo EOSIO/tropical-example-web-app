@@ -11,7 +11,7 @@ export default () => {
   const private_key_wif = process.env.API_SERVER_PRIVATE_KEY
   const api = Router()
 
-  const decodeWebauthnPublicKey = (webauthnPublicKey) => {
+  const decodeWebauthnPublicKey = (webauthnPublicKey, hostname) => {
     const attestationBuffer = base64url.toBuffer(webauthnPublicKey.attestationObject)
     const attestation = cbor.decodeFirstSync(attestationBuffer)
     const authdata = attestation.authData
@@ -24,7 +24,7 @@ export default () => {
     const x   = COSEPublicKey.get(-2)
     const y   = COSEPublicKey.get(-3)
 
-    const rpId = 'localhost'
+    const rpId = hostname
     const presence = ((flags)=>{
       if (flags & 0x04)
         return 2
@@ -80,8 +80,9 @@ export default () => {
   api.post( '/enroll', json(), (req, resp) => {
     const name = req.body.accountName
     const webauthnPublicKey = req.body.webauthnPublicKey
+    const hostname = req.body.hostname
 
-    users[name] = decodeWebauthnPublicKey(webauthnPublicKey)
+    users[name] = decodeWebauthnPublicKey(webauthnPublicKey, hostname)
     resp.json({ 'status': 'ok' })
   })
 

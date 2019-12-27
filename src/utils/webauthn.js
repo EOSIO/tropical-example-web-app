@@ -63,7 +63,7 @@ export const generateWebauthnPubkey = async ( accountName ) => {
       // Relying Party
       rp: {
         name: "Tropical Stay",
-        id: "localhost"
+        id: window.location.hostname
       },
       // Cryptographic challenge from the server
       challenge: new Uint8Array(26),
@@ -90,7 +90,8 @@ export const generateWebauthnPubkey = async ( accountName ) => {
 export const enrollWebauthnPubkey = async (accountName, webauthnPublicKey) => {
   const payload = {
     accountName,
-    webauthnPublicKey
+    webauthnPublicKey,
+    hostname: window.location.hostname
   }
 
   const enrollResponse = await fetch('/api/enroll', {
