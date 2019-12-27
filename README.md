@@ -400,10 +400,9 @@ You can view the contract in the [eosio/contracts directory](https://github.com/
 
 ### Running Frontend
 
-```bash
-HTTPS=true yarn start
+```yarn startSecure
 ```
-This command runs the app in the development mode.
+This command runs the app in development mode over SSL. You can also run `yarn start` to run the app without SSL. You will need to install a self-signed SSL certificate or enable [allow-insecure-localhost](chrome://flags/#allow-insecure-localhost) if running over SSL in chrome.
 Open [https://localhost:3000](https://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.
@@ -420,6 +419,25 @@ EOS6TWM95TUqpgcjYnvXSK5kBsi6LryWRxmcBaULVTvf5zxkaMYWf
 5KkXYBUb7oXrq9cvEYT3HXsoHvaC2957VKVftVRuCy7Z7LyUcQB
 ```
 
+### WebAuthn
+
+After setting up the application and logging in, you can enable WebAuthn if you want to be able to `rent` a property.
+![Enabling WebAuthn](docs/images/enable-webauthn.png)
+
+Once you enable WebAuthn with your choice of hardware, you can browse to the list of properties and select `rent`. Scatter will prompt you to allow this action by authenticating with your hardware.
+![Renting A Property](docs/images/scatter-rent-property.png)
+
+After confirming the transaction, you should now see an indicator that your property has been rented successfully.
+![Rented Property](docs/images/rented-property.png)
+
+#### Other Available Actions
+
+You can like a property (WebAuthn not required). After browsing to the list of properties and selecting `like`, scatter will prompty you to allow this action.
+![Liking A Property](docs/images/scatter-like-property.png)
+
+After confirming the transaction, you should now see an indicator that your property has been liked successfully.
+![Liked Property](docs/images/liked-property.png)
+
 ### Docker Compose Command Reference
 
 ```bash
@@ -430,11 +448,6 @@ docker-compose down eosio
 # Open a bash terminal into the docker container
 docker-compose exec eosio /bin/bash
 ```
-
-# Add other info somewhere in here
-## How to use WebAuthn
-### Need for SSL ++
-### Need for enabling chrome://flags/#allow-insecure-localhost
 
 ## Links
 - [Universal Authenticator Library (UAL)](https://github.com/EOSIO/universal-authenticator-library)
