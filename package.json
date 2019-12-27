@@ -43,7 +43,7 @@
     "ual-token-pocket": "0.1.2"
   },
   "resolutions": {
-    "eosjs": "20.0.4-e2c667e.0"
+    "eosjs": "^20.0.2-a53eecb.0"
   },
   "scripts": {
     "start": "node scripts/copyDefaultEnv.js && react-scripts start",

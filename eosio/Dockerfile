@@ -9,18 +9,12 @@ RUN apt-get update && sudo apt install -y ./eosio_2.0.0-rc2-ubuntu-18.04_amd64.d
 RUN echo "INSTALLING CONTRACTS"
 RUN mkdir -p "/opt/eosio/bin/contracts"
 
-RUN echo "INSTALLING EOSIO.CONTRACTS v1.8.3"
-RUN wget https://github.com/EOSIO/eosio.contracts/archive/v1.8.3.tar.gz
-RUN mkdir -p /eosio.contracts-1.8.3
-RUN tar xvzf ./v1.8.3.tar.gz -C /eosio.contracts-1.8.3
-RUN mv /eosio.contracts-1.8.3/eosio.contracts-1.8.3 /opt/eosio/bin/contracts
-
-RUN echo "INSTALLING EOSIO.CONTRACTS v1.9.0-rc4"
-RUN wget https://github.com/EOSIO/eosio.contracts/archive/v1.9.0-rc4.tar.gz
+RUN echo "INSTALLING EOSIO.CONTRACTS"
+RUN wget https://github.com/EOSIO/eosio.contracts/archive/v1.7.0.tar.gz
 RUN mkdir -p /eosio.contracts
-RUN tar xvzf ./v1.9.0-rc4.tar.gz -C /eosio.contracts
-RUN mv /eosio.contracts/eosio.contracts-1.9.0-rc4 /opt/eosio/bin/contracts
-RUN mv /opt/eosio/bin/contracts/eosio.contracts-1.9.0-rc4 /opt/eosio/bin/contracts/eosio.contracts
+RUN tar xvzf ./v1.7.0.tar.gz -C /eosio.contracts
+RUN mv /eosio.contracts/eosio.contracts-1.7.0 /opt/eosio/bin/contracts
+RUN mv /opt/eosio/bin/contracts/eosio.contracts-1.7.0 /opt/eosio/bin/contracts/eosio.contracts
 
 RUN echo "INSTALLING EOSIO.ASSERT CONTRACT"
 RUN wget https://github.com/EOSIO/eosio.assert/archive/v0.1.0.tar.gz

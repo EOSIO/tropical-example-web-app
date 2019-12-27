@@ -102,7 +102,6 @@ class Property extends React.Component {
             role='button'
             onClick={this.onRent}
             onKeyUp={event => onKeyUpEnter(event, this.onRent)}
-            disabled={!this.state.canRent}
           >
             <img src={rented ? rentingSvg : rentSvg} alt='rent '/>
             {rented && !loading ? 'Renting' : 'Rent'}
