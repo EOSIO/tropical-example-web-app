@@ -22,7 +22,7 @@ const decodeWebauthnSignature = (assertion, key) => {
         throw new Error('Signature has an r or s that is too big')
     return new Uint8Array(a)
   }
-  
+
   const der = new Serialize.SerialBuffer({ array: new Uint8Array(assertion.signature) })
   if (der.get() !== 0x30)
       throw new Error('Signature missing DER prefix')
@@ -40,19 +40,19 @@ const decodeWebauthnSignature = (assertion, key) => {
   const signedData = Buffer.concat([Buffer.from(assertion.authenticatorData), Buffer.from(e.hash().update(Buffer.from(assertion.clientDataJSON)).digest())])
   const hash = Buffer.from(e.hash().update(signedData).digest())
   const recid = e.getKeyRecoveryParam(hash, Buffer.from(assertion.signature), pubKey)
-  
+
   const sigData = new Serialize.SerialBuffer()
   sigData.push(recid + 27 + 4)
   sigData.pushArray(r)
   sigData.pushArray(s)
   sigData.pushBytes(new Uint8Array(assertion.authenticatorData))
   sigData.pushBytes(new Uint8Array(assertion.clientDataJSON))
-  
+
   const sig = Numeric.signatureToString({
       type: Numeric.KeyType.wa,
       data: sigData.asUint8Array().slice(),
   })
-  console.log(sig)
+
   return sig;
 }
 
@@ -151,4 +151,8 @@ export const signRentChallenge = async(accountName, propertyName, challenge) => 
 
   const webauthnResp = await navigator.credentials.get(getCredentialOptions)
   return decodeWebauthnSignature(webauthnResp.response, challenge.userKey)
+}
+
+export const canUseWebAuthN = () => {
+  return window.location.protocol.replace(/:$/, '') === 'https'
 }

@@ -1,5 +1,5 @@
 # 🌴 Tropical Example <!-- omit in toc -->
-Tropical Example is a mock application for renting properties. It will be referenced throughout this guide as an example for application developers to start building secure applications with a good user experience on the EOSIO blockchain. 
+Tropical Example is a mock application for renting properties. It will be referenced throughout this guide as an example for application developers to start building secure applications with a good user experience on the EOSIO blockchain.
 
 ![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
 
@@ -12,7 +12,7 @@ EOSIO Labs repositories are experimental. Developers in the community are encour
 ### Try it out in Gitpod ###
 
 Gitpod [launches the app](https://gitpod.io/#https://github.com/EOSIO/tropical-example-web-app) for you. It starts the required blockchain in the background, launches the web server, and opens a preview window.
-NOTES: 
+NOTES:
  1) There are several times during startup it might look like startup hangs, namely... near the end of the docker build, once the IDE comes up, and then once the preview shows.
  2) Sometimes when Gitpod launches the webapp preview, it does so prematurely.  Just click the small refresh circular arrow icon in the top left of the preview window.
  3) Gitpod generates a dynamic URL for the browser to access the app from. This URL is needed in numerous parts of the app, so note that there is code in this repo specifically meant for Gitpod compatibility. A comment has been added in those locations to point it out.
@@ -33,7 +33,7 @@ The following open source repositories are utilized in Tropical Example:
 * Using the [Universal Authenticator Library (UAL)](https://github.com/EOSIO/universal-authenticator-library/) for quick and easy integration with multiple authentication providers (wallets).
 * Increasing the security and transparency of your application by following the [Manifest Specification](https://github.com/EOSIO/manifest-spec).
 * Displaying human readable Ricardian Contracts of your proposed EOSIO actions by following the [Ricardian Specification](https://github.com/EOSIO/ricardian-spec).
-  
+
 ## Table of Contents <!-- omit in toc -->
 - [Universal Authenticator Library (UAL)](#universal-authenticator-library-ual)
   - [Installation](#installation)
@@ -49,6 +49,7 @@ The following open source repositories are utilized in Tropical Example:
     - [Transactions Errors](#transactions-errors)
 - [Manifest Specification](#manifest-specification)
 - [Ricardian Specification](#ricardian-specification)
+- [WebAuthn](#web-authn)
 - [Running Tropical Example](#running-tropical-example)
   - [Required Tools](#required-tools)
   - [Setup](#setup-1)
@@ -57,6 +58,8 @@ The following open source repositories are utilized in Tropical Example:
   - [Running Nodeos](#running-nodeos)
   - [Running Frontend](#running-frontend)
   - [Login](#login-1)
+  - [Using WebAuthn](#using-webauthn)
+    - [Other Available Actions](#other-available-actions)
   - [Docker Compose Command Reference](#docker-compose-command-reference)
 - [Links](#links)
 - [Contributing](#contributing)
@@ -400,10 +403,9 @@ You can view the contract in the [eosio/contracts directory](https://github.com/
 
 ### Running Frontend
 
-```bash
-HTTPS=true yarn start
+```yarn startSecure
 ```
-This command runs the app in the development mode.
+This command runs the app in development mode over SSL. You can also run `yarn start` to run the app without SSL. You will need to install a self-signed SSL certificate or enable [allow-insecure-localhost](chrome://flags/#allow-insecure-localhost) if running over SSL in chrome.
 Open [https://localhost:3000](https://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.
@@ -419,6 +421,25 @@ EOS6TWM95TUqpgcjYnvXSK5kBsi6LryWRxmcBaULVTvf5zxkaMYWf
 # Example Account Private Key
 5KkXYBUb7oXrq9cvEYT3HXsoHvaC2957VKVftVRuCy7Z7LyUcQB
 ```
+
+### Using WebAuthn
+
+After setting up the application and logging in, you can enable WebAuthn if you want to be able to `rent` a property.
+![Enabling WebAuthn](docs/images/enable-webauthn.png)
+
+Once you enable WebAuthn with your choice of hardware, you can browse to the list of properties and select `rent`. Scatter will prompt you to allow this action by authenticating with your hardware.
+![Renting A Property](docs/images/scatter-rent-property.png)
+
+After confirming the transaction, you should now see an indicator that your property has been rented successfully.
+![Rented Property](docs/images/rented-property.png)
+
+#### Other Available Actions
+
+You can like a property (WebAuthn not required). After browsing to the list of properties and selecting `like`, scatter will prompty you to allow this action.
+![Liking A Property](docs/images/scatter-like-property.png)
+
+After confirming the transaction, you should now see an indicator that your property has been liked successfully.
+![Liked Property](docs/images/liked-property.png)
 
 ### Docker Compose Command Reference
 
