@@ -58,7 +58,7 @@ The following open source repositories are utilized in Tropical Example:
   - [Running Nodeos](#running-nodeos)
   - [Running Frontend](#running-frontend)
   - [Login](#login-1)
-  - [Using WebAuthn](#using-web-authn)
+  - [Using WebAuthn](#using-webauthn)
     - [Other Available Actions](#other-available-actions)
   - [Docker Compose Command Reference](#docker-compose-command-reference)
 - [Links](#links)
