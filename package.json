@@ -21,7 +21,7 @@
     "@babel/preset-env": "7.4.3",
     "@babel/register": "7.4.4",
     "assert": "^2.0.0",
-    "base64url": "2.0.0",
+    "base64url": "^3.0.1",
     "bigi": "^1.4.2",
     "bs58": "^4.0.1",
     "cbor": "3.0.3",
@@ -43,7 +43,9 @@
     "ual-token-pocket": "0.1.2"
   },
   "resolutions": {
-    "eosjs": "^20.0.2-a53eecb.0"
+    "eosjs": "^20.0.2-a53eecb.0",
+    "handlebars": "4.5.3",
+    "terser-webpack-plugin": "1.4.3"
   },
   "scripts": {
     "start": "node scripts/copyDefaultEnv.js && react-scripts start",
