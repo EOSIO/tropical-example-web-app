@@ -73,7 +73,7 @@ class App extends React.Component {
     this.displayNotificationBar(false)
   }
 
-  enroll = async ( onSuccess ) => {
+  enroll = async () => {
     console.info('enroll().top')
     // Via static contextType = UALContext, access to the activeUser object on this.context is now available
     const { ual: { activeUser } } = this.props
@@ -85,7 +85,6 @@ class App extends React.Component {
         console.info('pubkey:', pubkey)
         await enrollWebauthnPubkey(accountName, pubkey)
         this.setState({enrolled: true})
-        onSuccess();
       } catch (err) {
         this.displayError(err)
       }
@@ -99,14 +98,14 @@ class App extends React.Component {
     const routeToResults = () => this.displayResults(true)
     const routeToLanding = () => this.displayResults(false)
     const hideNotificationBar = () => this.clearError()
-    const { showResults, showNotificationBar, error } = this.state
+    const { showResults, showNotificationBar, error, enrolled } = this.state
 
     return (
       <div className='app-container'>
         { showNotificationBar && <NotificationBar hideNotificationBar={hideNotificationBar} error={error} /> }
-        <NavigationBar routeToLanding={routeToLanding} login={login} enroll={this.enroll} />
+        <NavigationBar routeToLanding={routeToLanding} login={login} enroll={this.enroll} enrolled={enrolled} />
         { showResults
-          ? <ResultsPage routeToLanding={routeToLanding} login={login} displayError={this.displayError} enrolled={this.state.enrolled} />
+          ? <ResultsPage routeToLanding={routeToLanding} login={login} displayError={this.displayError} enrolled={enrolled} />
           : <LandingPage routeToResults={routeToResults} />
         }
       </div>

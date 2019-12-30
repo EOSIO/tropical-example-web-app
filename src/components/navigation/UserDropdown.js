@@ -1,5 +1,5 @@
 import React from 'react'
-import { func } from 'prop-types'
+import { bool, func } from 'prop-types'
 // UAL context object that can be set via the contextType property on a class and can be referenced using this.context
 import { UALContext } from 'ual-reactjs-renderer'
 import './UserDropdown.scss'
@@ -14,18 +14,11 @@ class UserDropdown extends React.Component {
   static propTypes = {
     logout: func.isRequired,
     enroll: func.isRequired,
-  }
-
-  state = {
-    enrolled: false
+    enrolled: bool.isRequired,
   }
 
   render() {
-    const { logout, enroll } = this.props;
-    const { enrolled } = this.state;
-    const doEnroll = () => {
-      enroll(() => this.setState({enrolled: true}))
-    }
+    const { logout, enrolled, enroll } = this.props;
     return (
       <div
         className='user-dropdown-container'
@@ -35,8 +28,8 @@ class UserDropdown extends React.Component {
         <ul>
           { !enrolled
             ? <li className='user-dropdown-item menu-item-with-icon'
-                onClick={doEnroll}
-                onKeyUp={event => onKeyUpEnter(event, doEnroll)}
+                onClick={enroll}
+                onKeyUp={event => onKeyUpEnter(event, enroll)}
               >
                 <img src={privacyIcon} className='menu-item-icon-left' alt='privacy' />
                 <span>Enable WebAuthn 2FA</span>

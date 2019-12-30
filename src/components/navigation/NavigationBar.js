@@ -1,5 +1,5 @@
 import React from 'react'
-import { func, instanceOf, oneOfType, shape } from 'prop-types'
+import { bool, func, instanceOf, oneOfType, shape } from 'prop-types'
 import { EOSIOAuthUser } from 'ual-eosio-reference-authenticator'
 import { ScatterUser } from 'ual-scatter'
 import { LynxUser } from 'ual-lynx'
@@ -12,7 +12,7 @@ import LoginButton from 'components/navigation/LoginButton'
 import { onKeyUpEnter } from 'utils/keyPress'
 import logo from 'assets/images/logo.svg'
 
-const NavigationBar = ({ ual: { activeUser }, routeToLanding, login, enroll }) => (
+const NavigationBar = ({ ual: { activeUser }, routeToLanding, login, enroll, enrolled }) => (
   <div className='navigation-bar-container'>
     <div className='navigation-bar-content'>
       <div
@@ -27,7 +27,7 @@ const NavigationBar = ({ ual: { activeUser }, routeToLanding, login, enroll }) =
       <ul className='navigation-bar-list'>
         <li className={`post ${!activeUser && 'disabled'}`}>Post a Property</li>
         { activeUser
-          ? <li className='user-info'><UserInfo enroll={enroll} /></li>
+          ? <li className='user-info'><UserInfo enroll={enroll} enrolled={enrolled} /></li>
           : <li className='login'><LoginButton login={login} /></li>
         }
       </ul>
@@ -47,6 +47,7 @@ NavigationBar.propTypes = {
   routeToLanding: func.isRequired,
   login: func.isRequired,
   enroll: func.isRequired,
+  enrolled: bool.isRequired
 }
 
 NavigationBar.defaultProps = {
