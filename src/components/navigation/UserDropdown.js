@@ -28,6 +28,8 @@ class UserDropdown extends React.Component {
         <ul>
           { !enrolled
             ? <li className='user-dropdown-item menu-item-with-icon'
+                role='button'
+                aria-label='Enable WebAuthn 2FA'
                 onClick={enroll}
                 onKeyUp={event => onKeyUpEnter(event, enroll)}
               >
@@ -40,6 +42,8 @@ class UserDropdown extends React.Component {
               </li>
           }
           <li className='user-dropdown-item menu-item-with-icon'
+            role='button'
+            aria-label='Logout'
             onClick={logout}
             onKeyUp={event => onKeyUpEnter(event, logout)}
           >

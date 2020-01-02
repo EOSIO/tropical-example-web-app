@@ -88,6 +88,7 @@ class Property extends React.Component {
           className='property-image'
           tabIndex={0}
           role='button'
+          aria-label='Rent Property Image'
           onClick={this.onRent}
           onKeyUp={event => onKeyUpEnter(event, this.onRent)}
         >
@@ -100,6 +101,7 @@ class Property extends React.Component {
             className={`button rent-button ${rented && !loading ? 'active' : ''}`}
             tabIndex={0}
             role='button'
+            aria-label='Rent Property Button'
             onClick={this.onRent}
             onKeyUp={event => onKeyUpEnter(event, this.onRent)}
           >
@@ -110,6 +112,7 @@ class Property extends React.Component {
             className={`button like-button ${liked && !loading ? 'active' : ''}`}
             tabIndex={0}
             role='button'
+            aria-label='Like Property Button'
             onClick={this.onLike}
             onKeyUp={event => onKeyUpEnter(event, this.onLike)}
           >

@@ -15,7 +15,7 @@ const SearchBox = ({ onSearch }) => {
       <div className='search-field location'><div className='blurb' /></div>
       <div className='search-field left'><div className='blurb' /></div>
       <div className='search-field right'><div className='blurb' /></div>
-      <button className='search-button' type='submit'>Continue</button>
+      <button className='search-button' type='submit' aria-label='Search a Property Submit'>Continue</button>
     </form>
   )
 }
