@@ -23,13 +23,6 @@ RUN tar xvzf ./v1.9.0.tar.gz -C /eosio.contracts
 RUN mv /eosio.contracts/eosio.contracts-1.9.0 /opt/eosio/bin/contracts
 RUN mv /opt/eosio/bin/contracts/eosio.contracts-1.9.0 /opt/eosio/bin/contracts/eosio.contracts
 
-RUN echo "INSTALLING EOSIO.CONTRACTS"
-RUN wget https://github.com/EOSIO/eosio.contracts/archive/v1.7.0.tar.gz
-RUN mkdir -p /eosio.contracts
-RUN tar xvzf ./v1.7.0.tar.gz -C /eosio.contracts
-RUN mv /eosio.contracts/eosio.contracts-1.7.0 /opt/eosio/bin/contracts
-RUN mv /opt/eosio/bin/contracts/eosio.contracts-1.7.0 /opt/eosio/bin/contracts/eosio.contracts
-
 RUN echo "INSTALLING EOSIO.ASSERT CONTRACT"
 RUN wget https://github.com/EOSIO/eosio.assert/archive/v0.1.0.tar.gz
 RUN mkdir -p /eosio.assert
