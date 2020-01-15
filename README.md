@@ -403,7 +403,8 @@ You can view the contract in the [eosio/contracts directory](https://github.com/
 
 ### Running Frontend
 
-```yarn startSecure
+```bash
+yarn startSecure
 ```
 This command runs the app in development mode over SSL. You can also run `yarn start` to run the app without SSL. You will need to install a self-signed SSL certificate or enable [allow-insecure-localhost](chrome://flags/#allow-insecure-localhost) if running over SSL in chrome.
 Open [https://localhost:3000](https://localhost:3000) to view it in the browser.
