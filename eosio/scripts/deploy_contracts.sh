@@ -34,7 +34,7 @@ mkdir -p $ROOT_DIR/bin
 # Set PATH
 PATH="$PATH:$ROOT_DIR/bin:$ROOT_DIR/bin/scripts"
 GITPOD_WORKSPACE_ROOT="/workspace/tropical-example-web-app"
-WALLET_DIR="$ROOT_DIR/wallet/"
+WALLET_DIR="/root/eosio-wallet/"
 CONFIG_DIR="$ROOT_DIR/bin/config-dir"
 
 function start_wallet {
@@ -253,6 +253,13 @@ create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_K
 deploy_system_contract eosio.assert eosio.assert eosio.assert
 
 # eosio.bios
+deploy_system_contract eosio.contracts-1.8.3/contracts eosio.bios eosio
+
+activate_feature "299dcb6af692324b899b39f16d5a530a33062804e41f09dc97e9f156b4476707"
+
+wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+apt-get update && sudo apt install -y ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+
 deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 
 # eosio.token

@@ -16,7 +16,7 @@ import 'assets/styles/constants.scss'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
-const appName = 'Tropical Example'
+const appName = 'Tropical-Example'
 
 const isGitpod = process.env.REACT_APP_IS_GITPOD === 'true'
 

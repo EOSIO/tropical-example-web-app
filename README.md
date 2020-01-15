@@ -110,7 +110,7 @@ import { Scatter } from 'ual-scatter'
 import { Lynx } from 'ual-lynx'
 import { TokenPocket } from 'ual-token-pocket'
 ...
-const appName = 'Tropical Example'
+const appName = 'Tropical-Example'
 
 // Chains
 const chain = {
