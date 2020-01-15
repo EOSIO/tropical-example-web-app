@@ -1,7 +1,8 @@
 import { Router, json } from 'express'
 import { ec as EC } from 'elliptic'
 import {Serialize, Numeric} from 'eosjs'
-import { JsSignatureProvider, PrivateKey, PublicKey, Signature } from 'eosjs/dist/eosjs-jssig'
+import { PrivateKey, PublicKey, Signature } from 'eosjs/dist/eosjs-jssig'
+import { KeyType } from 'eosjs/dist/eosjs-numeric'
 import base64url from 'base64url'
 import cbor from 'cbor'
 import util from 'util';
@@ -59,13 +60,13 @@ export default () => {
 
     const kPrivElliptic = PrivateKey.fromString(private_key_wif).toElliptic(ec)
     const ellipticSignature = kPrivElliptic.sign(sigDigest)
-    const signature = Signature.fromElliptic(ellipticSignature).toString()
+    const signature = Signature.fromElliptic(ellipticSignature, KeyType.k1).toString()
 
     const userKey = Numeric.publicKeyToString({
       type: Numeric.KeyType.wa,
       data: users[name].eosioPubkey.slice(1),
     })
-    const serverKey = PublicKey.fromElliptic(kPrivElliptic).toString()
+    const serverKey = PublicKey.fromElliptic(kPrivElliptic, KeyType.k1).toString()
     const credentialIDStr = base64url.encode(users[name].credentialID)
 
     resp.json({
