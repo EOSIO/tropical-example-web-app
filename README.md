@@ -49,7 +49,7 @@ The following open source repositories are utilized in Tropical Example:
     - [Transactions Errors](#transactions-errors)
 - [Manifest Specification](#manifest-specification)
 - [Ricardian Specification](#ricardian-specification)
-- [WebAuthn](#web-authn)
+- [WebAuthn](#webauthn)
 - [Running Tropical Example](#running-tropical-example)
   - [Required Tools](#required-tools)
   - [Setup](#setup-1)
