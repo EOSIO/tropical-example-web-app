@@ -51,7 +51,7 @@ class UserDropdown extends React.Component {
             onClick={logout}
             onKeyUp={event => onKeyUpEnter(event, logout)}
           >
-            <img src={logoutIcon} className='bob9 menu-item-icon-left' alt='' />
+            <img src={logoutIcon} className='menu-item-icon-left' alt='' />
             Logout
           </li>
         </ul>

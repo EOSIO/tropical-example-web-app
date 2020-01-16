@@ -233,7 +233,7 @@ It is **highly recommended** in the transaction configuration to provide a `expi
 
 ```javascript
 import { UALContext } from 'ual-reactjs-renderer'
-import { generateTransaction } from 'utils/transaction'
+import { generateLikeTransaction } from 'utils/transaction'
 ...
 class Property extends React.Component {
   static contextType = UALContext
@@ -245,7 +245,7 @@ class Property extends React.Component {
     if (activeUser) {
       try {
         const accountName = await activeUser.getAccountName()
-        const transaction = generateTransaction(accountName)
+        const transaction = generateLikeTransaction(accountName)
         // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
         await activeUser.signTransaction(transaction, { broadcast: true, expireSeconds: 300 })
         this.setState({ liked: true })

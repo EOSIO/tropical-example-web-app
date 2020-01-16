@@ -8,9 +8,9 @@ const NUM_PROPERTIES = 8
 
 const ResultsProperties = ({ login, displayError, enrolled }) => (
   <div className='results-properties-container'>
-    { [...Array(NUM_PROPERTIES).keys()].map((e) => {
-      return <Property login={login} displayError={displayError} key={e} enrolled={enrolled} />
-    })
+    { [...Array(NUM_PROPERTIES).keys()].map((e) => (
+      <Property login={login} displayError={displayError} key={e} enrolled={enrolled} />
+    ))
     }
   </div>
 )

@@ -1,4 +1,4 @@
-export const generateTransaction = account => ({
+export const generateLikeTransaction = account => ({
   actions: [{
     account: 'tropical',
     name: 'like',

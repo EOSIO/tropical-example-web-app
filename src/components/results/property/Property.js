@@ -5,7 +5,7 @@ import { UALContext } from 'ual-reactjs-renderer'
 import './Property.scss'
 
 import PropertyImage from 'components/results/property/PropertyImage'
-import { generateTransaction, generateRentTransaction, transactionConfig } from 'utils/transaction'
+import { generateLikeTransaction, generateRentTransaction, transactionConfig } from 'utils/transaction'
 import { generateRentChallenge, signRentChallenge, canUseWebAuthN } from 'utils/webauthn'
 import { onKeyUpEnter } from 'utils/keyPress'
 
@@ -35,7 +35,7 @@ class Property extends React.Component {
       this.setState({ loading: true })
       try {
         const accountName = await activeUser.getAccountName()
-        const transaction = generateTransaction(accountName)
+        const transaction = generateLikeTransaction(accountName)
         // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
         await activeUser.signTransaction(transaction, transactionConfig)
         this.setState({ liked: true })
@@ -94,16 +94,7 @@ class Property extends React.Component {
 
     return (
       <div className='property-container'>
-        <div
-          className='property-image'
-          tabIndex={0}
-          role='button'
-          aria-label='Rent Property Image'
-          onClick={this.onRent}
-          onKeyUp={event => onKeyUpEnter(event, this.onRent)}
-        >
-          <PropertyImage loading={loading} liked={liked} />
-        </div>
+        <PropertyImage loading={loading} liked={liked} onRent={this.onRent} />
         <div className='property-info property-info-1' />
         <div className='property-info property-info-2' />
         <div className='property-info property-info-3'>
