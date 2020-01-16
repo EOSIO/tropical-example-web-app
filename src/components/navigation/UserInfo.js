@@ -8,8 +8,6 @@ import upArrow from 'assets/images/up-arrow.svg'
 import { onKeyUpEnter } from 'utils/keyPress'
 
 class UserInfo extends React.Component {
-  static contextType = UALContext
-
   _isMounted = false
 
   state = {
@@ -38,7 +36,9 @@ class UserInfo extends React.Component {
     }))
   }
 
-  renderLogout = ( enroll, enrolled ) => (
+  static contextType = UALContext
+
+  renderLogout = (enroll, enrolled) => (
     <React.Fragment>
       <div
         className='user-info-dropdown-btn'
@@ -49,11 +49,11 @@ class UserInfo extends React.Component {
       >
         <img src={this.state.showDropdown ? upArrow : downArrow} alt='dropdown' />
       </div>
-      { this.state.showDropdown && this.renderDropdown( enroll, enrolled ) }
+      { this.state.showDropdown && this.renderDropdown(enroll, enrolled) }
     </React.Fragment>
   )
 
-  renderDropdown = ( enroll, enrolled ) => {
+  renderDropdown = (enroll, enrolled) => {
     const { logout } = this.context
     return (
       <div className='user-info-dropdown-content'>
@@ -65,7 +65,7 @@ class UserInfo extends React.Component {
   render() {
     const { logout, isAutoLogin } = this.context
     const { accountName } = this.state
-    const { enroll, enrolled } = this.props;
+    const { enroll, enrolled } = this.props
     const shouldDisplayLogout = logout && !isAutoLogin
     return (
       <div className={`user-info-container ${shouldDisplayLogout ? '' : 'user-info-hide-dropdown'}`}>

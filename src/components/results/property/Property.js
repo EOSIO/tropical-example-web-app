@@ -14,8 +14,6 @@ import rentSvg from 'assets/images/money-bag.svg'
 import rentingSvg from 'assets/images/renting.svg'
 
 class Property extends React.Component {
-  static contextType = UALContext
-
   static propTypes = {
     login: func.isRequired,
     displayError: func.isRequired,
@@ -26,7 +24,7 @@ class Property extends React.Component {
     loading: false,
     liked: false,
     rented: false,
-    canRent: canUseWebAuthN()
+    canRent: canUseWebAuthN(),
   }
 
   onLike = async () => {
@@ -53,23 +51,33 @@ class Property extends React.Component {
   onRent = async () => {
     const { login, displayError } = this.props
     const { activeUser } = this.context
-    if ( activeUser ) {
+    if (activeUser) {
       if (!this.state.canRent) {
         displayError(new Error('HTTPS is required to use 2FA.'))
-        return;
-      } else if (!this.props.enrolled) {
-        displayError(new Error('No 2FA enrolled 2FA: Please enroll in 2FA (under Login/Profile menu at the top right) to Rent.'))
-        return;
+        return
+      }
+      if (!this.props.enrolled) {
+        displayError(
+          new Error('No 2FA enrolled 2FA: Please enroll in 2FA (under Login/Profile menu at the top right) to Rent.'),
+        )
+        return
       }
       this.setState({ loading: true })
       try {
         const accountName = await activeUser.getAccountName()
-        const rentChallenge = await generateRentChallenge(accountName, "aproperty")
-        const userAuth = await signRentChallenge(accountName, "aproperty", rentChallenge)
-        const transaction = generateRentTransaction(accountName, "aproperty", rentChallenge.serverKey, rentChallenge.userKey, rentChallenge.serverAuth, userAuth)
+        const rentChallenge = await generateRentChallenge(accountName, 'aproperty')
+        const userAuth = await signRentChallenge(accountName, 'aproperty', rentChallenge)
+        const transaction = generateRentTransaction(
+          accountName,
+          'aproperty',
+          rentChallenge.serverKey,
+          rentChallenge.userKey,
+          rentChallenge.serverAuth,
+          userAuth,
+        )
         // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
         await activeUser.signTransaction(transaction, transactionConfig)
-        this.setState({rented: true})
+        this.setState({ rented: true })
       } catch (err) {
         displayError(err)
       }
@@ -78,6 +86,8 @@ class Property extends React.Component {
       login()
     }
   }
+
+  static contextType = UALContext
 
   render() {
     const { loading, liked, rented } = this.state
@@ -105,7 +115,7 @@ class Property extends React.Component {
             onClick={this.onRent}
             onKeyUp={event => onKeyUpEnter(event, this.onRent)}
           >
-            <img src={rented ? rentingSvg : rentSvg} alt='rent '/>
+            <img src={rented ? rentingSvg : rentSvg} alt='rent' />
             {rented && !loading ? 'Renting' : 'Rent'}
           </span>
           <span
@@ -116,7 +126,7 @@ class Property extends React.Component {
             onClick={this.onLike}
             onKeyUp={event => onKeyUpEnter(event, this.onLike)}
           >
-            <img src={likeSvg} alt='like'/>
+            <img src={likeSvg} alt='like' />
             {liked && !loading ? 'Liked' : 'Like'}
           </span>
         </div>

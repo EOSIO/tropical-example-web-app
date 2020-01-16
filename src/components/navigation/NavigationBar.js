@@ -47,7 +47,7 @@ NavigationBar.propTypes = {
   routeToLanding: func.isRequired,
   login: func.isRequired,
   enroll: func.isRequired,
-  enrolled: bool.isRequired
+  enrolled: bool.isRequired,
 }
 
 NavigationBar.defaultProps = {

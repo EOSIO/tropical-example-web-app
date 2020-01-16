@@ -9,7 +9,7 @@ import NotificationBar from 'components/notification/NotificationBar'
 import ResultsPage from 'components/results/ResultsPage'
 import LandingPage from 'components/landing/LandingPage'
 
-import {generateWebauthnPubkey, enrollWebauthnPubkey} from "utils/webauthn"
+import { generateWebauthnPubkey, enrollWebauthnPubkey } from 'utils/webauthn'
 
 class App extends React.Component {
   static propTypes = {
@@ -84,12 +84,12 @@ class App extends React.Component {
         console.info('accountName:', accountName)
         console.info('pubkey:', pubkey)
         await enrollWebauthnPubkey(accountName, pubkey)
-        this.setState({enrolled: true})
+        this.setState({ enrolled: true })
       } catch (err) {
         this.displayError(err)
       }
     } else {
-      this.displayError(new Error("Not Logged In!"))
+      this.displayError(new Error('Not Logged In!'))
     }
   }
 
@@ -105,7 +105,14 @@ class App extends React.Component {
         { showNotificationBar && <NotificationBar hideNotificationBar={hideNotificationBar} error={error} /> }
         <NavigationBar routeToLanding={routeToLanding} login={login} enroll={this.enroll} enrolled={enrolled} />
         { showResults
-          ? <ResultsPage routeToLanding={routeToLanding} login={login} displayError={this.displayError} enrolled={enrolled} />
+          ? (
+            <ResultsPage
+              routeToLanding={routeToLanding}
+              login={login}
+              displayError={this.displayError}
+              enrolled={enrolled}
+            />
+          )
           : <LandingPage routeToResults={routeToResults} />
         }
       </div>
