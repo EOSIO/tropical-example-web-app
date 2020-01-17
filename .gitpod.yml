@@ -10,7 +10,7 @@ ports:
   onOpen: ignore
 # We open this port because it's the port that nginx is serving and which is federating the other services (web app and chain in this case)
 - port: 8000
-  onOpen: open-preview
+  onOpen: open-browser
 - port: 8900
   onOpen: ignore
 - port: 8080

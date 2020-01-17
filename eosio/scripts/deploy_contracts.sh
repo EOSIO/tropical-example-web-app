@@ -34,7 +34,7 @@ mkdir -p $ROOT_DIR/bin
 # Set PATH
 PATH="$PATH:$ROOT_DIR/bin:$ROOT_DIR/bin/scripts"
 GITPOD_WORKSPACE_ROOT="/workspace/tropical-example-web-app"
-WALLET_DIR="$ROOT_DIR/wallet/"
+WALLET_DIR="/root/eosio-wallet/"
 CONFIG_DIR="$ROOT_DIR/bin/config-dir"
 
 function start_wallet {
@@ -47,6 +47,42 @@ function start_wallet {
   echo $wallet_password > "$CONFIG_DIR"/keys/default_wallet_password.txt
 
   cleos wallet import --private-key $SYSTEM_ACCOUNT_PRIVATE_KEY
+}
+
+function post_preactivate {
+  curl -X POST http://127.0.0.1:8888/v1/producer/schedule_protocol_feature_activations -d '{"protocol_features_to_activate": ["0ec7e080177b2c02b278d5088611686b49d739925a92d9bfcacd7fc6b74053bd"]}'
+}
+
+# $1 feature disgest to activate
+function activate_feature {
+  cleos push action eosio activate '["'"$1"'"]' -p eosio
+  if [ $? -ne 0 ]; then
+    exit 1
+  fi
+}
+
+# $1 account name
+# $2 contract directory
+# $3 wasm file name
+# $4 abi file name
+function setcode {
+  retry_count="4"
+
+  while [ $retry_count -gt 0 ]; do
+    cleos set contract $1 $2 $3 $4 -p $1@active
+    if [ $? -eq 0 ]; then
+      break
+    fi
+
+    echo "setcode failed retrying..."
+    sleep 1s
+    retry_count=$[$retry_count-1]
+  done
+
+  if [ $retry_count -eq 0 ]; then
+    echo "setcode failed too many times, bailing."
+    exit 1
+  fi
 }
 
 # $1 - parent folder where smart contract directory is located
@@ -69,7 +105,7 @@ function deploy_system_contract {
   cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
-  cleos set contract $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi" -p $3@active
+  setcode $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi"
 }
 
 # $1 - account name
@@ -94,13 +130,21 @@ function deploy_app_contract {
   # Move into contracts directory
   cd "$CONTRACTS_DIR/$1/"
   (
-    eosio-cpp -abigen "$1.cpp" -o "$1.wasm" -I ./
+    if [ ! -f "$1.wasm" ]; then
+      eosio-cpp -abigen "$1.cpp" -o "$1.wasm" -I ./
+    else
+      echo "Using pre-built contract..."
+    fi
   ) &&
   # Move back into the executable directory
   cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
-  cleos set contract $2 "$CONTRACTS_DIR/$1/" -p $2
+  setcode $2 "$CONTRACTS_DIR/$1/" "$1.wasm" "$1.abi"
+
+  # Set the root of trust for the contract
+  cleos push action $2 setsrvkey '["'"$TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY"'"]' -p $2
+
 }
 
 function issue_sys_tokens {
@@ -143,12 +187,13 @@ if [ -z "$NODEOS_RUNNING" ]; then
   --data-dir $BLOCKCHAIN_DATA_DIR \
   --config-dir $BLOCKCHAIN_CONFIG_DIR \
   --http-validate-host=false \
-  --plugin eosio::producer_plugin \
+  --plugin eosio::producer_api_plugin \
   --plugin eosio::chain_api_plugin \
   --plugin eosio::http_plugin \
   --http-server-address=0.0.0.0:8888 \
   --access-control-allow-origin=* \
   --contracts-console \
+  --max-transaction-time=100000 \
   --verbose-http-errors &
 fi
 
@@ -174,14 +219,23 @@ if [ ! -z "$RUNNING_IN_GITPOD" ]; then
   mkdir -p $CONTRACTS_DIR
   mkdir -p $ROOT_DIR/downloads
 
-  echo "INSTALLING EOSIO.CONTRACTS"
-  wget https://github.com/EOSIO/eosio.contracts/archive/v1.6.0.tar.gz
-  mkdir -p $ROOT_DIR/downloads/eosio.contracts
+  echo "INSTALLING EOSIO.CONTRACTS v1.8.3"
+  wget https://github.com/EOSIO/eosio.contracts/archive/v1.8.3.tar.gz
+  mkdir -p $ROOT_DIR/downloads/eosio.contracts-1.8.3
+  mkdir -p $CONTRACTS_DIR/eosio.contracts-1.8.3
+  tar xvzf ./v1.8.3.tar.gz -C $ROOT_DIR/downloads/eosio.contracts-1.8.3
+  mv $ROOT_DIR/downloads/eosio.contracts-1.8.3/eosio.contracts-1.8.3/* $CONTRACTS_DIR/eosio.contracts-1.8.3
+  rm -rf $ROOT_DIR/downloads/eosio.contracts-1.8.3
+  rm ./v1.8.3.tar.gz
+
+  echo "INSTALLING EOSIO.CONTRACTS v1.9.0"
+  wget https://github.com/EOSIO/eosio.contracts/archive/v1.9.0.tar.gz
+  mkdir -p $ROOT_DIR/downloads/eosio.contracts-1.9.0
   mkdir -p $CONTRACTS_DIR/eosio.contracts
-  tar xvzf ./v1.6.0.tar.gz -C $ROOT_DIR/downloads/eosio.contracts
-  mv $ROOT_DIR/downloads/eosio.contracts/eosio.contracts-1.6.0/* $CONTRACTS_DIR/eosio.contracts
-  rm -rf $ROOT_DIR/downloads/eosio.contracts
-  rm ./v1.6.0.tar.gz
+  tar xvzf ./v1.9.0.tar.gz -C $ROOT_DIR/downloads/eosio.contracts-1.9.0
+  mv $ROOT_DIR/downloads/eosio.contracts-1.9.0/eosio.contracts-1.9.0/* $CONTRACTS_DIR/eosio.contracts
+  rm -rf $ROOT_DIR/downloads/eosio.contracts-1.9.0
+  rm ./v1.9.0.tar.gz
 
   echo "INSTALLING EOSIO.ASSERT CONTRACT"
   wget https://github.com/EOSIO/eosio.assert/archive/v0.1.0.tar.gz
@@ -199,18 +253,31 @@ if [ ! -z "$RUNNING_IN_GITPOD" ]; then
   cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/tropical/* $CONTRACTS_DIR/tropical/
 fi
 
+# preactivate concensus upgrades
+post_preactivate
+
 # Create accounts and deploy contracts
 # eosio.assert
 create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
 deploy_system_contract eosio.assert eosio.assert eosio.assert
 
 # eosio.bios
+deploy_system_contract eosio.contracts-1.8.3/contracts eosio.bios eosio
+
+activate_feature "299dcb6af692324b899b39f16d5a530a33062804e41f09dc97e9f156b4476707"
+
+wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+apt-get update && sudo apt install -y ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
+
 deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 
 # eosio.token
 create_account eosio.token $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
 deploy_system_contract eosio.contracts/contracts eosio.token eosio.token
 issue_sys_tokens
+
+# activate Webauthn support
+activate_feature "4fca8bd82bbd181e714e283f83e1b45d95ca5af40fb89ad3977b653c448f78c2"
 
 # tropical
 create_account tropical $TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY $TROPICAL_EXAMPLE_ACCOUNT_PRIVATE_KEY
@@ -227,16 +294,17 @@ assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc
 
 # Register tropical manifest
 # If running in Gitpod, we need to alter the URLs
+CONTRACT_NAME="tropical"
+MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""rent"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""check2fa"\"" }]"
 if [ -z "$RUNNING_IN_GITPOD" ]; then
-  assert_register_manifest "tropical" "http://localhost:3000" "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa" "[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
+  APP_DOMAIN="http://localhost:3000"
+  APPMETA="http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
 else
   GP_URL=$(gp url 8000)
-  CONTRACT_NAME="tropical"
   APP_DOMAIN="${GP_URL}"
   APPMETA="${GP_URL}/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
-  MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" }]"
-  assert_register_manifest $CONTRACT_NAME $APP_DOMAIN $APPMETA "$MANIFEST"
 fi
+assert_register_manifest $CONTRACT_NAME $APP_DOMAIN $APPMETA "$MANIFEST"
 
 echo "All done initializing the blockchain"
 
