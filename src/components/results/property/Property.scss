@@ -30,13 +30,33 @@
   }
 
   .property-info-3 {
-    background: $filler-light;
-    width: 85%;
+    width: 100%;
   }
 }
 
 .results-property:nth-child(even) .property-container {
   @media screen and (min-width: 1200px) {
     float: right;
+  }
+}
+
+.rent-button {
+  display: inline-block;
+  background-color: #2B455B;
+  width: 150px;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  &.active {
+    background-color: #46D564;
+  }
+}
+
+.like-button {
+  display: inline-block;
+  background-color: #597084;
+  width: 110px;
+  cursor: pointer;
+  &.active {
+    background-color: #FD5F82;
   }
 }

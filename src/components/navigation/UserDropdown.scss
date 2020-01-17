@@ -1,5 +1,13 @@
 @import "src/assets/styles/constants.scss";
 
+.user-dropdown-container > ul > li.user-dropdown-item.menu-item-with-icon {
+  margin: 1rem 0 0 0.2rem;
+}
+
+.user-info-dropdown-content .user-dropdown-container li.user-dropdown-item.menu-item-with-icon {
+  display: block;
+}
+
 .user-dropdown-container {
   position: relative;
   background-color: white;
@@ -12,8 +20,23 @@
   z-index: 1;
   cursor: pointer;
 
-  .user-dropdown-item {
-    color: black;
+  ul {
+    padding-inline-start: 0px;
+  }
+
+  li {
+    &.user-dropdown-item {
+      margin: 0 0 0 0;
+      font-weight: normal;
+      color: black;
+    }
+  }
+
+  .menu-item-icon-left {
+    height: 22px;
+    width: 22px;
+    margin: 0px 0.5rem;
+    vertical-align: text-top;
   }
 
   &:after {

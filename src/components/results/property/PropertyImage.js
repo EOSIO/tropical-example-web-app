@@ -1,22 +1,29 @@
 import React from 'react'
-import { bool } from 'prop-types'
+import { bool, func } from 'prop-types'
 import './PropertyImage.scss'
 
-import heart from 'assets/images/heart/heart.svg'
-import likedHeart from 'assets/images/heart/liked-heart.svg'
-import loadingHeart from 'assets/images/heart/loading-heart.svg'
+import propertySvg from 'assets/images/property.svg'
+import { onKeyUpEnter } from 'utils/keyPress'
 
-const PropertyImage = ({ loading, liked }) => (
-  <div className='property-image-container'>
-    <img className={`heart ${!liked && !loading ? 'display' : ''}`} src={heart} alt='heart' />
-    <img className={`heart ${liked && !loading ? 'display' : ''}`} src={likedHeart} alt='liked-heart' />
-    <img className={`heart ${loading ? 'display' : ''}`} src={loadingHeart} alt='loading-heart' />
+const PropertyImage = ({ onRent }) => (
+  <div
+    className='property-image'
+    tabIndex={0}
+    role='button'
+    aria-label='Rent Property Image'
+    onClick={onRent}
+    onKeyUp={event => onKeyUpEnter(event, onRent)}
+  >
+    <div className='property-image-container'>
+      <img src={propertySvg} alt='property' />
+    </div>
   </div>
 )
 
 PropertyImage.propTypes = {
   loading: bool.isRequired,
   liked: bool.isRequired,
+  onRent: func.isRequired,
 }
 
 export default PropertyImage

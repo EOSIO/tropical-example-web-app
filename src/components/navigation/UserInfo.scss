@@ -2,7 +2,7 @@
   display: grid;
   align-items: center;
   grid-gap: 0 .5rem;
-  grid-template-columns: 5fr 1fr;
+  grid-template-columns: 270px 50px;
   grid-template-areas:
    'prefix   options'
    'name     options'
@@ -17,12 +17,14 @@
   }
   
   .user-info-prefix {
+    text-align: right;
     grid-area: prefix;
     font-size: .75rem;
     font-weight: 500;
   }
 
   .user-info-name {
+    text-align: right;
     grid-area: name;
     font-size: 0.90rem;
   }

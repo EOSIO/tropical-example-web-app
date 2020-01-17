@@ -5,12 +5,20 @@
       "chainId": "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f",
       "manifest": {
         "account": "tropical",
-        "domain": "http://localhost:3000",
-        "appmeta": "http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa",
+        "domain": "https://localhost:3000",
+        "appmeta": "https://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa",
         "whitelist": [
           {
             "contract": "tropical",
             "action": "like"
+          },
+          {
+            "contract": "tropical",
+            "action": "rent"
+          },
+          {
+            "contract": "tropical",
+            "action": "check2fa"
           }
         ]
       }

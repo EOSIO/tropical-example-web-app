@@ -9,6 +9,8 @@ import NotificationBar from 'components/notification/NotificationBar'
 import ResultsPage from 'components/results/ResultsPage'
 import LandingPage from 'components/landing/LandingPage'
 
+import { generateWebauthnPubkey, enrollWebauthnPubkey } from 'utils/webauthn'
+
 class App extends React.Component {
   static propTypes = {
     ual: shape({
@@ -30,6 +32,7 @@ class App extends React.Component {
     showResults: false,
     showNotificationBar: true,
     error: null,
+    enrolled: false,
   }
 
   componentDidUpdate(prevProps) {
@@ -70,19 +73,46 @@ class App extends React.Component {
     this.displayNotificationBar(false)
   }
 
+  enroll = async () => {
+    console.info('enroll().top')
+    // Via static contextType = UALContext, access to the activeUser object on this.context is now available
+    const { ual: { activeUser } } = this.props
+    if (activeUser) {
+      try {
+        const accountName = await activeUser.getAccountName()
+        const pubkey = await generateWebauthnPubkey(accountName)
+        console.info('accountName:', accountName)
+        console.info('pubkey:', pubkey)
+        await enrollWebauthnPubkey(accountName, pubkey)
+        this.setState({ enrolled: true })
+      } catch (err) {
+        this.displayError(err)
+      }
+    } else {
+      this.displayError(new Error('Not Logged In!'))
+    }
+  }
+
   render() {
     const login = () => this.displayLoginModal(true)
     const routeToResults = () => this.displayResults(true)
     const routeToLanding = () => this.displayResults(false)
     const hideNotificationBar = () => this.clearError()
-    const { showResults, showNotificationBar, error } = this.state
+    const { showResults, showNotificationBar, error, enrolled } = this.state
 
     return (
       <div className='app-container'>
         { showNotificationBar && <NotificationBar hideNotificationBar={hideNotificationBar} error={error} /> }
-        <NavigationBar routeToLanding={routeToLanding} login={login} />
+        <NavigationBar routeToLanding={routeToLanding} login={login} enroll={this.enroll} enrolled={enrolled} />
         { showResults
-          ? <ResultsPage routeToLanding={routeToLanding} login={login} displayError={this.displayError} />
+          ? (
+            <ResultsPage
+              routeToLanding={routeToLanding}
+              login={login}
+              displayError={this.displayError}
+              enrolled={enrolled}
+            />
+          )
           : <LandingPage routeToResults={routeToResults} />
         }
       </div>

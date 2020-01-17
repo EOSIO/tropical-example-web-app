@@ -16,6 +16,10 @@ body {
   font-size: 16px;
   border: none;
 
+  *:focus {
+    outline: none;
+  }
+
   @media screen and (min-width: $max-content-width) {
     font-size: 18px;
   }
@@ -24,4 +28,18 @@ body {
 .disabled {
   opacity: .5;
   cursor: not-allowed !important;
+}
+
+.button {
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  height: 41px;
+  border-radius: 6px;
+  padding: 0.4rem;
+  img {
+    width: 22px;
+    height: 16px;
+    margin-right: 0.5rem;
+  }
 }
