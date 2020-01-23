@@ -3,4 +3,4 @@ GP_URL=$(gp url 8000)
 echo "Replacing URLs with: ${GP_URL}"
 
 # Pull in the manifest the chain will serve and update the URLs
-sed -i "s%http://localhost:3000%${GP_URL}%g" $PWD/public/chain-manifests.json
+sed -i "s%https://localhost:3000%${GP_URL}%g" $PWD/public/chain-manifests.json
