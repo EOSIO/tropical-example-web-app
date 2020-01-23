@@ -21,12 +21,14 @@ if [ -z "$RUNNING_IN_GITPOD" ]; then
   CONTRACTS_DIR="$ROOT_DIR/eosio/bin/contracts"
   BLOCKCHAIN_DATA_DIR=/root/.local/share
   BLOCKCHAIN_CONFIG_DIR=/opt/eosio/bin/config-dir
+  WALLET_DIR="/root/eosio-wallet/"
 else
   echo "Running in Gitpod..."
   ROOT_DIR="/home/gitpod"
   CONTRACTS_DIR="$ROOT_DIR/contracts"
   BLOCKCHAIN_DATA_DIR=$ROOT_DIR/eosio/chain/data
   BLOCKCHAIN_CONFIG_DIR=$ROOT_DIR/eosio/chain/config
+  WALLET_DIR="$ROOT_DIR/eosio-wallet"
 fi
 
 mkdir -p $ROOT_DIR/bin
@@ -34,7 +36,6 @@ mkdir -p $ROOT_DIR/bin
 # Set PATH
 PATH="$PATH:$ROOT_DIR/bin:$ROOT_DIR/bin/scripts"
 GITPOD_WORKSPACE_ROOT="/workspace/tropical-example-web-app"
-WALLET_DIR="/root/eosio-wallet/"
 CONFIG_DIR="$ROOT_DIR/bin/config-dir"
 
 function start_wallet {
