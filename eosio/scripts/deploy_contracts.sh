@@ -21,12 +21,14 @@ if [ -z "$RUNNING_IN_GITPOD" ]; then
   CONTRACTS_DIR="$ROOT_DIR/eosio/bin/contracts"
   BLOCKCHAIN_DATA_DIR=/root/.local/share
   BLOCKCHAIN_CONFIG_DIR=/opt/eosio/bin/config-dir
+  WALLET_DIR="/root/eosio-wallet/"
 else
   echo "Running in Gitpod..."
   ROOT_DIR="/home/gitpod"
   CONTRACTS_DIR="$ROOT_DIR/contracts"
   BLOCKCHAIN_DATA_DIR=$ROOT_DIR/eosio/chain/data
   BLOCKCHAIN_CONFIG_DIR=$ROOT_DIR/eosio/chain/config
+  WALLET_DIR="$ROOT_DIR/eosio-wallet"
 fi
 
 mkdir -p $ROOT_DIR/bin
@@ -34,7 +36,6 @@ mkdir -p $ROOT_DIR/bin
 # Set PATH
 PATH="$PATH:$ROOT_DIR/bin:$ROOT_DIR/bin/scripts"
 GITPOD_WORKSPACE_ROOT="/workspace/tropical-example-web-app"
-WALLET_DIR="/root/eosio-wallet/"
 CONFIG_DIR="$ROOT_DIR/bin/config-dir"
 
 function start_wallet {
@@ -106,6 +107,19 @@ function deploy_system_contract {
 
   # Set (deploy) the compiled contract to the blockchain
   setcode $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi"
+}
+
+function deploy_1.8.x_bios {
+  # Unlock the wallet, ignore error if already unlocked
+  cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
+
+  echo "Deploying the v1.8.3 eosio.bios contract in path: $CONTRACTS_DIR/$1"
+
+  # Move back into the executable directory
+  cd $CONTRACTS_DIR
+
+  # Set (deploy) the compiled contract to the blockchain
+  setcode $3 "$CONTRACTS_DIR/$1" "$2.wasm" "$2.abi"
 }
 
 # $1 - account name
@@ -219,16 +233,7 @@ if [ ! -z "$RUNNING_IN_GITPOD" ]; then
   mkdir -p $CONTRACTS_DIR
   mkdir -p $ROOT_DIR/downloads
 
-  echo "INSTALLING EOSIO.CONTRACTS v1.8.3"
-  wget https://github.com/EOSIO/eosio.contracts/archive/v1.8.3.tar.gz
-  mkdir -p $ROOT_DIR/downloads/eosio.contracts-1.8.3
-  mkdir -p $CONTRACTS_DIR/eosio.contracts-1.8.3
-  tar xvzf ./v1.8.3.tar.gz -C $ROOT_DIR/downloads/eosio.contracts-1.8.3
-  mv $ROOT_DIR/downloads/eosio.contracts-1.8.3/eosio.contracts-1.8.3/* $CONTRACTS_DIR/eosio.contracts-1.8.3
-  rm -rf $ROOT_DIR/downloads/eosio.contracts-1.8.3
-  rm ./v1.8.3.tar.gz
-
-  echo "INSTALLING EOSIO.CONTRACTS v1.9.0"
+  echo "INSTALLING EOSIO.CONTRACTS"
   wget https://github.com/EOSIO/eosio.contracts/archive/v1.9.0.tar.gz
   mkdir -p $ROOT_DIR/downloads/eosio.contracts-1.9.0
   mkdir -p $CONTRACTS_DIR/eosio.contracts
@@ -249,6 +254,8 @@ if [ ! -z "$RUNNING_IN_GITPOD" ]; then
   echo "COPYING APP CONTRACT"
   echo "GITPOD_WORKSPACE_ROOT: $GITPOD_WORKSPACE_ROOT"
   cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/eosio.token/eosio.token.contracts.md $CONTRACTS_DIR/eosio.contracts/contracts/eosio.token/src
+  mkdir -p $CONTRACTS_DIR/eosio.bios-v1.8.3
+  cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/eosio.bios-v1.8.3/* $CONTRACTS_DIR/eosio.bios-v1.8.3/
   mkdir -p $CONTRACTS_DIR/tropical
   cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/tropical/* $CONTRACTS_DIR/tropical/
 fi
@@ -262,12 +269,10 @@ create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_K
 deploy_system_contract eosio.assert eosio.assert eosio.assert
 
 # eosio.bios
-deploy_system_contract eosio.contracts-1.8.3/contracts eosio.bios eosio
+
+deploy_1.8.x_bios eosio.bios-v1.8.3 eosio.bios eosio
 
 activate_feature "299dcb6af692324b899b39f16d5a530a33062804e41f09dc97e9f156b4476707"
-
-wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
-apt-get update && sudo apt install -y ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
 
 deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 
@@ -295,10 +300,10 @@ assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc
 # Register tropical manifest
 # If running in Gitpod, we need to alter the URLs
 CONTRACT_NAME="tropical"
-MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""rent"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""check2fa"\"" }]"
+MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""rent"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""check2fa"\"" }, { "\""contract"\"": "\""eosio.assert"\"",  "\""action"\"": "\""require"\"" }]"
 if [ -z "$RUNNING_IN_GITPOD" ]; then
-  APP_DOMAIN="http://localhost:3000"
-  APPMETA="http://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
+  APP_DOMAIN="https://localhost:3000"
+  APPMETA="https://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
 else
   GP_URL=$(gp url 8000)
   APP_DOMAIN="${GP_URL}"
