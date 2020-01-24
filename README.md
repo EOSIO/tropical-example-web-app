@@ -404,9 +404,9 @@ You can view the contract in the [eosio/contracts directory](https://github.com/
 ### Running Frontend
 
 ```bash
-yarn startSecure
+yarn start
 ```
-This command runs the app in development mode over SSL. You can also run `yarn start` to run the app without SSL. You will need to install a self-signed SSL certificate or enable [allow-insecure-localhost](chrome://flags/#allow-insecure-localhost) if running over SSL in chrome.
+This command runs the app in development mode over SSL. You will need to install a self-signed SSL certificate or enable [allow-insecure-localhost](chrome://flags/#allow-insecure-localhost) if running over SSL in chrome.
 Open [https://localhost:3000](https://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.
@@ -436,7 +436,7 @@ After confirming the transaction, you should now see an indicator that your prop
 
 #### Other Available Actions
 
-You can like a property (WebAuthn not required). After browsing to the list of properties and selecting `like`, scatter will prompty you to allow this action.
+You can like a property (WebAuthn not required). After browsing to the list of properties and selecting `like`, scatter will prompt you to allow this action.
 ![Liking A Property](docs/images/scatter-like-property.png)
 
 After confirming the transaction, you should now see an indicator that your property has been liked successfully.
