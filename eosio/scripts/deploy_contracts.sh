@@ -254,6 +254,8 @@ if [ ! -z "$RUNNING_IN_GITPOD" ]; then
   echo "COPYING APP CONTRACT"
   echo "GITPOD_WORKSPACE_ROOT: $GITPOD_WORKSPACE_ROOT"
   cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/eosio.token/eosio.token.contracts.md $CONTRACTS_DIR/eosio.contracts/contracts/eosio.token/src
+  mkdir -p $CONTRACTS_DIR/eosio.bios-v1.8.3
+  cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/eosio.bios-v1.8.3/* $CONTRACTS_DIR/eosio.bios-v1.8.3/
   mkdir -p $CONTRACTS_DIR/tropical
   cp $GITPOD_WORKSPACE_ROOT/eosio/contracts/tropical/* $CONTRACTS_DIR/tropical/
 fi
