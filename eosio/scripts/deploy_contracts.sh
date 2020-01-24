@@ -109,6 +109,19 @@ function deploy_system_contract {
   setcode $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi"
 }
 
+function deploy_1.8.x_bios {
+  # Unlock the wallet, ignore error if already unlocked
+  cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
+
+  echo "Deploying the v1.8.3 eosio.bios contract in path: $CONTRACTS_DIR/$1"
+
+  # Move back into the executable directory
+  cd $CONTRACTS_DIR
+
+  # Set (deploy) the compiled contract to the blockchain
+  setcode $3 "$CONTRACTS_DIR/$1" "$2.wasm" "$2.abi"
+}
+
 # $1 - account name
 # $2 - public key
 # $3 - private key
@@ -220,16 +233,7 @@ if [ ! -z "$RUNNING_IN_GITPOD" ]; then
   mkdir -p $CONTRACTS_DIR
   mkdir -p $ROOT_DIR/downloads
 
-  echo "INSTALLING EOSIO.CONTRACTS v1.8.3"
-  wget https://github.com/EOSIO/eosio.contracts/archive/v1.8.3.tar.gz
-  mkdir -p $ROOT_DIR/downloads/eosio.contracts-1.8.3
-  mkdir -p $CONTRACTS_DIR/eosio.contracts-1.8.3
-  tar xvzf ./v1.8.3.tar.gz -C $ROOT_DIR/downloads/eosio.contracts-1.8.3
-  mv $ROOT_DIR/downloads/eosio.contracts-1.8.3/eosio.contracts-1.8.3/* $CONTRACTS_DIR/eosio.contracts-1.8.3
-  rm -rf $ROOT_DIR/downloads/eosio.contracts-1.8.3
-  rm ./v1.8.3.tar.gz
-
-  echo "INSTALLING EOSIO.CONTRACTS v1.9.0"
+  echo "INSTALLING EOSIO.CONTRACTS"
   wget https://github.com/EOSIO/eosio.contracts/archive/v1.9.0.tar.gz
   mkdir -p $ROOT_DIR/downloads/eosio.contracts-1.9.0
   mkdir -p $CONTRACTS_DIR/eosio.contracts
@@ -263,14 +267,10 @@ create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_K
 deploy_system_contract eosio.assert eosio.assert eosio.assert
 
 # eosio.bios
-deploy_system_contract eosio.contracts-1.8.3/contracts eosio.bios eosio
+
+deploy_1.8.x_bios eosio.bios-v1.8.3 eosio.bios eosio
 
 activate_feature "299dcb6af692324b899b39f16d5a530a33062804e41f09dc97e9f156b4476707"
-
-if [ -z "$RUNNING_IN_GITPOD" ]; then
-  wget https://github.com/EOSIO/eosio.cdt/releases/download/v1.7.0/eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
-  apt-get update && sudo apt install -y ./eosio.cdt_1.7.0-1-ubuntu-18.04_amd64.deb
-fi
 
 deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 
