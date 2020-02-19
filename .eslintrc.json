@@ -8,7 +8,6 @@
   "extends": "airbnb",
   "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaFeatures": { "jsx": true },
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
@@ -21,6 +20,7 @@
       2,
       { "SwitchCase" : 1 }
     ],
+    "import/prefer-default-export": 1,
     "no-unused-vars": 1,
     "max-len": [
       "error",
@@ -46,13 +46,6 @@
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
     "react/destructuring-assignment": "off",
-    "comma-dangle": ["error", {
-        "arrays": "only-multiline",
-        "objects": "only-multiline",
-        "imports": "only-multiline",
-        "exports": "only-multiline",
-        "functions": "only-multiline"
-    }],
     "no-console": [
       "error",
       { "allow": ["info", "warn", "error"] }
@@ -69,13 +62,7 @@
     "jsx-quotes": [
       "error",
       "prefer-single"
-    ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      { "devDependencies": true }
-    ],
-    "func-names": ["error", "never"],
-    "func-style": ["error", "expression"]
+    ]
   },
   "overrides": [
     {
