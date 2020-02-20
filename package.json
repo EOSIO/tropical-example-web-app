@@ -56,6 +56,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -66,7 +69,6 @@
     "@blockone/eslint-config-blockone": "file:../tslint-config-blockone",
     "@testing-library/react": "^9.4.0",
     "@types/elliptic": "^6.4.6",
-    "eslint-plugin-no-exclusive-tests": "^1.0.0-rc.1",
     "node-sass": "^4.10.0"
   }
 }
