@@ -134,7 +134,7 @@ function create_account {
 }
 
 function configure_multisig {
-  echo "Configuring multisig account for nonbillable, tied to $1"
+  echo "Configuring multisig account for $1, tied to nonbillable"
   cleos set account permission nonbillable active "{\"threshold\" : 1, \"keys\" : [{\"permission\":{\"key\":\""$NONBILLABLE_ACCOUNT_PUBLIC_KEY"\",\"permission\":\"active\"},\"weight\":1}], \"accounts\" :[{\"permission\":{\"actor\":\""$1"\",\"permission\":\"active\"},\"weight\":1}]}" owner -p nonbillable@owner
 }
 
