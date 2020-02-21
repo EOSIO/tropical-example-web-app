@@ -34,8 +34,9 @@ class Property extends React.Component {
     if (activeUser) {
       this.setState({ loading: true })
       try {
-        const accountName = await activeUser.getAccountName()
-        const transaction = generateLikeTransaction(accountName)
+        const accountNames = [await activeUser.getAccountName(), 'nonbillable']
+        debugger
+        const transaction = generateLikeTransaction(accountNames)
         // The activeUser.signTransaction will propose the passed in transaction to the logged in Authenticator
         await activeUser.signTransaction(transaction, transactionConfig)
         this.setState({ liked: true })

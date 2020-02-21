@@ -15,6 +15,9 @@ TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY="EOS6bRs6knaaHyvpVXd5EgAPoxrZkkeDv89M1jidHCt
 EXAMPLE_ACCOUNT_PRIVATE_KEY="5KkXYBUb7oXrq9cvEYT3HXsoHvaC2957VKVftVRuCy7Z7LyUcQB"
 EXAMPLE_ACCOUNT_PUBLIC_KEY="EOS6TWM95TUqpgcjYnvXSK5kBsi6LryWRxmcBaULVTvf5zxkaMYWf"
 
+NONBILLABLE_ACCOUNT_PRIVATE_KEY="5KCdgm5JoU4d5zgsvkiJKrkrMqyedNK17dAzShHptFzP9Ev2oEi"
+NONBILLABLE_ACCOUNT_PUBLIC_KEY="EOS6i1h2m7u5B2HRKo4afdC5k92fXEBsGGCnBgUcoNN14JGLrj3iJ"
+
 if [ -z "$RUNNING_IN_GITPOD" ]; then
   echo "Running locally..."
   ROOT_DIR="/opt"
@@ -128,6 +131,11 @@ function deploy_1.8.x_bios {
 function create_account {
   cleos wallet import --private-key $3
   cleos create account eosio $1 $2
+}
+
+function configure_multisig {
+  echo "Configuring multisig account for nonbillable, tied to $1"
+  cleos set account permission nonbillable active "{\"threshold\" : 1, \"accounts\" :[{\"permission\":{\"actor\":\""$1"\",\"permission\":\"active\"},\"weight\":1}]}" owner -p nonbillable@owner
 }
 
 # $1 - smart contract name
@@ -284,6 +292,9 @@ issue_sys_tokens
 # activate Webauthn support
 activate_feature "4fca8bd82bbd181e714e283f83e1b45d95ca5af40fb89ad3977b653c448f78c2"
 
+# activate ONLY_BILL_FIRST_AUTHORIZER
+activate_feature "8ba52fe7a3956c5cd3a656a3174b931d3bb2abb45578befc59f283ecd816a405"
+
 # tropical
 create_account tropical $TROPICAL_EXAMPLE_ACCOUNT_PUBLIC_KEY $TROPICAL_EXAMPLE_ACCOUNT_PRIVATE_KEY
 deploy_app_contract tropical tropical
@@ -292,6 +303,12 @@ transfer_sys_tokens tropical
 # example
 create_account example $EXAMPLE_ACCOUNT_PUBLIC_KEY $EXAMPLE_ACCOUNT_PRIVATE_KEY
 transfer_sys_tokens example
+
+# nonbillable
+create_account nonbillable $NONBILLABLE_ACCOUNT_PUBLIC_KEY $NONBILLABLE_ACCOUNT_PRIVATE_KEY
+transfer_sys_tokens nonbillable
+
+configure_multisig example
 
 # eosio.assert actions
 # Set chain

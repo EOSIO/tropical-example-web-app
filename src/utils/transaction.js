@@ -1,13 +1,12 @@
-export const generateLikeTransaction = account => ({
+export const generateLikeTransaction = accountNames => ({
   actions: [{
     account: 'tropical',
     name: 'like',
-    authorization: [{
-      actor: account,
-      permission: 'active',
-    }],
+    authorization: accountNames.map(function(accountName) {
+      return { actor: accountName, permission: 'active'}
+    }),
     data: {
-      user: account,
+      user: accountNames[0],
     },
   }],
 })
