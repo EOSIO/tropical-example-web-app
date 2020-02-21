@@ -135,7 +135,7 @@ function create_account {
 
 function configure_multisig {
   echo "Configuring multisig account for nonbillable, tied to $1"
-  cleos set account permission nonbillable active "{\"threshold\" : 1, \"accounts\" :[{\"permission\":{\"actor\":\""$1"\",\"permission\":\"active\"},\"weight\":1}]}" owner -p nonbillable@owner
+  cleos set account permission nonbillable active "{\"threshold\" : 1, \"keys\" : [{\"permission\":{\"key\":\""$NONBILLABLE_ACCOUNT_PUBLIC_KEY"\",\"permission\":\"active\"},\"weight\":1}], \"accounts\" :[{\"permission\":{\"actor\":\""$1"\",\"permission\":\"active\"},\"weight\":1}]}" owner -p nonbillable@owner
 }
 
 # $1 - smart contract name
