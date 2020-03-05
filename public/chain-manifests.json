@@ -23,6 +23,10 @@
           {
             "contract": "eosio.assert",
             "action": "require"
+          },
+          {
+            "contract": "eosio",
+            "action": "updateauth"
           }
         ]
       }

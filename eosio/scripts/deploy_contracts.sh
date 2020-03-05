@@ -274,7 +274,7 @@ deploy_1.8.x_bios eosio.bios-v1.8.3 eosio.bios eosio
 
 activate_feature "299dcb6af692324b899b39f16d5a530a33062804e41f09dc97e9f156b4476707"
 
-deploy_system_contract eosio.contracts/contracts eosio.bios eosio
+# deploy_system_contract eosio.contracts/contracts eosio.bios eosio
 
 # eosio.token
 create_account eosio.token $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
@@ -300,7 +300,7 @@ assert_set_chain "cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc
 # Register tropical manifest
 # If running in Gitpod, we need to alter the URLs
 CONTRACT_NAME="tropical"
-MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""rent"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""check2fa"\"" }, { "\""contract"\"": "\""eosio.assert"\"",  "\""action"\"": "\""require"\"" }]"
+MANIFEST="[{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""like"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""rent"\"" },{ "\""contract"\"": "\""tropical"\"",  "\""action"\"": "\""check2fa"\"" }, { "\""contract"\"": "\""eosio.assert"\"",  "\""action"\"": "\""require"\"" }, { "\""contract"\"": "\""eosio"\"",  "\""action"\"": "\""updateauth"\"" }]"
 if [ -z "$RUNNING_IN_GITPOD" ]; then
   APP_DOMAIN="https://localhost:3000"
   APPMETA="https://localhost:3000/app-metadata.json#bc677523fca562e307343296e49596e25cb14aac6b112a9428a42119da9f65fa"
