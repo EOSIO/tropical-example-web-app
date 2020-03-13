@@ -49,9 +49,6 @@
     "up": "docker-compose up",
     "down": "docker-compose down && docker volume rm tropical-example-web-app_eosiochaindata && docker image rm tropical-example/eosio"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",

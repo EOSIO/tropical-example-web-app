@@ -8,7 +8,7 @@ import upArrow from 'assets/images/up-arrow.svg'
 import { onKeyUpEnter } from 'utils/keyPress'
 
 class UserInfo extends React.Component {
-  _isMounted = false
+  isMounted = false
 
   state = {
     showDropdown: false,
@@ -16,18 +16,18 @@ class UserInfo extends React.Component {
   }
 
   async componentDidMount() {
-    this._isMounted = true
+    this.isMounted = true
     const { activeUser } = this.context
     if (activeUser) {
       const accountName = await activeUser.getAccountName()
-      if (this._isMounted) {
+      if (this.isMounted) {
         this.setState({ accountName })
       }
     }
   }
 
   componentWillUnmount() {
-    this._isMounted = false
+    this.isMounted = false
   }
 
   toggleDropdown = () => {
