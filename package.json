@@ -20,20 +20,13 @@
     "@babel/core": "7.8.7",
     "@babel/preset-env": "7.8.7",
     "@babel/register": "7.8.6",
-    "assert": "2.0.0",
     "base64url": "3.0.1",
-    "bigi": "1.4.2",
-    "bs58": "4.0.1",
     "cbor": "3.0.3",
-    "create-hash": "1.2.0",
-    "create-hmac": "1.1.7",
-    "ecurve": "1.0.6",
     "elliptic": "6.5.2",
     "eosjs": "21.0.1-rc1",
     "express": "4.17.1",
     "focus-visible": "4.1.5",
     "prop-types": "15.7.2",
-    "randombytes": "2.1.0",
     "react": "16.13.0",
     "react-dom": "16.13.0",
     "react-scripts": "3.4.0",
@@ -69,7 +62,6 @@
     "@blockone/eslint-config-blockone": "^3.0.0",
     "@testing-library/react": "^9.4.0",
     "@types/elliptic": "^6.4.6",
-    "eslint-plugin-no-exclusive-tests": "^1.0.0-rc.1",
-    "node-sass": "^4.10.0"
+    "node-sass": "^4.13.1"
   }
 }
