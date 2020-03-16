@@ -1,3 +1,4 @@
+/* eslint no-bitwise: 0 */
 import { Router, json } from 'express'
 import { ec as EC } from 'elliptic'
 import { Serialize, Numeric } from 'eosjs'
@@ -26,9 +27,9 @@ export default () => {
     const y = COSEPublicKey.get(-3)
 
     const rpId = hostname
-    const presence = ((flags) => {
-      if (flags & 0x04) return 2
-      if (flags & 0x01) return 1
+    const presence = ((presenceFlags) => {
+      if (presenceFlags & 0x04) return 2
+      if (presenceFlags & 0x01) return 1
       return 0
     })(flags)
 
