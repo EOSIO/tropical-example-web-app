@@ -8,6 +8,7 @@ import { EOSIOAuth } from 'ual-eosio-reference-authenticator'
 import { Scatter } from 'ual-scatter'
 import { Lynx } from 'ual-lynx'
 import { TokenPocket } from 'ual-token-pocket'
+import { Anchor } from 'ual-anchor'
 
 import 'focus-visible/dist/focus-visible.min.js'
 import 'index.scss'
@@ -41,9 +42,10 @@ const eosioAuth = new EOSIOAuth([chain], { appName, protocol: 'eosio' })
 const scatter = new Scatter([chain], { appName })
 const lynx = new Lynx([chain])
 const tokenPocket = new TokenPocket([chain])
+const anchor = new Anchor([chain], { appName })
 
 const supportedChains = [chain]
-const supportedAuthenticators = [eosioAuth, scatter, lynx, tokenPocket]
+const supportedAuthenticators = [eosioAuth, scatter, lynx, tokenPocket, anchor]
 
 ReactDOM.render(
   <UALProvider chains={supportedChains} authenticators={supportedAuthenticators} appName={appName}>
