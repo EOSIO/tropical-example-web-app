@@ -93,33 +93,19 @@ function deploy_system_contract {
   # Unlock the wallet, ignore error if already unlocked
   cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
 
-  echo "Deploying the $2 contract in path: $CONTRACTS_DIR/$1/$2/src"
-
-  # Move into contracts /src directory
-  cd "$CONTRACTS_DIR/$1/$2/src"
-
-  # Compile the smart contract to wasm and abi files using the EOSIO.CDT (Contract Development Toolkit)
-  # https://github.com/EOSIO/eosio.cdt
-  eosio-cpp -abigen "$2.cpp" -o "$2.wasm" -I ../include
+  echo "Deploying the $1 contract in path: $CONTRACTS_DIR/$1"
 
   # Move back into the executable directory
   cd $CONTRACTS_DIR
 
   # Set (deploy) the compiled contract to the blockchain
-  setcode $3 "$CONTRACTS_DIR/$1/$2/src" "$2.wasm" "$2.abi"
+  setcode $2 "$CONTRACTS_DIR/$1" "$1.wasm" "$1.abi"
 }
 
-function deploy_1.8.x_bios {
-  # Unlock the wallet, ignore error if already unlocked
+function init_system {
   cleos wallet unlock --password $(cat "$CONFIG_DIR"/keys/default_wallet_password.txt) || true
 
-  echo "Deploying the v1.8.3 eosio.bios contract in path: $CONTRACTS_DIR/$1"
-
-  # Move back into the executable directory
-  cd $CONTRACTS_DIR
-
-  # Set (deploy) the compiled contract to the blockchain
-  setcode $3 "$CONTRACTS_DIR/$1" "$2.wasm" "$2.abi"
+  cleos push action eosio init '[0,"4,SYS"]' -p eosio@active
 }
 
 # $1 - account name
@@ -262,23 +248,28 @@ fi
 
 # preactivate concensus upgrades
 post_preactivate
+sleep 1s
 
 # Create accounts and deploy contracts
-# eosio.assert
-create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
-deploy_system_contract eosio.assert eosio.assert eosio.assert
+# eosio.boot
 
-# eosio.bios
-
-deploy_1.8.x_bios eosio.bios-v1.8.3 eosio.bios eosio
+deploy_system_contract eosio.boot eosio
 
 activate_feature "299dcb6af692324b899b39f16d5a530a33062804e41f09dc97e9f156b4476707"
+sleep 1s
 
-deploy_system_contract eosio.contracts/contracts eosio.bios eosio
+deploy_system_contract eosio.bios eosio
+deploy_system_contract eosio.system eosio
+init_system
+
+# eosio.assert
+create_account eosio.assert $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
+deploy_system_contract eosio.assert eosio.assert
 
 # eosio.token
 create_account eosio.token $SYSTEM_ACCOUNT_PUBLIC_KEY $SYSTEM_ACCOUNT_PRIVATE_KEY
-deploy_system_contract eosio.contracts/contracts eosio.token eosio.token
+deploy_system_contract eosio.token eosio.token
+
 issue_sys_tokens
 
 # activate Webauthn support

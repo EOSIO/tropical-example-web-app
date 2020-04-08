@@ -1,7 +1,12 @@
 {
     "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
     "version": "eosio::abi/1.1",
-    "types": [],
+    "types": [
+        {
+            "new_type_name": "block_signing_authority",
+            "type": "variant_block_signing_authority_v0"
+        }
+    ],
     "structs": [
         {
             "name": "abi_hash",
@@ -46,6 +51,20 @@
                 {
                     "name": "waits",
                     "type": "wait_weight[]"
+                }
+            ]
+        },
+        {
+            "name": "block_signing_authority_v0",
+            "base": "",
+            "fields": [
+                {
+                    "name": "threshold",
+                    "type": "uint32"
+                },
+                {
+                    "name": "keys",
+                    "type": "key_weight[]"
                 }
             ]
         },
@@ -252,7 +271,7 @@
             ]
         },
         {
-            "name": "producer_key",
+            "name": "producer_authority",
             "base": "",
             "fields": [
                 {
@@ -260,8 +279,8 @@
                     "type": "name"
                 },
                 {
-                    "name": "block_signing_key",
-                    "type": "public_key"
+                    "name": "authority",
+                    "type": "block_signing_authority"
                 }
             ]
         },
@@ -373,7 +392,7 @@
             "fields": [
                 {
                     "name": "schedule",
-                    "type": "producer_key[]"
+                    "type": "producer_authority[]"
                 }
             ]
         },
@@ -501,7 +520,7 @@
         {
             "name": "setprods",
             "type": "setprods",
-            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Set Block Producers\nsummary: 'Set block producer schedule'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} proposes a block producer schedule of:\n{{#each schedule}}\n  1. {{this.producer_name}} with a block signing key of {{this.block_signing_key}}\n{{/each}}"
+            "ricardian_contract": "---\nspec_version: \"0.2.0\"\ntitle: Set Block Producers\nsummary: 'Set block producer schedule'\nicon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec664863bd6aaac0f814b235f8799fb02c850e9aa5da34e8a004bd6518e\n---\n\n{{$action.account}} proposes a block producer schedule of:\n{{#each schedule}}\n  1. {{this.producer_name}}\n{{/each}}\n\nThe block signing authorities of each of the producers in the above schedule are listed below:\n{{#each schedule}}\n### {{this.producer_name}}\n{{to_json this.authority}}\n{{/each}}"
         },
         {
             "name": "unlinkauth",
@@ -524,5 +543,10 @@
         }
     ],
     "ricardian_clauses": [],
-    "variants": []
+    "variants": [
+        {
+            "name": "variant_block_signing_authority_v0",
+            "types": ["block_signing_authority_v0"]
+        }
+    ]
 }

@@ -154,7 +154,13 @@ icon: http://127.0.0.1/ricardian_assets/eosio.contracts/icons/admin.png#9bf1cec6
 
 {{$action.account}} proposes a block producer schedule of:
 {{#each schedule}}
-  1. {{this.producer_name}} with a block signing key of {{this.block_signing_key}}
+  1. {{this.producer_name}}
+{{/each}}
+
+The block signing authorities of each of the producers in the above schedule are listed below:
+{{#each schedule}}
+### {{this.producer_name}}
+{{to_json this.authority}}
 {{/each}}
 
 <h1 class="contract">unlinkauth</h1>
